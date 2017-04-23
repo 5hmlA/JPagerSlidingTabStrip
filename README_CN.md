@@ -19,7 +19,8 @@
 
   ##1. 添加依赖.
         
-  allprojects {
+ 
+ 	allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
