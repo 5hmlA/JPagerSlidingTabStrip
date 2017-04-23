@@ -19,11 +19,19 @@
 
   ##1. 添加依赖.
         
-        dependencies {
-            compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-        }
+  allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+	
+	dependencies {
+		compile 'com.github.User:Repo:Tag'
+	}
 
   ##2. 通过JTabStyleDelegate设置相关属性(或者定义在布局里面)
+  
     tabStyleDelegate来自于JPagerSlidingTabStrip
 		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
 		tabStyleDelegate.setJTabStyle(type)
