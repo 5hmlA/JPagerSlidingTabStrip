@@ -19,7 +19,10 @@
 
   ##1. 添加依赖.
         
- 	//TODO
+ 	
+		compile 'april.yun.JPagerSlidingTabStrip:library:1.0.0'
+	
+	
 
   ##2. 通过JTabStyleDelegate设置相关属性(或者定义在布局里面)
   
