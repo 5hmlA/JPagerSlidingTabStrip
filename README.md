@@ -21,9 +21,18 @@
 
   ##1. Add dependence.
         
-        dependencies {
-            compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
-        }
+      allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+	
+	dependencies {
+		compile 'com.github.User:Repo:Tag'
+	}
+	
+	
 
   ##2. Set up the attribute width JTabStyleDelegate( or xml)
      
