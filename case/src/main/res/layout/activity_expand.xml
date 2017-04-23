@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <april.yun.JPagerSlidingTabStrip
+        android:layout_margin="10dp"
+        android:id="@+id/tabs"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="@dimen/sug_event_tabheight"/>
+    <april.yun.JPagerSlidingTabStrip
+        android:layout_margin="10dp"
+        android:id="@+id/tabs_1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="@dimen/sug_event_tabheight"/>
+    <april.yun.JPagerSlidingTabStrip
+        android:layout_margin="10dp"
+        android:id="@+id/tabs_2"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"/>
+    <april.yun.JPagerSlidingTabStrip
+        android:layout_margin="10dp"
+        android:id="@+id/tabs_3"
+        android:layout_height="40dp"
+        android:layout_width="match_parent"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context=".MainActivity"/>
+
+        <april.yun.JPagerSlidingTabStrip
+            android:layout_margin="10dp"
+            android:id="@+id/dots"
+            android:layout_width="150dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="35dip"/>
+    </FrameLayout>
+
+    <april.yun.JPagerSlidingTabStrip2
+        android:id="@+id/tab_buttom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"/>
+    <!--<april.yun.JPagerSlidingTabStrip-->
+    <!--android:id="@+id/tab_buttom"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"/>-->
+
+</LinearLayout>
