@@ -20,11 +20,11 @@
 
 
   ##1. Add dependence.
-        
-     	 	
-		compile 'april.yun.JPagerSlidingTabStrip:library:1.0.0'
-	 
-	
+  
+  
+  			compile 'april.yun.JPagerSlidingTabStrip:library:1.0.0'
+  
+ 
   ##2. Set up the attribute width JTabStyleDelegate( or xml)
      
 		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
