@@ -85,7 +85,7 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
     }
 
 
-    public void setViewPager(ViewPager pager) {
+    public void bindViewPager(ViewPager pager) {
         this.pager = pager;
         mJTabStyle = mTabStyleDelegate.getJTabStyle();
         if (pager.getAdapter() == null) {

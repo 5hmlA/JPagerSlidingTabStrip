@@ -96,7 +96,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     }
 
 
-    public void setViewPager(ViewPager pager) {
+    public void bindViewPager(ViewPager pager) {
         this.pager = pager;
         if (pager.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");

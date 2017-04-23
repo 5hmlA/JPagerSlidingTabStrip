@@ -34,7 +34,7 @@ public interface ISlidingTabStrip {
 
     JTabStyleDelegate getTabStyleDelegate();
 
-    void setViewPager(ViewPager pager);
+    void bindViewPager(ViewPager pager);
 
     ViewGroup getTabsContainer();
 

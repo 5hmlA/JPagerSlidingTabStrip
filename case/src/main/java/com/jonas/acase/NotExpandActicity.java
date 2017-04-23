@@ -164,19 +164,19 @@ public class NotExpandActicity extends FragmentActivity {
                 getResources().getDisplayMetrics());
         pager.setPageMargin(pageMargin);
 
-        tabs_up.setViewPager(pager);
-        tabs_up1.setViewPager(pager);
-        tabs_up2.setViewPager(pager);
+        tabs_up.bindViewPager(pager);
+        tabs_up1.bindViewPager(pager);
+        tabs_up2.bindViewPager(pager);
         tabs_up2.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
-        tabs_up3.setViewPager(pager);
+        tabs_up3.bindViewPager(pager);
         tabs_up3.setPromptNum(2, 18);
-        tabs_buttom.setViewPager(pager);
+        tabs_buttom.bindViewPager(pager);
         tabs_buttom.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
         tabs_up1.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
         //tabs_up.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
         tabs_up3.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
 
-        dots.setViewPager(pager);
+        dots.bindViewPager(pager);
     }
 
 

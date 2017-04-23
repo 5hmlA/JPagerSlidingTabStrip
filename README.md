@@ -1,49 +1,55 @@
-# Android PagerSlidingTabStrip
+* JPagerSlidingTabStrip: deeply modified from [PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip).
+* Add 3 tabStyle and provides an entry for custom tabStyle (JTabStyle)
+* Added the display of unread messages (like weichat)
 
-Interactive paging indicator widget, compatible with the `ViewPager` from the 
-Android Support Library. 
 
-Try out the sample application [on the Play Store](https://play.google.com/store/apps/details?id=com.astuetz.viewpager.extensions.sample).
-
-![PagerSlidingTabStrip Sample Screenshot 1](https://lh3.ggpht.com/PXS7EmHhQZdT1Oa379iy91HX3ByWAQnFZAthMAFa_QHAOHNClEaXU5nxDEAj1F2eqbk)![PagerSlidingTabStrip Sample Screenshot 2](https://lh3.ggpht.com/oaksDoUcQlGB4j7VEkBCOjrvSzjtzVHHcKq8pAnGVfm6oxkcJg_w1QS4tyP3fLcqrwcX)
 
 # Usage
 
-*For a working implementation of this project see the `sample/` folder.*
 
-  1. Include the library as local library project or add the dependency in your build.gradle.
+  ##1. Add dependence.
         
         dependencies {
             compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
         }
 
-  2. Include the PagerSlidingTabStrip widget in your layout. This should usually be placed
-     above the `ViewPager` it represents.
+  ##2. Set up the attribute width JTabStyleDelegate( or xml)
+     
+		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
+		tabStyleDelegate.setJTabStyle(type)
+                        .setShouldExpand(true)
+                        .setFrameColor(Color.parseColor("#45C01A"))
+                        .setTabTextSize(getDimen(R.dimen.tabstrip_textsize))
+                        .setTextColorStateResource(getApplicationContext(), R.drawable.tabstripbg)
+                        .setDividerColor(Color.parseColor("#45C01A"))
+                        .setDividerPadding(0)
+                        .setUnderlineColor(Color.parseColor("#3045C01A"))
+                        .setUnderlineHeight(0)
+                        .setIndicatorColor(Color.parseColor("#7045C01A"))
+                        .setIndicatorHeight(getDimen(R.dimen.sug_event_tabheight));
 
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="48dip" />
+- ###set up tabStyle###
+	- tabStyleDelegate.setJTabStyle(type) //provide 3 types:STYLE_DEFAULT,STYLE_ROUND,STYLE_DOTS
+	- tabStyleDelegate.setJTabStyle(JTabStyle)  //define your own tabStyle
 
-  3. In your `onCreate` method (or `onCreateView` for a fragment), bind the
-     widget to the `ViewPager`.
+reference [CustomTabStyle](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/case/src/main/java/com/jonas/acase/CustomTabStyle/CustomTabStyle.java)
 
-         // Initialize the ViewPager and set an adapter
-         ViewPager pager = (ViewPager) findViewById(R.id.pager);
-         pager.setAdapter(new TestAdapter(getSupportFragmentManager()));
-         
-         // Bind the tabs to the ViewPager
-         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-         tabs.setViewPager(pager);
 
-  4. *(Optional)* If you use an `OnPageChangeListener` with your view pager
-     you should set it in the widget rather than on the pager directly.
+  ##3. BindViewpager for JPagerSlidingTabStrip
+     
+		JPagerSlidingTabStrip.bindViewPager(viewpager);
 
-         // continued from above
-         tabs.setOnPageChangeListener(mPageChangeListener);
+  #### *(Optional)* If you need an `OnPageChangeListener` with your view pager
 
-# Customization
+         JPagerSlidingTabStrip.setOnPageChangeListener(mPageChangeListener);
+##4.Show prompt message for tab with JPagerSlidingTabStrip
+	
+	//index:the index of tab ,msgNum:(0~99 show number,0 dismiss message,>99 show ~)
+	JPagerSlidingTabStrip.setPromptNum(index, msgNum);
 
+# Customization 
+
+###*from [astuetz/PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip)*
 To not just look like another Play Store styled app, go and adjust these values to match
 your brand:
 
@@ -61,20 +67,13 @@ your brand:
 
 *All attributes have their respective getters and setters to change them at runtime*
 
-# Changelog
+##*Add for prompt message*
+ * `mPromptBgColor` the background color of prompt msg
+ * `mPromptNumColor` the number color of prompt msg
 
-### Current Version: 1.0.1
 
-### [1.0.1](https://github.com/astuetz/PagerSlidingTabStrip/tree/v1.0.1)
-
- * Upgraded gradle build files
- * Changed package name to `com.astuetz.PagerSlidingTabStrip`
- * [#37](https://github.com/astuetz/PagerSlidingTabStrip/pull/37), [#41](https://github.com/astuetz/PagerSlidingTabStrip/pull/41) Added `psts` prefix to all attributes in `attrs.xml`
- * [#46](https://github.com/astuetz/PagerSlidingTabStrip/pull/46) Changed the shouldExpand behavior to set the layout at the time the tab is added
-
-# Developed By
-
- * Andreas Stuetz - <andreas.stuetz@gmail.com>
+##Thanks
+###[PagerSlidingTabStrip](https://github.com/jpardogo/PagerSlidingTabStrip)
 
 
 # License
