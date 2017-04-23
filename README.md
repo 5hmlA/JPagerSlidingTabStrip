@@ -21,7 +21,7 @@
 
   ##1. Add dependence.
         
-        allprojects {
+      allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
