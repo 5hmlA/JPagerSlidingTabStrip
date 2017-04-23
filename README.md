@@ -32,8 +32,14 @@
 	- tabStyleDelegate.setJTabStyle(type) //provide 3 types:STYLE_DEFAULT,STYLE_ROUND,STYLE_DOTS
 	- tabStyleDelegate.setJTabStyle(JTabStyle)  //define your own tabStyle
 
-reference [CustomTabStyle](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/case/src/main/java/com/jonas/acase/CustomTabStyle/CustomTabStyle.java)
-
+ - reference [CustomTabStyle](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/case/src/main/java/com/jonas/acase/CustomTabStyle/CustomTabStyle.java)
+![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/custom.gif)
+  - STYLE_DEFAULT
+![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/default2.gif)
+  - STYLE_ROUND
+![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/round.gif)
+  - STYLE_DOTS
+![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/dots.gif)
 
   ##3. BindViewpager for JPagerSlidingTabStrip
      
@@ -72,8 +78,9 @@ your brand:
  * `mPromptNumColor` the number color of prompt msg
 
 
-##Thanks
-###[PagerSlidingTabStrip](https://github.com/jpardogo/PagerSlidingTabStrip)
+#Thanks
+
+[PagerSlidingTabStrip](https://github.com/jpardogo/PagerSlidingTabStrip)
 
 
 # License
