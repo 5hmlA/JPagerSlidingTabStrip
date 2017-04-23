@@ -24,6 +24,7 @@
         }
 
   ##2. 通过JTabStyleDelegate设置相关属性(或者定义在布局里面)
+
     tabStyleDelegate来自于JPagerSlidingTabStrip
 		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
 		tabStyleDelegate.setJTabStyle(type)
