@@ -19,17 +19,7 @@
 
   ##1. 添加依赖.
         
- 
- 	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-	
-	dependencies {
-		compile 'com.github.User:Repo:Tag'
-	}
+ 	//TODO
 
   ##2. 通过JTabStyleDelegate设置相关属性(或者定义在布局里面)
   
