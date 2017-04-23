@@ -8,25 +8,23 @@
 
 ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/1.gif)
 
-#[中文版](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/README_CN.md)
-
-* JPagerSlidingTabStrip: deeply modified from [PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip).
-* Add 3 tabStyle and provides an entry for custom tabStyle (JTabStyle)
-* Added the display of unread messages (like weichat)
+* JPagerSlidingTabStrip: 增强版的 [PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip). 使用方式和PagerSlidingTabStrip一样简单，但功能和样式更丰富
+* 内置3中tab风格 还可以 继承子自JTabStyle 实现自己的风格和动画 (JTabStyle)
+* 增加 右上角的提示信息 (仿微信)
 
 
 
-# Usage
+# 使用方法
 
 
-  ##1. Add dependence.
+  ##1. 添加依赖.
         
         dependencies {
             compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
         }
 
-  ##2. Set up the attribute width JTabStyleDelegate( or xml)
-     
+  ##2. 通过JTabStyleDelegate设置相关属性(或者定义在布局里面)
+    tabStyleDelegate来自于JPagerSlidingTabStrip
 		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
 		tabStyleDelegate.setJTabStyle(type)
                         .setShouldExpand(true)
@@ -40,7 +38,7 @@
                         .setIndicatorColor(Color.parseColor("#7045C01A"))
                         .setIndicatorHeight(getDimen(R.dimen.sug_event_tabheight));
 
-- ###set up tabStyle###
+- ###设置tab风格###
 	- tabStyleDelegate.setJTabStyle(type) //provide 3 types:STYLE_DEFAULT,STYLE_ROUND,STYLE_DOTS
 	- tabStyleDelegate.setJTabStyle(JTabStyle)  //define your own tabStyle
 
@@ -53,23 +51,21 @@
   - STYLE_DOTS
 ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/dots.gif)
 
-  ##3. BindViewpager for JPagerSlidingTabStrip
+  ##3. 为JPagerSlidingTabStrip绑定viewpager
      
 		JPagerSlidingTabStrip.bindViewPager(viewpager);
 
-  #### *(Optional)* If you need an `OnPageChangeListener` with your view pager
+  #### 如果需要使用 `OnPageChangeListener` 建议像下面这样添加监听即可
 
          JPagerSlidingTabStrip.setOnPageChangeListener(mPageChangeListener);
-##4.Show prompt message for tab with JPagerSlidingTabStrip
+##4.通过JPagerSlidingTabStrip显示 提示信息
 	
-	//index:the index of tab ,msgNum:(0~99 show number,0 dismiss message,>99 show ~)
+	//index:第几个tab  ,msgNum:(0~99 会显示数字,0 移除提示信息, 大于99 显示 ~)
 	JPagerSlidingTabStrip.setPromptNum(index, msgNum);
 
-# Customization 
+# 相关熟悉
 
 ###*from [astuetz/PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip)*
-To not just look like another Play Store styled app, go and adjust these values to match
-your brand:
 
  * `pstsIndicatorColor` Color of the sliding indicator
  * `pstsUnderlineColor` Color of the full-width line on the bottom of the view
@@ -83,14 +79,12 @@ your brand:
  * `pstsShouldExpand` If set to true, each tab is given the same weight, default false
  * `pstsTextAllCaps` If true, all tab titles will be upper case, default true
 
-*All attributes have their respective getters and setters to change them at runtime*
 
-##*Add for prompt message*
- * `mPromptBgColor` the background color of prompt msg
- * `mPromptNumColor` the number color of prompt msg
+##*为提示信息增加的属性*
+ * `mPromptBgColor` 提示信息胶囊背景颜色
+ * `mPromptNumColor` 提示信息文字颜色
 
-
-#Thanks
+#感谢
 
 [PagerSlidingTabStrip](https://github.com/jpardogo/PagerSlidingTabStrip)
 
