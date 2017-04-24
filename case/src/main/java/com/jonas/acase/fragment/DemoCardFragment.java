@@ -25,14 +25,14 @@ import com.jonas.acase.R;
 import com.jonas.acase.eventbusmsg.PromptMsg;
 import org.greenrobot.eventbus.EventBus;
 
-public class SuperAwesomeCardFragment extends Fragment {
+public class DemoCardFragment extends Fragment {
 
 	private static final String ARG_POSITION = "position";
 
 	private int position;
 
-	public static SuperAwesomeCardFragment newInstance(int position) {
-		SuperAwesomeCardFragment f = new SuperAwesomeCardFragment();
+	public static DemoCardFragment newInstance(int position) {
+		DemoCardFragment f = new DemoCardFragment();
 		Bundle b = new Bundle();
 		b.putInt(ARG_POSITION, position);
 		f.setArguments(b);

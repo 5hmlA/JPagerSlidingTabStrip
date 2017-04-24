@@ -16,7 +16,7 @@ import android.widget.Toolbar;
 import april.yun.ISlidingTabStrip;
 import april.yun.other.JTabStyleDelegate;
 import com.jonas.acase.eventbusmsg.PromptMsg;
-import com.jonas.acase.fragment.SuperAwesomeCardFragment;
+import com.jonas.acase.fragment.DemoCardFragment;
 import java.security.SecureRandom;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -98,7 +98,8 @@ public class ExpandActivity extends FragmentActivity {
         setupStrip(tabs_buttom.getTabStyleDelegate(), STYLE_DEFAULT);
         setupStrip(dots.getTabStyleDelegate(), STYLE_DOTS);
         tabs_buttom.getTabStyleDelegate().setTabIconGravity(Gravity.TOP)//图标显示在top
-                   .setIndicatorHeight(-8).setDividerColor(Color.TRANSPARENT);
+                   .setIndicatorHeight(-8)//设置的高小于0 会显示在tab顶部 否则底部
+                   .setDividerColor(Color.TRANSPARENT);
         tabs_up.getTabStyleDelegate().setNotDrawIcon(true);
         tabs_up1.getTabStyleDelegate()
                 .setNotDrawIcon(true)
@@ -231,7 +232,7 @@ public class ExpandActivity extends FragmentActivity {
 
 
         @Override public Fragment getItem(int position) {
-            return SuperAwesomeCardFragment.newInstance(position);
+            return DemoCardFragment.newInstance(position);
         }
 
 

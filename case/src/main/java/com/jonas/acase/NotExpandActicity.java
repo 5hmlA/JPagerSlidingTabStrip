@@ -12,7 +12,7 @@ import april.yun.ISlidingTabStrip;
 import april.yun.other.JTabStyleDelegate;
 import com.jonas.acase.CustomTabStyle.CustomTabStyle;
 import com.jonas.acase.eventbusmsg.PromptMsg;
-import com.jonas.acase.fragment.SuperAwesomeCardFragment;
+import com.jonas.acase.fragment.DemoCardFragment;
 import java.security.SecureRandom;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -202,7 +202,7 @@ public class NotExpandActicity extends FragmentActivity {
 
 
         @Override public Fragment getItem(int position) {
-            return SuperAwesomeCardFragment.newInstance(position);
+            return DemoCardFragment.newInstance(position);
         }
 
     }

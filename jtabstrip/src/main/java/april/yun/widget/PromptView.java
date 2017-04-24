@@ -29,7 +29,7 @@ import android.view.animation.DecelerateInterpolator;
 public class PromptView extends android.support.v7.widget.AppCompatCheckedTextView
         implements ValueAnimator.AnimatorUpdateListener {
     private static final String TAG = PromptView.class.getSimpleName();
-    private static final int SHOWTIME = 360;
+    private static final int SHOWTIME = 460;
     private static final int CLEARPROMPT = 0;
     private static final int DOTSNOTIFY = -1991;
     private Paint mBgPaint;
