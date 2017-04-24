@@ -3,4 +3,5 @@
     <string name="title_activity_expand">ExpandActivity</string>
     <string name="title_activity_not_expand_acticity">NotExpandActicity</string>
     <string name="title_activity_custom_view">CustomView</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

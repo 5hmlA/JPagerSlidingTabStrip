@@ -18,7 +18,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.CheckedTextView;
 
 /**
  * @author yun.
@@ -27,7 +26,8 @@ import android.widget.CheckedTextView;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
-public class PromptView extends CheckedTextView implements ValueAnimator.AnimatorUpdateListener {
+public class PromptView extends android.support.v7.widget.AppCompatCheckedTextView
+        implements ValueAnimator.AnimatorUpdateListener {
     private static final String TAG = PromptView.class.getSimpleName();
     private static final int SHOWTIME = 360;
     private static final int CLEARPROMPT = 0;
@@ -269,7 +269,7 @@ public class PromptView extends CheckedTextView implements ValueAnimator.Animato
             msg_str = "";//动画结束后情空消息
         }
         ratio = TextUtils.isEmpty(mLastMsg) ? 1 - ratio : ratio;
-        mPromptCenterPoint.y = mNumHeight * ratio;
+        mPromptCenterPoint.y = mNumHeight * (3*ratio/2f-1/2f);
         mMsgBg.bottom = mNumHeight * 2 * ratio;
         invalidate();
     }

@@ -6,7 +6,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
-//        classpath 'com.novoda:bintray-release:0.3.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.2'
         // NOTE: Do not place your application dependencies here; they belong
@@ -17,9 +16,6 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        //        maven {
-        //            url "http://dl.bintray.com/h07000223/maven"
-        //        }
     }
 }
 

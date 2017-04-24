@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+        </activity>
+        <activity
+            android:name=".ExpandActivity"
+            android:label="@string/title_activity_expand">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -17,15 +21,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ExpandActivity"
-            android:label="@string/title_activity_expand"/>
-        <activity
             android:name=".NotExpandActicity"
-            android:label="@string/title_activity_not_expand_acticity"/>
-        <activity
-            android:name=".CustomView"
-            android:label="@string/title_activity_custom_view"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_not_expand_acticity">
+        </activity>
+
     </application>
 
 </manifest>

@@ -1,1 +1,1 @@
-include ':case', ':librarys'
+include ':case',':jtabstrip'

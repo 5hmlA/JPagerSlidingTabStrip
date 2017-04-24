@@ -1,17 +1,15 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+apply from: "../bintrayUpload.gradle"
 
 android {
     compileSdkVersion project.compileSV as int
     buildToolsVersion project.buildTV
 
     defaultConfig {
-        applicationId "com.jonas.acase"
         minSdkVersion project.minSV as int
         targetSdkVersion project.targetSV as int
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -23,13 +21,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${project.supportlV}"
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile project(':jtabstrip')
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
-    compile 'com.android.support:design:25.2.0'
 }
