@@ -1,2 +1,1 @@
 include ':case', ':librarys'
-include 'library'

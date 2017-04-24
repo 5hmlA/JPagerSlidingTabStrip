@@ -61,13 +61,11 @@ public class DefaultTabStyle extends JTabStyle {
             }
             else if (mTabStyleDelegate.getIndicatorHeight() >= 0) {
                 //画在底部
-                //draw indicator
                 canvas.drawRoundRect(mLinePosition.x, mH - mTabStyleDelegate.getIndicatorHeight(),
                         mLinePosition.y, mH, mOutRadio, mOutRadio, mIndicatorPaint);
             }
             else {
                 //IndicatorHeight<0 画在顶部
-                //draw indicator
                 canvas.drawRoundRect(mLinePosition.x, 0,
                         mLinePosition.y, -mTabStyleDelegate.getIndicatorHeight(), mOutRadio, mOutRadio, mIndicatorPaint);
             }

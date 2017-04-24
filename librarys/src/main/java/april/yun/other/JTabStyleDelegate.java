@@ -14,7 +14,7 @@ import android.view.Gravity;
 import april.yun.ISlidingTabStrip;
 import april.yun.tabstyle.JTabStyle;
 import april.yun.widget.PromptView;
-import com.astuetz.pagerslidingtabstrip.R;
+import com.jonas.librarys.R;
 
 import static april.yun.other.JTabStyleBuilder.STYLE_DEFAULT;
 
