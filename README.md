@@ -1,14 +1,12 @@
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-V1.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)  [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-download-yellowgreen.svg)](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/JPagerSlidingTabStrip.apk) [ ![Download](https://api.bintray.com/packages/jonas-j/maven/JPagerSlidingTabStrip/images/download.svg) ](https://bintray.com/jonas-j/maven/JPagerSlidingTabStrip/_latestVersion)
 
-[![License](https://img.shields.io/badge/JPagerSlidingTabStrip-V1.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+ - ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/face1.gif)  ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/face2.gif)
 
-[![License](https://img.shields.io/badge/JPagerSlidingTabStrip-download-yellowgreen.svg)](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/JPagerSlidingTabStrip.apk)
+- ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/promptmsg.gif)  ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/1.gif)
 
-![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/promptmsg.gif)
 
-![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/1.gif)
+# [中文版](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/README_CN.md)
 
-#[中文版](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/README_CN.md)
 
 * JPagerSlidingTabStrip: deeply modified from [PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip).
 * Add 3 tabStyle and provides an entry for custom tabStyle (JTabStyle)
@@ -19,13 +17,13 @@
 # Usage
 
 
-  ##1. Add dependence.
+  ## 1. Add dependence.
   
   
   			compile 'april.yun.JPagerSlidingTabStrip:library:1.0.0'
   
  
-  ##2. Set up the attribute width JTabStyleDelegate( or xml)
+  ## 2. Set up the attribute width JTabStyleDelegate( or xml)
      
 		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
 		tabStyleDelegate.setJTabStyle(type)
@@ -40,7 +38,7 @@
                         .setIndicatorColor(Color.parseColor("#7045C01A"))
                         .setIndicatorHeight(getDimen(R.dimen.sug_event_tabheight));
 
-- ###set up tabStyle###
+- ### set up tabStyle
 	- tabStyleDelegate.setJTabStyle(type) //provide 3 types:STYLE_DEFAULT,STYLE_ROUND,STYLE_DOTS
 	- tabStyleDelegate.setJTabStyle(JTabStyle)  //define your own tabStyle
 
@@ -53,25 +51,25 @@
   - STYLE_DOTS
 ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/dots.gif)
 
-  ##3. BindViewpager for JPagerSlidingTabStrip
+  ## 3. BindViewpager for JPagerSlidingTabStrip
      
 		JPagerSlidingTabStrip.bindViewPager(viewpager);
 
   #### *(Optional)* If you need an `OnPageChangeListener` with your view pager
 
          JPagerSlidingTabStrip.setOnPageChangeListener(mPageChangeListener);
-##4.Show prompt message for tab with JPagerSlidingTabStrip
+## 4.Show prompt message for tab with JPagerSlidingTabStrip
 	
 	//index:the index of tab ,msgNum:(0~99 show number,0 dismiss message,>99 show ~)
 	JPagerSlidingTabStrip.setPromptNum(index, msgNum);
 
 # Customization 
 
-###*from [astuetz/PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip)*
-To not just look like another Play Store styled app, go and adjust these values to match
-your brand:
+### *from [astuetz/PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip)*
+> To not just look like another Play Store styled app, go and adjust these values to match
+> your brand:
 
- * `pstsIndicatorColor` Color of the sliding indicator
+>  * `pstsIndicatorColor` Color of the sliding indicator
  * `pstsUnderlineColor` Color of the full-width line on the bottom of the view
  * `pstsDividerColor` Color of the dividers between tabs
  * `pstsIndicatorHeight`Height of the sliding indicator
@@ -83,14 +81,14 @@ your brand:
  * `pstsShouldExpand` If set to true, each tab is given the same weight, default false
  * `pstsTextAllCaps` If true, all tab titles will be upper case, default true
 
-*All attributes have their respective getters and setters to change them at runtime*
+> *All attributes have their respective getters and setters to change them at runtime*
 
-##*Add for prompt message*
+## *Add for prompt message*
  * `mPromptBgColor` the background color of prompt msg
  * `mPromptNumColor` the number color of prompt msg
 
 
-#Thanks
+# Thanks
 
 [PagerSlidingTabStrip](https://github.com/jpardogo/PagerSlidingTabStrip)
 
