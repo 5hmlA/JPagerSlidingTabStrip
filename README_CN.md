@@ -19,17 +19,10 @@
 
   ##1. 添加依赖.
         
- 
- 	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+ 	
+		compile 'april.yun.JPagerSlidingTabStrip:library:1.0.0'
 	
-	dependencies {
-		compile 'com.github.User:Repo:Tag'
-	}
+	
 
   ##2. 通过JTabStyleDelegate设置相关属性(或者定义在布局里面)
   

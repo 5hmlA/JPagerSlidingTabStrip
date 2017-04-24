@@ -20,20 +20,11 @@
 
 
   ##1. Add dependence.
-        
-      allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-	
-	dependencies {
-		compile 'com.github.User:Repo:Tag'
-	}
-	
-	
-
+  
+  
+  			compile 'april.yun.JPagerSlidingTabStrip:library:1.0.0'
+  
+ 
   ##2. Set up the attribute width JTabStyleDelegate( or xml)
      
 		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
