@@ -1,58 +1,21 @@
-apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-
-//apply plugin: 'com.novoda.bintray-release'//添加
-
 // This is the library version used when deploying the artifact
 version = "1.0.0"
-
-dependencies {
-    compile 'com.android.support:support-annotations:25.1.0'
-    compile 'com.android.support:support-v4:25.1.0'
-}
-
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
-
-    defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-    }
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            res.srcDirs = ['res']
-        }
-    }
-}
-//添加
-//publish {
-//    userOrg = 'ZuYun'//bintray.com用户名
-//    groupId = 'com.ZuYun'//jcenter上的路径
-//    artifactId = 'JPagerSlidingTabStrip'//项目名称
-//    publishVersion = '1.0.0'//版本号
-//    desc = 'Oh hi, A TabLayout for Android'//描述，不重要
-//    website = 'https://github.com/ZuYun/basetools'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
-//}
 
 def siteUrl = 'https://github.com/ZuYun/JPagerSlidingTabStrip'      // 项目的主页
 def gitUrl = 'https://github.com/ZuYun/JPagerSlidingTabStrip.git'   // Git仓库的url
 group = "april.yun.JPagerSlidingTabStrip"                                        // Maven Group ID for the artifact，一般填你唯一的包名
 install {
     repositories.mavenInstaller {
-//         This generates POM.xml with proper parameters
+        // This generates POM.xml with proper parameters
         pom {
             project {
                 packaging 'aar'
-//                 Add your description here
+                // Add your description here
                 name 'A TabLayout for Android'
                 url siteUrl
-//                 Set your license
+                // Set your license
                 licenses {
                     license {
                         name 'The Apache Software License, Version 2.0'
@@ -61,8 +24,8 @@ install {
                 }
                 developers {
                     developer {
-                        id 'jonas-j'        //填写的一些基本信息
-                        name 'jonas-j'
+                        id 'ZuYun'        //填写的一些基本信息
+                        name 'ZuYun'
                         email 'jonas-j@outlook.com'
                     }
                 }
@@ -79,7 +42,16 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
     classifier = 'sources'
 }
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
 artifacts {
+    archives javadocJar
     archives sourcesJar
 }
 Properties properties = new Properties()
@@ -97,9 +69,9 @@ bintray {
         publish = true
     }
 }
-//javadoc { //jav doc采用utf-8编码否则会报“GBK的不可映射字符”错误
-//    options{
-//        encoding "UTF-8"
-//        charSet 'UTF-8'
-//    }
-//}
+javadoc { //jav doc采用utf-8编码否则会报“GBK的不可映射字符”错误
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+    }
+}

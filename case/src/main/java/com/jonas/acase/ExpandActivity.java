@@ -126,7 +126,7 @@ public class ExpandActivity extends FragmentActivity {
         setupStrip(dots.getTabStyleDelegate(), STYLE_DOTS);
         tabs_buttom.getTabStyleDelegate()
                    .setTabIconGravity(Gravity.TOP)//图标显示在top
-                   .setIndicatorHeight(0)
+                   .setIndicatorHeight(-8)
                    .setDividerColor(Color.TRANSPARENT);
         tabs_up.getTabStyleDelegate().setNotDrawIcon(true);
         tabs_up1.getTabStyleDelegate()
@@ -139,7 +139,7 @@ public class ExpandActivity extends FragmentActivity {
                 .setNotDrawIcon(true)//不现实图标
                 .setFrameColor(Color.TRANSPARENT)
                 .setDividerPadding(20)
-                .setIndicatorHeight(5);
+                .setIndicatorHeight(-5);
 
         tabs_up3.getTabStyleDelegate().setNotDrawIcon(true);
     }
