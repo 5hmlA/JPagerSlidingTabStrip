@@ -30,6 +30,5 @@ dependencies {
     compile "com.android.support:appcompat-v7:${project.supportlV}"
     compile 'org.greenrobot:eventbus:3.0.0'
     compile project(':jtabstrip')
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
-    compile 'com.android.support:design:25.2.0'
+//    compile 'com.yun.ospl:jtabstrip:1.1'
 }

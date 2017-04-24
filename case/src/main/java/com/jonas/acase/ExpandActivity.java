@@ -107,7 +107,7 @@ public class ExpandActivity extends FragmentActivity {
         tabs_up3.getTabStyleDelegate().getJTabStyle().moveStyle = MOVESTYLE_DEFAULT;
 
         tabs_up2.getTabStyleDelegate().setNotDrawIcon(true)//不现实图标
-                .setFrameColor(Color.TRANSPARENT).setDividerPadding(20).setIndicatorHeight(-5);
+                .setFrameColor(Color.TRANSPARENT).setDividerPadding(20).setIndicatorHeight(5);
 
         tabs_up3.getTabStyleDelegate().setNotDrawIcon(true);
     }
