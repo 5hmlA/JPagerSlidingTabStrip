@@ -70,16 +70,16 @@
 > your brand:
 
 >  * `pstsIndicatorColor` Color of the sliding indicator
- * `pstsUnderlineColor` Color of the full-width line on the bottom of the view
- * `pstsDividerColor` Color of the dividers between tabs
- * `pstsIndicatorHeight`Height of the sliding indicator
- * `pstsUnderlineHeight` Height of the full-width line on the bottom of the view
- * `pstsDividerPadding` Top and bottom padding of the dividers
- * `pstsTabPaddingLeftRight` Left and right padding of each tab
- * `pstsScrollOffset` Scroll offset of the selected tab
- * `pstsTabBackground` Background drawable of each tab, should be a StateListDrawable
- * `pstsShouldExpand` If set to true, each tab is given the same weight, default false
- * `pstsTextAllCaps` If true, all tab titles will be upper case, default true
+>  * `pstsUnderlineColor` Color of the full-width line on the bottom of the view
+>  * `pstsDividerColor` Color of the dividers between tabs
+>  * `pstsIndicatorHeight`Height of the sliding indicator
+>  * `pstsUnderlineHeight` Height of the full-width line on the bottom of the view
+>  * `pstsDividerPadding` Top and bottom padding of the dividers
+>  * `pstsTabPaddingLeftRight` Left and right padding of each tab
+>  * `pstsScrollOffset` Scroll offset of the selected tab
+>  * `pstsTabBackground` Background drawable of each tab, should be a StateListDrawable
+>  * `pstsShouldExpand` If set to true, each tab is given the same weight, default false
+>  * `pstsTextAllCaps` If true, all tab titles will be upper case, default true
 
 > *All attributes have their respective getters and setters to change them at runtime*
 
@@ -88,12 +88,12 @@
  * `mPromptNumColor` the number color of prompt msg
 
 
-# Thanks
+## Thanks
 
 [PagerSlidingTabStrip](https://github.com/jpardogo/PagerSlidingTabStrip)
 
 
-# License
+## License
 
     Copyright 2013 Andreas ZuYun
 
