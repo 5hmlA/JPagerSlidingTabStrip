@@ -130,7 +130,7 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
         int textWidth = getTextWidth(getPaint(), getText().toString());
         int msgWidth = getTextWidth(mNumPaint, msg_str);
         float promptOffset = mNumHeight / 2;
-        float halfMsgBgW = msgWidth / 2 + promptOffset;
+        float halfMsgBgW = msgWidth / 2f + promptOffset;
         halfMsgBgW = halfMsgBgW > mNumHeight ? halfMsgBgW : mNumHeight;
 
         if (!TextUtils.isEmpty(getText())) {
