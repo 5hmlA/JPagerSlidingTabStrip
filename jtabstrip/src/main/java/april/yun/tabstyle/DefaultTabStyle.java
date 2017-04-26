@@ -17,8 +17,6 @@ import april.yun.ISlidingTabStrip;
 public class DefaultTabStyle extends JTabStyle {
 
     private float mOutRadio = 0;
-
-
     public DefaultTabStyle(ISlidingTabStrip slidingTabStrip) {
         super(slidingTabStrip);
     }
@@ -36,13 +34,12 @@ public class DefaultTabStyle extends JTabStyle {
         mH = h - pading;
     }
 
-
     @Override
     public void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition) {
         if (mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
-            canvas.drawRoundRect(dp2dip(padingOffect), dp2dip(padingOffect),
+            drawRoundRect(canvas, dp2dip(padingOffect), dp2dip(padingOffect),
                     mLastTab.getRight() - dp2dip(padingOffect), this.mH, mOutRadio, mOutRadio, mDividerPaint);
         }
 
@@ -56,18 +53,18 @@ public class DefaultTabStyle extends JTabStyle {
                 int halfIndHeight = mTabStyleDelegate.getIndicatorHeight() / 2;
                 float indPading = mH / 2 - halfIndHeight;
 
-                canvas.drawRoundRect(mLinePosition.x + indPading, indPading, mLinePosition.y - indPading,
+                drawRoundRect(canvas,mLinePosition.x + indPading, indPading, mLinePosition.y - indPading,
                         mH - indPading, mOutRadio, mOutRadio, mIndicatorPaint);
             }
             else if (mTabStyleDelegate.getIndicatorHeight() >= 0) {
                 //画在底部
-                canvas.drawRoundRect(mLinePosition.x, mH - mTabStyleDelegate.getIndicatorHeight(),
+                drawRoundRect(canvas,mLinePosition.x, mH - mTabStyleDelegate.getIndicatorHeight(),
                         mLinePosition.y, mH, mOutRadio, mOutRadio, mIndicatorPaint);
             }
             else {
                 //IndicatorHeight<0 画在顶部
-                canvas.drawRoundRect(mLinePosition.x, 0,
-                        mLinePosition.y, -mTabStyleDelegate.getIndicatorHeight(), mOutRadio, mOutRadio, mIndicatorPaint);
+                drawRoundRect(canvas,mLinePosition.x, 0, mLinePosition.y,
+                        -mTabStyleDelegate.getIndicatorHeight(), mOutRadio, mOutRadio, mIndicatorPaint);
             }
         }
         if (mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {

@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.RectF;
+import android.os.Build;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -36,6 +38,8 @@ public abstract class JTabStyle {
      * the left and right position of indicator
      */
     protected PointF mLinePosition = new PointF(0, 0);
+    protected RectF mRectF4round = new RectF(0, 0, 0, 0);
+
 
     public int moveStyle = MOVESTYLE_STIKY;
     public static final int MOVESTYLE_DEFAULT = 0;
@@ -154,6 +158,16 @@ public abstract class JTabStyle {
         mDividerPaint.setStrokeWidth(mTabStyleDelegate.getDividerWidth());
         mDividerPaint.setColor(mTabStyleDelegate.getDividerColor());
         mIndicatorPaint.setColor(mTabStyleDelegate.getIndicatorColor());
+    }
+
+    protected void drawRoundRect(Canvas canvas, float left, float top, float right, float bottom, float rx, float ry, Paint paint) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            canvas.drawRoundRect(left, top, right, bottom, rx, ry, paint);
+        }
+        else {
+            mRectF4round.set(left, top, right, bottom);
+            canvas.drawRoundRect(mRectF4round, rx, ry, paint);
+        }
     }
 }
 

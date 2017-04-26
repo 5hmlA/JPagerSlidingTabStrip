@@ -52,7 +52,7 @@ public class RoundTabStyle extends JTabStyle {
         if (mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
-            canvas.drawRoundRect(dp2dip(padingOffect), dp2dip(padingOffect),
+            drawRoundRect(canvas,dp2dip(padingOffect), dp2dip(padingOffect),
                     mLastTab.getRight() - dp2dip(padingOffect), this.mH, mOutRadio, mOutRadio, mDividerPaint);
         }
         if (mTabStyleDelegate.getIndicatorColor() != Color.TRANSPARENT) {

@@ -75,7 +75,7 @@ public class DotsTabStyle extends JTabStyle implements ValueAnimator.AnimatorUpd
         // draw indicator line
         calcuteIndicatorLinePosition(tabsContainer, currentPositionOffset, lastCheckedPosition);
         //draw indicator
-        canvas.drawRoundRect(mLinePosition.x + mTabWidth / 2 - dosRadio, mH / 2 - dosRadio,
+        drawRoundRect(canvas,mLinePosition.x + mTabWidth / 2 - dosRadio, mH / 2 - dosRadio,
                 mLinePosition.y - mTabWidth / 2 + dosRadio, mH / 2 + dosRadio, dosRadio, dosRadio,
                 mIndicatorPaint);
         //画默认圆
