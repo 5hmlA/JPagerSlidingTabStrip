@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-V1.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)  [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-download-yellowgreen.svg)](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/JPagerSlidingTabStrip.apk) [ ![Download](https://api.bintray.com/packages/jonas-j/maven/JTabStrip/images/download.svg?version=1.2) ](https://bintray.com/jonas-j/maven/JTabStrip/1.2/link)
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-V1.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)  [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-download-yellowgreen.svg)](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/JPagerSlidingTabStrip.apk) [ ![Download](https://api.bintray.com/packages/jonas-j/maven/JTabStrip/images/download.svg?version=1.3) ](https://bintray.com/jonas-j/maven/JTabStrip/1.3/link)
 
 - ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/face1.gif)  ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/face2.gif)
 
@@ -16,7 +16,7 @@
   ## 1. 添加依赖.
         
  	
-		compile 'com.yun.ospl:jtabstrip:1.2'
+		compile 'com.yun.ospl:jtabstrip:1.3'
 	
 	
 

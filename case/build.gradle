@@ -29,6 +29,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile "com.android.support:appcompat-v7:${project.supportlV}"
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile project(':jtabstrip')
-//    compile 'com.yun.ospl:jtabstrip:1.1'
+//    compile project(':jtabstrip')
+    compile 'com.yun.ospl:jtabstrip:1.3'
 }
