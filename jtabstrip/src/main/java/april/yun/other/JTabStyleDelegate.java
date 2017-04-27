@@ -6,6 +6,8 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.annotation.ColorInt;
+import android.support.annotation.Size;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -28,6 +30,7 @@ import static april.yun.other.JTabStyleBuilder.STYLE_DEFAULT;
 public class JTabStyleDelegate {
 
     private ISlidingTabStrip mTabStrip;
+    private Context mContext;
 
     /**
      * 是否使用IconTabProvider提供的资源
@@ -66,10 +69,11 @@ public class JTabStyleDelegate {
     private int mCornerRadio;
     private int mPromptBgColor=Color.RED;
     private int mPromptNumColor=Color.WHITE;
+    private int mBackgroundColor;
 
 
     public JTabStyleDelegate obtainAttrs(ISlidingTabStrip tabStrip, AttributeSet attrs, Context context) {
-        mTabStrip = tabStrip;
+        mTabStrip = tabStrip;mContext = context;
         DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
         scrollOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, scrollOffset, dm);
         indicatorHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indicatorHeight, dm);
@@ -206,9 +210,35 @@ public class JTabStyleDelegate {
         return this;
     }
 
+    /**
+     * checked ,normol
+     * @param colorStrs
+     * @return
+     */
+    public JTabStyleDelegate setTextColor(@Size(value = 2) String... colorStrs) {
+        int[][] states = new int[][] {
+                new int[] {android.R.attr.state_checked},// unchecked
+                new int[] {}   //normal
+        };
+        int[] colors = new int[2];
+        for (int i = 0; i < colorStrs.length; i++) {
+            colors[i] = Color.parseColor(colorStrs[i]);
+        }
+        mTabTextColorStateList = new ColorStateList(states,colors);
+        return this;
+    }
 
-    public JTabStyleDelegate setTextColorStateResource(Context context, int resId) {
-        mTabTextColorStateList = ContextCompat.getColorStateList(context, resId);
+    public JTabStyleDelegate setTextColor(@Size(value = 2)@ColorInt int... colors) {
+        int[][] states = new int[][] {
+                new int[] {android.R.attr.state_checked},// unchecked
+                new int[] {}   //normal
+        };
+        mTabTextColorStateList = new ColorStateList(states,colors);
+        return this;
+    }
+
+    public JTabStyleDelegate setTextColor(int resId) {
+        mTabTextColorStateList = ContextCompat.getColorStateList(mContext, resId);
         return this;
     }
 
@@ -344,6 +374,7 @@ public class JTabStyleDelegate {
 
 
     public JTabStyleDelegate setTabIconGravity(int tabIconGravity) {
+        
         mTabIconGravity = tabIconGravity;
         return this;
     }
@@ -417,5 +448,16 @@ public class JTabStyleDelegate {
 
     public void setPromptNumColor(int promptNumColor) {
         mPromptNumColor = promptNumColor;
+    }
+
+
+    public int getBackgroundColor() {
+        return mBackgroundColor;
+    }
+
+
+    public JTabStyleDelegate setBackgroundColor(int backgroundColor) {
+        mBackgroundColor = backgroundColor;
+        return this;
     }
 }

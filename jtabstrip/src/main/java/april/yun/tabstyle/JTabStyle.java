@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import april.yun.ISlidingTabStrip;
 import april.yun.other.JTabStyleDelegate;
+import april.yun.widget.PromptView;
 
 /**
  * @author yun.
@@ -29,8 +30,9 @@ public abstract class JTabStyle {
     protected Paint mIndicatorPaint;
     protected ISlidingTabStrip mTabStrip;
     protected boolean mDragRight;
-    protected View mCurrentTab;
-    protected View mNextTab;
+    //indicator往左 <<------mCurrentTab和nextTab意义相反
+    protected PromptView mCurrentTab;
+    protected PromptView mNextTab;
     protected int mTabCounts;
     protected float padingOffect = 0.3f;
     /**
@@ -39,7 +41,6 @@ public abstract class JTabStyle {
      */
     protected PointF mLinePosition = new PointF(0, 0);
     protected RectF mRectF4round = new RectF(0, 0, 0, 0);
-
 
     public int moveStyle = MOVESTYLE_STIKY;
     public static final int MOVESTYLE_DEFAULT = 0;
@@ -83,22 +84,26 @@ public abstract class JTabStyle {
 
 
     protected void calcuteIndicatorLinePosition(ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition) {
-        // default: line below current tab
-        mCurrentTab = tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition());
-        mLinePosition.x = mCurrentTab.getLeft();
-        mLinePosition.y = mCurrentTab.getRight();
-        // if there is an offset, start interpolating left and right coordinates between current and next tab
-        if (currentPositionOffset > 0f &&
-                mTabStyleDelegate.getCurrentPosition() < tabsContainer.getChildCount() - 1) {
+        if (mTabCounts > 0) {
 
-            mNextTab = tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition() + 1);
-            final float nextTabLeft = mNextTab.getLeft();
-            final float nextTabRight = mNextTab.getRight();
-            if (moveStyle == MOVESTYLE_DEFAULT) {
-                moveStyle_normal(currentPositionOffset, nextTabLeft, nextTabRight);
-            }
-            else {
-                moveStyle_sticky(currentPositionOffset, lastCheckedPosition, nextTabLeft, nextTabRight);
+            // default: line below current tab
+            mCurrentTab = (PromptView) tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition());
+
+            mLinePosition.x = mCurrentTab.getLeft();
+            mLinePosition.y = mCurrentTab.getRight();
+            // if there is an offset, start interpolating left and right coordinates between current and next tab
+            if (currentPositionOffset > 0f &&
+                    mTabStyleDelegate.getCurrentPosition() < tabsContainer.getChildCount() - 1) {
+
+                mNextTab = (PromptView) tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition() + 1);
+                final float nextTabLeft = mNextTab.getLeft();
+                final float nextTabRight = mNextTab.getRight();
+                if (moveStyle == MOVESTYLE_DEFAULT) {
+                    moveStyle_normal(currentPositionOffset, nextTabLeft, nextTabRight);
+                }
+                else {
+                    moveStyle_sticky(currentPositionOffset, lastCheckedPosition, nextTabLeft, nextTabRight);
+                }
             }
         }
     }
@@ -149,6 +154,26 @@ public abstract class JTabStyle {
     }
 
 
+    protected void updateScrollDirection(boolean right) {
+        mNextTab.setScroll2Checked(right);
+        mCurrentTab.setScroll2Checked(!right);
+    }
+
+
+    protected float getTabWidth(View tab) {
+        //要把tab外部的pading加上
+        return tab.getWidth() + mTabStyleDelegate.getTabPadding() * 2;
+    }
+
+
+    protected void updateTabTextScrollColor() {
+        //做往右相反
+        updateScrollDirection(true);
+        mNextTab.setScrollOffset((mLinePosition.y - mNextTab.getLeft()) / getTabWidth(mNextTab));
+        mCurrentTab.setScrollOffset((mLinePosition.x - mCurrentTab.getLeft()) / getTabWidth(mCurrentTab));
+    }
+
+
     public void afterSetViewPager(LinearLayout tabsContainer) {
 
         mDividerPaint.setStrokeWidth(mTabStyleDelegate.getDividerWidth());
@@ -159,6 +184,17 @@ public abstract class JTabStyle {
         mDividerPaint.setColor(mTabStyleDelegate.getDividerColor());
         mIndicatorPaint.setColor(mTabStyleDelegate.getIndicatorColor());
     }
+
+
+    protected boolean isNeedUpdateTabSrcollColor(int lastCheckedPosition) {
+        return Math.abs(lastCheckedPosition - mTabStyleDelegate.getCurrentPosition()) <= 1;
+    }
+
+
+    protected boolean isNeedUpdateTabSrcollColor() {
+        return mTabStyleDelegate.isShouldExpand() && mNextTab != null && mCurrentTab != null;
+    }
+
 
     protected void drawRoundRect(Canvas canvas, float left, float top, float right, float bottom, float rx, float ry, Paint paint) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

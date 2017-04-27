@@ -277,7 +277,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     @Override protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (mJTabStyle.needChildView()  && tabsContainer.getChildCount() == 0 || isInEditMode() ||
+        if (mJTabStyle.needChildView() && tabsContainer.getChildCount() == 0 || isInEditMode() ||
                 mTabCount == 0) {
             return;
         }
@@ -288,10 +288,15 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
     private class PageListener implements OnPageChangeListener {
 
-        @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        private int mSelectedPosition;
 
+
+        @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             mTabStyleDelegate.setCurrentPosition(position);
             currentPositionOffset = positionOffset;
+            if (mLastCheckedPosition != mSelectedPosition) {
+                check(mSelectedPosition);
+            }
             if (mJTabStyle.needChildView()) {
                 scrollToChild(position,
                         (int) (positionOffset * tabsContainer.getChildAt(position).getWidth()));
@@ -317,7 +322,8 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
 
         @Override public void onPageSelected(int position) {
-            check(position);
+            mSelectedPosition = position;
+            //check(position);
             if (delegatePageListener != null) {
                 delegatePageListener.onPageSelected(position);
             }

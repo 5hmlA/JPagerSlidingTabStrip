@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/sts_noexpand"
+        android:id="@+id/sts_badge"
         android:title="@string/title_activity_not_expand_acticity"/>
+    <item
+        android:id="@+id/sts_promptview"
+        android:title="@string/title_activity_promptview"/>
 </menu>

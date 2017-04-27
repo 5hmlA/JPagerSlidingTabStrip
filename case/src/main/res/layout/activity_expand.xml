@@ -31,12 +31,14 @@
     <april.yun.JPagerSlidingTabStrip
         android:layout_margin="10dp"
         android:id="@+id/tabs_2"
+        android:background="#57365C"
         android:layout_height="40dp"
         android:layout_width="match_parent"/>
 
     <april.yun.JPagerSlidingTabStrip
         android:layout_margin="10dp"
         android:id="@+id/tabs_3"
+        android:background="#6B8DB3"
         android:layout_height="40dp"
         android:layout_width="match_parent"/>
 

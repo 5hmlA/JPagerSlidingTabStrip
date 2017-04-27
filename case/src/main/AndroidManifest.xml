@@ -9,8 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".ExpandActivity"
             android:label="@string/title_activity_expand">
@@ -22,9 +21,12 @@
         </activity>
         <activity
             android:name=".NotExpandActicity"
-            android:label="@string/title_activity_not_expand_acticity">
-        </activity>
-
+            android:launchMode="singleTask"
+            android:label="@string/title_activity_not_expand_acticity"></activity>
+        <activity
+            android:name=".PromptActivity"
+            android:label="@string/title_activity_prompt"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

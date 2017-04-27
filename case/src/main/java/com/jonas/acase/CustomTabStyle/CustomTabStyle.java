@@ -34,12 +34,9 @@ public class CustomTabStyle extends JTabStyle {
         }
     }
 
-
     private void calcuteTrianglePath() {
         float tabWidth = mLinePosition.y - mLinePosition.x;
         float vertex = mH-mTrigangleHeight;
-        //float tr_left = mLinePosition.x+tabWidth/2-mTrigangleHeight;
-        //float tr_right = mLinePosition.x+tabWidth/2+mTrigangleHeight;
         float tr_left = mLinePosition.x+tabWidth/2-mTrigangleHeight;
         float tr_right = mLinePosition.x+tabWidth/2+mTrigangleHeight;
         mTrianglePath.reset();

@@ -24,7 +24,6 @@ import org.greenrobot.eventbus.Subscribe;
 import static april.yun.other.JTabStyleBuilder.STYLE_DEFAULT;
 import static april.yun.other.JTabStyleBuilder.STYLE_DOTS;
 import static april.yun.other.JTabStyleBuilder.STYLE_ROUND;
-import static april.yun.tabstyle.JTabStyle.MOVESTYLE_DEFAULT;
 
 public class ExpandActivity extends FragmentActivity {
     private ISlidingTabStrip tabs_up;
@@ -38,6 +37,7 @@ public class ExpandActivity extends FragmentActivity {
     private int[] mPressed;
     private int[] mNormal;
     private int[] mSelectors;
+    private String[] mTitles;
 
 
     @Override protected void onStart() {
@@ -64,6 +64,7 @@ public class ExpandActivity extends FragmentActivity {
         tabs_buttom = (ISlidingTabStrip) findViewById(R.id.tab_buttom);
         dots = (ISlidingTabStrip) findViewById(R.id.dots);
 
+
         setupTabStrips();
 
         setupViewpager();
@@ -80,7 +81,7 @@ public class ExpandActivity extends FragmentActivity {
 
         switch (item.getItemId()) {
 
-            case R.id.sts_noexpand:
+            case R.id.sts_badge:
                 startActivity(new Intent(this, NotExpandActicity.class));
                 return true;
         }
@@ -104,13 +105,23 @@ public class ExpandActivity extends FragmentActivity {
         tabs_up1.getTabStyleDelegate()
                 .setNotDrawIcon(true)
                 .setCornerRadio(40)
+                //.setIndicatorHeight(60)
+                .setTextColor(Color.WHITE, Color.parseColor("#009688"))
+                .setIndicatorColor(Color.parseColor("#009688"))
+                .setFrameColor(Color.parseColor("#009688"))
                 .setDividerColor(Color.TRANSPARENT);
-        tabs_up3.getTabStyleDelegate().getJTabStyle().moveStyle = MOVESTYLE_DEFAULT;
 
         tabs_up2.getTabStyleDelegate().setNotDrawIcon(true)//不现实图标
+                .setDividerColor(Color.TRANSPARENT)
+                .setIndicatorColor(Color.WHITE)
+                .setTextColor(Color.WHITE,Color.WHITE)
                 .setFrameColor(Color.TRANSPARENT).setDividerPadding(20).setIndicatorHeight(5);
 
-        tabs_up3.getTabStyleDelegate().setNotDrawIcon(true);
+        //tabs_up3.getTabStyleDelegate().getJTabStyle().moveStyle = MOVESTYLE_DEFAULT;
+        tabs_up3.getTabStyleDelegate().setNotDrawIcon(true)
+                .setDividerColor(Color.TRANSPARENT)
+                .setIndicatorColor(Color.parseColor("#4B6A8A"))
+                .setTextColor(Color.WHITE,Color.WHITE).setFrameColor(Color.TRANSPARENT);
     }
 
 
@@ -119,7 +130,8 @@ public class ExpandActivity extends FragmentActivity {
                         .setShouldExpand(true)
                         .setFrameColor(Color.parseColor("#45C01A"))
                         .setTabTextSize(getDimen(R.dimen.tabstrip_textsize))
-                        .setTextColorStateResource(getApplicationContext(), R.drawable.tabstripbg)
+                        .setTextColor(Color.parseColor("#45C01A"),Color.GRAY)
+                        //.setTextColor(R.drawable.tabstripbg)
                         .setDividerColor(Color.parseColor("#45C01A"))
                         .setDividerPadding(0)
                         .setUnderlineColor(Color.parseColor("#3045C01A"))
@@ -130,6 +142,8 @@ public class ExpandActivity extends FragmentActivity {
 
 
     private void setupViewpager() {
+
+        mTitles = getResources().getStringArray(R.array.tabs);
         mNormal = new int[] { R.drawable.ic_tab_msg, R.drawable.ic_tab_contact, R.drawable.ic_tab_moments,
                 R.drawable.ic_tab_profile };
         mPressed = new int[] { R.drawable.ic_tab_msg_h, R.drawable.ic_tab_contact_h,
@@ -146,14 +160,14 @@ public class ExpandActivity extends FragmentActivity {
         tabs_up.bindViewPager(pager);
         tabs_up1.bindViewPager(pager);
         tabs_up2.bindViewPager(pager);
-        tabs_up2.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
+        //tabs_up2.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
         tabs_up3.bindViewPager(pager);
-        tabs_up3.setPromptNum(2, 18);
+        //tabs_up3.setPromptNum(2, 18);
         tabs_buttom.bindViewPager(pager);
-        tabs_buttom.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
-        tabs_up1.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
+        //tabs_buttom.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
+        //tabs_up1.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
         //tabs_up.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
-        tabs_up3.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
+        //tabs_up3.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
 
         dots.bindViewPager(pager);
     }
@@ -213,21 +227,18 @@ public class ExpandActivity extends FragmentActivity {
 
     public class MyPagerAdapter extends FragmentPagerAdapter implements ISlidingTabStrip.IconTabProvider {
 
-        private final String[] TITLES = { "微信", "通讯录", "发现", "我" };
-
-
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
 
         @Override public CharSequence getPageTitle(int position) {
-            return TITLES[position % 4];
+            return mTitles[position % 4];
         }
 
 
         @Override public int getCount() {
-            return TITLES.length;
+            return mTitles.length;
         }
 
 

@@ -1,14 +1,19 @@
 package april.yun.widget;
 
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -18,6 +23,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import java.security.SecureRandom;
 
 /**
  * @author yun.
@@ -29,7 +35,7 @@ import android.view.animation.DecelerateInterpolator;
 public class PromptView extends android.support.v7.widget.AppCompatCheckedTextView
         implements ValueAnimator.AnimatorUpdateListener {
     private static final String TAG = PromptView.class.getSimpleName();
-    private static final int SHOWTIME = 460;
+    private static final int SHOWTIME = 666;
     private static final int CLEARPROMPT = 0;
     private static final int DOTSNOTIFY = -1991;
     private Paint mBgPaint;
@@ -49,6 +55,13 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
     private ValueAnimator mShowAni;
     //是否要清楚消息
     private boolean msgIs_dirty;
+    private LinearGradient mLinearGradient;
+    private Matrix mMatrix;
+    private ColorStateList mTextColorsList;
+    private int[] mTextScrollColors;
+    private int mColorForChecked;
+    private int mColorForNormal;
+    private boolean mChecked2 = true;
 
 
     public static float dp2px(float px) {
@@ -103,10 +116,28 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
         else {
             setPadding(getPaddingLeft(), (int) (mNumHeight), getPaddingRight(), (int) (mNumHeight));
         }
-
+        //TypedValue outValue = new TypedValue();
+        //getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
+        //cardView.setBackgroundResource(outValue.resourceId);
+        //setClickable(true);
+        //setForeground(ContextCompat.getDrawable(getContext(),android.R.attr.selectableItemBackground));
         mBgPaint.setColor(color_bg);
         mNumPaint.setColor(color_num);
         startShowAni();
+        SecureRandom secureRandom = new SecureRandom();
+        float alphaStart = secureRandom.nextInt(60) / 100f;
+        if (secureRandom.nextInt(100) > 50) {
+            ObjectAnimator.ofFloat(this, "alpha", alphaStart, 1)
+                          .setDuration(SHOWTIME).start();
+        }
+        mTextColorsList = getTextColors();
+        mColorForChecked = mTextColorsList.getColorForState(new int[] { android.R.attr.state_checked }, 0);
+        mColorForNormal = mTextColorsList.getColorForState(new int[] {}, 0);
+        mTextScrollColors = new int[] { mColorForChecked, mColorForNormal };
+        mLinearGradient = new LinearGradient(0, 0, mHalfW * 2, 0, mTextScrollColors,
+                new float[] { 0f, 0.001f }, Shader.TileMode.CLAMP);
+        mMatrix = new Matrix();
+        mLinearGradient.setLocalMatrix(mMatrix);
     }
 
 
@@ -269,8 +300,49 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
             msg_str = "";//动画结束后情空消息
         }
         ratio = TextUtils.isEmpty(mLastMsg) ? 1 - ratio : ratio;
-        mPromptCenterPoint.y = mNumHeight * (3*ratio/2f-1/2f);
+        mPromptCenterPoint.y = mNumHeight * (3 * ratio / 2f - 1 / 2f);
         mMsgBg.bottom = mNumHeight * 2 * ratio;
         invalidate();
+    }
+
+
+    /**
+     * 进度为0--1之间
+     */
+    public PromptView setScrollOffset(float offset) {
+        if (offset > 0.2 && offset < 0.9) {
+            //mMatrix.postTranslate(offset*mHalfW*2, 0);
+            mMatrix.setTranslate(offset * mHalfW * 2, 0);
+            mLinearGradient.setLocalMatrix(mMatrix);
+            getPaint().setShader(mLinearGradient);
+        }
+        else {
+            getPaint().setShader(null);
+        }
+        postInvalidate();
+        return this;
+    }
+
+
+    public PromptView setScroll2Checked(boolean checked2) {
+        if (mChecked2 != checked2) {
+            mChecked2 = checked2;
+            if (checked2) {
+                mTextScrollColors = new int[] { mColorForChecked, mColorForNormal };
+                mLinearGradient = new LinearGradient(0, 0, mHalfW * 2, 0, mTextScrollColors,
+                        new float[] { 0f, 0.001f }, Shader.TileMode.CLAMP);
+            }
+            else {
+                mTextScrollColors = new int[] { mColorForNormal, mColorForChecked };
+                mLinearGradient = new LinearGradient(0, 0, mHalfW * 2, 0, mTextScrollColors,
+                        new float[] { 0f, 0.001f }, Shader.TileMode.CLAMP);
+            }
+        }
+        return this;
+    }
+
+
+    @Override public void setChecked(boolean checked) {
+        super.setChecked(checked);
     }
 }

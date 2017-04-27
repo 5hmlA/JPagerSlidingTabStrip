@@ -31,11 +31,17 @@ public class DefaultTabStyle extends JTabStyle {
     @Override public void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         float pading = dp2dip(padingOffect);
-        mH = h - pading;
+        mH = h -pading;
     }
 
     @Override
     public void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition) {
+        if (mTabStyleDelegate.getBackgroundColor() != Color.TRANSPARENT) {
+            //画背景
+            mIndicatorPaint.setColor(mTabStyleDelegate.getBackgroundColor());
+            drawRoundRect(canvas, dp2dip(padingOffect), dp2dip(padingOffect),
+                    mLastTab.getRight() - dp2dip(padingOffect), this.mH, mOutRadio, mOutRadio, mIndicatorPaint);
+        }
         if (mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
@@ -59,7 +65,7 @@ public class DefaultTabStyle extends JTabStyle {
             else if (mTabStyleDelegate.getIndicatorHeight() >= 0) {
                 //画在底部
                 drawRoundRect(canvas,mLinePosition.x, mH - mTabStyleDelegate.getIndicatorHeight(),
-                        mLinePosition.y, mH, mOutRadio, mOutRadio, mIndicatorPaint);
+                        mLinePosition.y, mH+dp2dip(padingOffect), mOutRadio, mOutRadio, mIndicatorPaint);
             }
             else {
                 //IndicatorHeight<0 画在顶部

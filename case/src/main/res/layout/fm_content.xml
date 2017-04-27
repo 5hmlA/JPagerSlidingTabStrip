@@ -11,20 +11,20 @@
 
 
     <Button
-        android:text="隨機"
+        android:text="@string/badge_random"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button"/>
 
     <Button
-        android:text="清除"
+        android:text="@string/badge_clear"
         android:layout_margin="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/button2"/>
 
     <Button
-        android:text="顯示"
+        android:text="@string/badge_showall"
         android:layout_width="88dp"
         android:layout_height="48dp"
         android:id="@+id/button3"/>

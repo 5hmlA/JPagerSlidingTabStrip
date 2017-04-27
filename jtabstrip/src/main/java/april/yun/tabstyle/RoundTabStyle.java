@@ -30,7 +30,7 @@ public class RoundTabStyle extends JTabStyle {
 
 
     @Override public void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w,h,oldw,oldh);
+        super.onSizeChanged(w, h, oldw, oldh);
         float pading = dp2dip(padingOffect);
         mH = h - pading;
         if (mLastTab != null) {
@@ -49,10 +49,11 @@ public class RoundTabStyle extends JTabStyle {
 
     @Override
     public void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition) {
+
         if (mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
-            drawRoundRect(canvas,dp2dip(padingOffect), dp2dip(padingOffect),
+            drawRoundRect(canvas, dp2dip(padingOffect), dp2dip(padingOffect),
                     mLastTab.getRight() - dp2dip(padingOffect), this.mH, mOutRadio, mOutRadio, mDividerPaint);
         }
         if (mTabStyleDelegate.getIndicatorColor() != Color.TRANSPARENT) {

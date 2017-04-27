@@ -1,5 +1,6 @@
 package com.jonas.acase;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toolbar;
 import april.yun.ISlidingTabStrip;
 import april.yun.other.JTabStyleDelegate;
 import com.jonas.acase.CustomTabStyle.CustomTabStyle;
@@ -31,6 +35,7 @@ public class NotExpandActicity extends FragmentActivity {
     private ISlidingTabStrip tabs_buttom;
     private ViewPager pager;
     private MyPagerAdapter adapter;
+    private String[] mTitles;
 
 
     @Override protected void onStart() {
@@ -99,6 +104,7 @@ public class NotExpandActicity extends FragmentActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_not_expand_acticity);
+        setActionBar(((Toolbar) findViewById(R.id.toolbar)));
         EventBus.getDefault().register(this);
         tabs_up = (ISlidingTabStrip) findViewById(R.id.tabs);
         tabs_up1 = (ISlidingTabStrip) findViewById(R.id.tabs_1);
@@ -114,6 +120,26 @@ public class NotExpandActicity extends FragmentActivity {
     }
 
 
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.sts_badge:
+                startActivity(new Intent(this, NotExpandActicity.class));
+                return true;
+            default:
+                startActivity(new Intent(this, PromptActivity.class));
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setupTabStrips() {
 
         setupStrip(tabs_up.getTabStyleDelegate(), STYLE_ROUND);
@@ -127,15 +153,26 @@ public class NotExpandActicity extends FragmentActivity {
                    .setDividerColor(Color.TRANSPARENT);
         tabs_up.getTabStyleDelegate();
         tabs_up1.getTabStyleDelegate()
-                .setCornerRadio(40)
-                .setDividerColor(Color.TRANSPARENT);
-        tabs_up3.getTabStyleDelegate().getJTabStyle().moveStyle = MOVESTYLE_DEFAULT;
+                .setDividerColor(Color.TRANSPARENT)
+                .setBackgroundColor(Color.parseColor("#6B8DB3"))
+                .setIndicatorColor(Color.parseColor("#4B6A8A"))
+                .setTextColor(Color.WHITE,Color.WHITE).setFrameColor(Color.TRANSPARENT);
+
+        tabs_up3.getTabStyleDelegate()
+                .setDividerColor(Color.TRANSPARENT)
+                .setIndicatorColor(Color.WHITE)
+                .setTextColor(Color.WHITE,Color.GRAY)
+                .setBackgroundColor(Color.parseColor("#57365C"))
+                .setFrameColor(Color.TRANSPARENT).setDividerPadding(20).setIndicatorHeight(5)
+                .getJTabStyle().moveStyle = MOVESTYLE_DEFAULT;
 
         tabs_up2.getTabStyleDelegate()
                 .setJTabStyle(new CustomTabStyle(tabs_up2))
                 .setFrameColor(Color.TRANSPARENT)
-                .setDividerPadding(20)
-                .setIndicatorHeight(5);
+                .setTextColor(Color.parseColor("#57365D"),Color.GRAY)
+                .setIndicatorColor(Color.parseColor("#57365D"))
+                .setDividerPadding(8)
+                .setDividerColor(Color.parseColor("#57365D"));
     }
 
 
@@ -145,7 +182,7 @@ public class NotExpandActicity extends FragmentActivity {
                         .setFrameColor(Color.parseColor("#45C01A"))
                         .setTabTextSize(getDimen(R.dimen.tabstrip_textsize))
                         //        .setTextColor(Color.parseColor("#FB6522"))
-                        .setTextColorStateResource(getApplicationContext(), R.drawable.tabstripbg)
+                        .setTextColor(R.drawable.tabstripbg)
                         .setDividerColor(Color.parseColor("#45C01A"))
                         .setDividerPadding(0)
                         .setUnderlineColor(Color.parseColor("#3045C01A"))
@@ -156,7 +193,7 @@ public class NotExpandActicity extends FragmentActivity {
 
 
     private void setupViewpager() {
-
+        mTitles = getResources().getStringArray(R.array.tabs);
         pager = (ViewPager) findViewById(R.id.pager);
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(adapter);
@@ -167,22 +204,20 @@ public class NotExpandActicity extends FragmentActivity {
         tabs_up.bindViewPager(pager);
         tabs_up1.bindViewPager(pager);
         tabs_up2.bindViewPager(pager);
-        tabs_up2.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
+        //tabs_up2.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
         tabs_up3.bindViewPager(pager);
-        tabs_up3.setPromptNum(2, 18);
+        //tabs_up3.setPromptNum(2, 18);
         tabs_buttom.bindViewPager(pager);
-        tabs_buttom.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
-        tabs_up1.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
+        //tabs_buttom.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
+        //tabs_up1.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
         //tabs_up.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
-        tabs_up3.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
+        //tabs_up3.setPromptNum(1, 9).setPromptNum(0, 10).setPromptNum(2, -9).setPromptNum(3, 100);
 
         dots.bindViewPager(pager);
     }
 
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
-
-        private final String[] TITLES = { "微信", "通讯录", "发现", "我" };
 
 
         public MyPagerAdapter(FragmentManager fm) {
@@ -191,12 +226,13 @@ public class NotExpandActicity extends FragmentActivity {
 
 
         @Override public CharSequence getPageTitle(int position) {
-            return TITLES[position % 4];
+            return mTitles[position % 4];
         }
 
 
         @Override public int getCount() {
-            return 2*TITLES.length;
+            return 2*mTitles.length;
+            //return mTitles.length;
             //return 1;
         }
 

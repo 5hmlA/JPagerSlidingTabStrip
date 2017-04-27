@@ -1,7 +1,17 @@
 <resources>
     <string name="app_name">Case</string>
-    <string name="title_activity_expand">ExpandActivity</string>
-    <string name="title_activity_not_expand_acticity">NotExpandActicity</string>
+    <string name="title_activity_expand">Sample</string>
+    <string name="title_activity_not_expand_acticity">widthbadge</string>
     <string name="title_activity_custom_view">CustomView</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_promptview">PromptView</string>
+    <array name="tabs">
+        <item>Chats</item>
+        <item>Contacts</item>
+        <item>Discover</item>
+        <item>Me</item>
+    </array>
+    <string name="title_activity_prompt">PromptActivity</string>
+    <string name="badge_random">Random</string>
+    <string name="badge_clear">Clear</string>
+    <string name="badge_showall">Reset</string>
 </resources>

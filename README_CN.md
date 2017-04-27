@@ -16,19 +16,20 @@
   ## 1. 添加依赖.
         
  	
-		compile 'com.yun.ospl:jtabstrip:1.3'
+		compile 'com.yun.ospl:jtabstrip:1.4.1'
 	
 	
 
   ## 2. 通过JTabStyleDelegate设置相关属性(或者定义在布局里面)
   
-    tabStyleDelegate来自于JPagerSlidingTabStrip
-		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
+    	tabStyleDelegate来自于JPagerSlidingTabStrip
+		ISlidingTabStrip tabStrip = (ISlidingTabStrip) findViewById(R.id.tabs);
+		tabStyleDelegate = tabStrip.getTabStyleDelegate();
 		tabStyleDelegate.setJTabStyle(type)
                         .setShouldExpand(true)
                         .setFrameColor(Color.parseColor("#45C01A"))
                         .setTabTextSize(getDimen(R.dimen.tabstrip_textsize))
-                        .setTextColorStateResource(getApplicationContext(), R.drawable.tabstripbg)
+                        .setTextColor(R.drawable.tabstripbg)
                         .setDividerColor(Color.parseColor("#45C01A"))
                         .setDividerPadding(0)
                         .setUnderlineColor(Color.parseColor("#3045C01A"))

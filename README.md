@@ -20,17 +20,18 @@
   ## 1. Add dependence.
   
   
-  	compile 'com.yun.ospl:jtabstrip:1.3'
+  	compile 'com.yun.ospl:jtabstrip:1.4.1'
   
  
   ## 2. Set up the attribute width JTabStyleDelegate( or xml)
-     
-		tabStyleDelegate = JPagerSlidingTabStrip.getTabStyleDelegate();
+     	
+		ISlidingTabStrip tabStrip = (ISlidingTabStrip) findViewById(R.id.tabs);
+		tabStyleDelegate = tabStrip.getTabStyleDelegate();
 		tabStyleDelegate.setJTabStyle(type)
                         .setShouldExpand(true)
                         .setFrameColor(Color.parseColor("#45C01A"))
                         .setTabTextSize(getDimen(R.dimen.tabstrip_textsize))
-                        .setTextColorStateResource(getApplicationContext(), R.drawable.tabstripbg)
+                        .setTextColor(R.drawable.tabstripbg)
                         .setDividerColor(Color.parseColor("#45C01A"))
                         .setDividerPadding(0)
                         .setUnderlineColor(Color.parseColor("#3045C01A"))
@@ -53,7 +54,7 @@
 
   ## 3. BindViewpager for JPagerSlidingTabStrip
      
-		JPagerSlidingTabStrip.bindViewPager(viewpager);
+		(JPagerSlidingTabStrip) tabStrip.bindViewPager(viewpager);
 
   #### *(Optional)* If you need an `OnPageChangeListener` with your view pager
 

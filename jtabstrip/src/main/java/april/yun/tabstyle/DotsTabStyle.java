@@ -56,7 +56,7 @@ public class DotsTabStyle extends JTabStyle implements ValueAnimator.AnimatorUpd
 
 
     @Override public void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w,h,oldw,oldh);
+        super.onSizeChanged(w, h, oldw, oldh);
         fake_container = new ArrayList<>();
         showAnimation();
     }
@@ -70,12 +70,10 @@ public class DotsTabStyle extends JTabStyle implements ValueAnimator.AnimatorUpd
 
     @Override
     public void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition) {
-        //Log.d(TAG, "Current: " + mTabStyleDelegate.getCurrentPosition() + "----lastChecked: " +
-        //        lastCheckedPosition);
         // draw indicator line
         calcuteIndicatorLinePosition(tabsContainer, currentPositionOffset, lastCheckedPosition);
         //draw indicator
-        drawRoundRect(canvas,mLinePosition.x + mTabWidth / 2 - dosRadio, mH / 2 - dosRadio,
+        drawRoundRect(canvas, mLinePosition.x + mTabWidth / 2 - dosRadio, mH / 2 - dosRadio,
                 mLinePosition.y - mTabWidth / 2 + dosRadio, mH / 2 + dosRadio, dosRadio, dosRadio,
                 mIndicatorPaint);
         //画默认圆
