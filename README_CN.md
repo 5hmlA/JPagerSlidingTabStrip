@@ -1,8 +1,6 @@
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-V1.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)  [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-download-yellowgreen.svg)](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/JPagerSlidingTabStrip.apk) [ ![Download](https://api.bintray.com/packages/jonas-j/maven/JTabStrip/images/download.svg?version=1.3) ](https://bintray.com/jonas-j/maven/JTabStrip/1.3/link)
 
-- ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/face1.gif)  ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/face2.gif)
-
-- ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/promptmsg.gif)  ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/1.gif)
+- ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/new.gif)  ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/face2.gif)
 --
 * JPagerSlidingTabStrip: 增强版的 [PagerSlidingTabStrip](https://github.com/astuetz/PagerSlidingTabStrip). 使用方式和PagerSlidingTabStrip一样简单，但功能和样式更丰富
 * 内置3中tab风格 还可以 继承子自JTabStyle 实现自己的风格和动画 (JTabStyle)
