@@ -48,6 +48,8 @@ public abstract class JTabStyle {
     protected View mLastTab;
     protected float mW;
     protected float mH;
+    //是否是由手指滑动触发的viewpager滑动
+    protected boolean mScrollSelected;
 
 
     public JTabStyle(ISlidingTabStrip slidingTabStrip) {
@@ -166,11 +168,16 @@ public abstract class JTabStyle {
     }
 
 
+    /**
+     * 更新 tab栏中文字颜色 左右滑动颜色
+     */
     protected void updateTabTextScrollColor() {
-        //做往右相反
-        updateScrollDirection(true);
-        mNextTab.setScrollOffset((mLinePosition.y - mNextTab.getLeft()) / getTabWidth(mNextTab));
-        mCurrentTab.setScrollOffset((mLinePosition.x - mCurrentTab.getLeft()) / getTabWidth(mCurrentTab));
+        if (isNeedUpdateTabSrcollColor()) {
+            //做往右相反
+            updateScrollDirection(true);
+            mNextTab.setScrollOffset((mLinePosition.y - mNextTab.getLeft()) / getTabWidth(mNextTab));
+            mCurrentTab.setScrollOffset((mLinePosition.x - mCurrentTab.getLeft()) / getTabWidth(mCurrentTab));
+        }
     }
 
 
@@ -186,13 +193,9 @@ public abstract class JTabStyle {
     }
 
 
-    protected boolean isNeedUpdateTabSrcollColor(int lastCheckedPosition) {
-        return Math.abs(lastCheckedPosition - mTabStyleDelegate.getCurrentPosition()) <= 1;
-    }
-
-
     protected boolean isNeedUpdateTabSrcollColor() {
-        return mTabStyleDelegate.isShouldExpand() && mNextTab != null && mCurrentTab != null;
+        return mTabStyleDelegate.isNeedTabTextColorScrollUpdate() && mTabStyleDelegate.isShouldExpand() &&
+                mScrollSelected && mNextTab != null && mCurrentTab != null;
     }
 
 
@@ -204,6 +207,11 @@ public abstract class JTabStyle {
             mRectF4round.set(left, top, right, bottom);
             canvas.drawRoundRect(mRectF4round, rx, ry, paint);
         }
+    }
+
+
+    public void scrollSelected(boolean scrollSelected) {
+        mScrollSelected = scrollSelected;
     }
 }
 

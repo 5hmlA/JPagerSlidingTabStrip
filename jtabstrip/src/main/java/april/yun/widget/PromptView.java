@@ -310,7 +310,7 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
      * 进度为0--1之间
      */
     public PromptView setScrollOffset(float offset) {
-        if (offset > 0.2 && offset < 0.9) {
+        if (offset > 0.1 && offset < 0.9) {
             //mMatrix.postTranslate(offset*mHalfW*2, 0);
             mMatrix.setTranslate(offset * mHalfW * 2, 0);
             mLinearGradient.setLocalMatrix(mMatrix);

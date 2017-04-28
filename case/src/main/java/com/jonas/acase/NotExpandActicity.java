@@ -178,6 +178,7 @@ public class NotExpandActicity extends FragmentActivity {
 
     private void setupStrip(JTabStyleDelegate tabStyleDelegate, int type) {
         tabStyleDelegate.setJTabStyle(type)
+                        .setTabPadding(20)
                         //.setShouldExpand(true)
                         .setFrameColor(Color.parseColor("#45C01A"))
                         .setTabTextSize(getDimen(R.dimen.tabstrip_textsize))

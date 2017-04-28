@@ -42,7 +42,7 @@ public class JTabStyleDelegate {
     private int mTabIconGravity = Gravity.NO_GRAVITY;
 
     private int currentPosition = 0;
-    private int indicatorColor = 0xFF666666;
+    private int indicatorColor = Color.TRANSPARENT;
     private int underlineColor = 0;
     private int dividerColor = 0;
     //边框颜色
@@ -51,7 +51,7 @@ public class JTabStyleDelegate {
     private static final int[] ATTRS = new int[]{android.R.attr.textSize, android.R.attr.textColor};
 
 
-    private boolean shouldExpand = false;
+    private boolean shouldExpand = true;
     private boolean textAllCaps = false;
     private int scrollOffset = 52;
     private int indicatorHeight = 5;
@@ -70,7 +70,7 @@ public class JTabStyleDelegate {
     private int mPromptBgColor=Color.RED;
     private int mPromptNumColor=Color.WHITE;
     private int mBackgroundColor;
-
+    private boolean mNeedTabTextColorScrollUpdate;
 
     public JTabStyleDelegate obtainAttrs(ISlidingTabStrip tabStrip, AttributeSet attrs, Context context) {
         mTabStrip = tabStrip;mContext = context;
@@ -125,16 +125,6 @@ public class JTabStyleDelegate {
 
     public ColorStateList getTabTextColorStateList() {
         return mTabTextColorStateList;
-    }
-
-
-    public JTabStyleDelegate setTabTextColorStateList(ColorStateList tabTextColorStateList) {
-        mTabTextColorStateList = tabTextColorStateList;
-        return this;
-    }
-    public JTabStyleDelegate setTabTextColor(ColorStateList tabTextColorStateList) {
-        mTabTextColorStateList = tabTextColorStateList;
-        return this;
     }
 
     private ColorStateList getColorStateList(int... colots) {
@@ -458,6 +448,17 @@ public class JTabStyleDelegate {
 
     public JTabStyleDelegate setBackgroundColor(int backgroundColor) {
         mBackgroundColor = backgroundColor;
+        return this;
+    }
+
+
+    public boolean isNeedTabTextColorScrollUpdate() {
+        return mNeedTabTextColorScrollUpdate;
+    }
+
+
+    public JTabStyleDelegate setNeedTabTextColorScrollUpdate(boolean needTabTextColorScrollUpdate) {
+        mNeedTabTextColorScrollUpdate = needTabTextColorScrollUpdate;
         return this;
     }
 }

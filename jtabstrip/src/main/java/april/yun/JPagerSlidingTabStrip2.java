@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
@@ -22,9 +23,9 @@ import android.widget.Checkable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import april.yun.other.JTabStyleDelegate;
-import april.yun.widget.PromptView;
 import april.yun.other.SavedState;
 import april.yun.tabstyle.JTabStyle;
+import april.yun.widget.PromptView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +41,6 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
 
     private static final String TAG = JPagerSlidingTabStrip2.class.getSimpleName();
     private JTabStyleDelegate mTabStyleDelegate;
-    private int scrollOffset = 52;
     private JTabStyle mJTabStyle;
     private int mLastCheckedPosition = -1;
     private int mState = -1;
@@ -147,7 +147,12 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
         if (!mTabStyleDelegate.isNotDrawIcon() && resId.length > 0) {
             if (mTabStyleDelegate.getTabIconGravity() == Gravity.NO_GRAVITY) {
                 if (resId.length > 1) {
-                    tab.setBackground(getListDrable(resId));
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                        tab.setBackground(getListDrable(resId));
+                    }
+                    else {
+                        tab.setBackgroundDrawable(getListDrable(resId));
+                    }
                 }
                 else {
                     tab.setBackgroundResource(resId[0]);
@@ -258,10 +263,16 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
 
     private class PageListener implements OnPageChangeListener {
 
+        private int mSelectedPosition;
+
+
         @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             mTabStyleDelegate.setCurrentPosition(position);
             currentPositionOffset = positionOffset;
+            if (mLastCheckedPosition != mSelectedPosition) {
+                check(mSelectedPosition);
+            }
             invalidate();
 
             if (delegatePageListener != null) {
@@ -271,7 +282,19 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
 
 
         @Override public void onPageScrollStateChanged(int state) {
+            //setCurrentItem触发 2--0
+            //由手指滑动触发 1--2--0
+            if (state == 1) {
+                mJTabStyle.scrollSelected(true);
+            }
+            if (state == 2) {
+                mJTabStyle.scrollSelected(mState==1);//由手指滑动触发 1--2--0
+            }
             mState = state;
+            if (state == ViewPager.SCROLL_STATE_IDLE) {
+                mJTabStyle.scrollSelected(false);
+            }
+
             if (delegatePageListener != null) {
                 delegatePageListener.onPageScrollStateChanged(state);
             }
@@ -279,7 +302,8 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
 
 
         @Override public void onPageSelected(int position) {
-            check(position);
+            mSelectedPosition = position;
+            //check(position);
             if (delegatePageListener != null) {
                 delegatePageListener.onPageSelected(position);
             }

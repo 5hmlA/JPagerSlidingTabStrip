@@ -50,6 +50,8 @@ public class RoundTabStyle extends JTabStyle {
     @Override
     public void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition) {
 
+        updateTabTextScrollColor();
+
         if (mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());

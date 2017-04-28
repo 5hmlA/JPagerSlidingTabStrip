@@ -98,12 +98,16 @@ public class ExpandActivity extends FragmentActivity {
         setupStrip(tabs_up3.getTabStyleDelegate(), STYLE_DEFAULT);
         setupStrip(tabs_buttom.getTabStyleDelegate(), STYLE_DEFAULT);
         setupStrip(dots.getTabStyleDelegate(), STYLE_DOTS);
-        tabs_buttom.getTabStyleDelegate().setTabIconGravity(Gravity.TOP)//图标显示在top
+        tabs_buttom.getTabStyleDelegate()
+                   .setFrameColor(Color.TRANSPARENT)
+                   .setIndicatorColor(Color.TRANSPARENT)
+                   .setTabIconGravity(Gravity.TOP)//图标显示在top
                    .setIndicatorHeight(-8)//设置的高小于0 会显示在tab顶部 否则底部
                    .setDividerColor(Color.TRANSPARENT);
-        tabs_up.getTabStyleDelegate().setNotDrawIcon(true);
+        tabs_up.getTabStyleDelegate().setNotDrawIcon(true).setNeedTabTextColorScrollUpdate(true);
         tabs_up1.getTabStyleDelegate()
                 .setNotDrawIcon(true)
+                .setNeedTabTextColorScrollUpdate(true)
                 .setCornerRadio(40)
                 //.setIndicatorHeight(60)
                 .setTextColor(Color.WHITE, Color.parseColor("#009688"))
@@ -114,14 +118,14 @@ public class ExpandActivity extends FragmentActivity {
         tabs_up2.getTabStyleDelegate().setNotDrawIcon(true)//不现实图标
                 .setDividerColor(Color.TRANSPARENT)
                 .setIndicatorColor(Color.WHITE)
-                .setTextColor(Color.WHITE,Color.WHITE)
+                .setTextColor(Color.WHITE,Color.GRAY)
                 .setFrameColor(Color.TRANSPARENT).setDividerPadding(20).setIndicatorHeight(5);
 
         //tabs_up3.getTabStyleDelegate().getJTabStyle().moveStyle = MOVESTYLE_DEFAULT;
         tabs_up3.getTabStyleDelegate().setNotDrawIcon(true)
-                .setDividerColor(Color.TRANSPARENT)
+                .setDividerColor(Color.TRANSPARENT).setNeedTabTextColorScrollUpdate(true)
                 .setIndicatorColor(Color.parseColor("#4B6A8A"))
-                .setTextColor(Color.WHITE,Color.WHITE).setFrameColor(Color.TRANSPARENT);
+                .setTextColor(Color.WHITE,Color.DKGRAY).setFrameColor(Color.TRANSPARENT);
     }
 
 

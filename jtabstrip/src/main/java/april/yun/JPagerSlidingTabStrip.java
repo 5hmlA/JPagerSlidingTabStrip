@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
@@ -161,7 +162,12 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         if (!mTabStyleDelegate.isNotDrawIcon()) {
             if (mTabStyleDelegate.getTabIconGravity() == Gravity.NO_GRAVITY) {
                 if (resId.length > 1) {
-                    tab.setBackground(getListDrable(resId));
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                        tab.setBackground(getListDrable(resId));
+                    }
+                    else {
+                        tab.setBackgroundDrawable(getListDrable(resId));
+                    }
                 }
                 else {
                     tab.setBackgroundResource(resId[0]);
@@ -310,8 +316,17 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
 
         @Override public void onPageScrollStateChanged(int state) {
+            //setCurrentItem触发 2--0
+            //由手指滑动触发 1--2--0
+            if (state == 1) {
+                mJTabStyle.scrollSelected(true);
+            }
+            if (state == 2) {
+                mJTabStyle.scrollSelected(mState==1);//由手指滑动触发 1--2--0
+            }
             mState = state;
             if (state == ViewPager.SCROLL_STATE_IDLE) {
+                mJTabStyle.scrollSelected(false);
                 scrollToChild(pager.getCurrentItem(), 0);
             }
 
