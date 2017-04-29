@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-V1.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)  [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-download-yellowgreen.svg)](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/JPagerSlidingTabStrip.apk) [ ![Download](https://api.bintray.com/packages/jonas-j/maven/JTabStrip/images/download.svg?version=1.3) ](https://bintray.com/jonas-j/maven/JTabStrip/1.3/link)
 
- - ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/new.gif)  ![new.gif](http://upload-images.jianshu.io/upload_images/1088393-519b0d7fd0d09670.gif?imageMogr2/auto-orient/strip)
+ - ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/new.gif)  ![new.gif](http://upload-images.jianshu.io/upload_images/1088393-519b0d7fd0d09670.gif)
 
 
 # [中文版](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/README_CN.md)
