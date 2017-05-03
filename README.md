@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) ![](https://img.shields.io/badge/support-15%2B-red.svg) [ ![Download](https://img.shields.io/badge/Android-Arsenal-brightgreen.svg)](https://android-arsenal.com/details/1/5689)
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) ![](https://img.shields.io/badge/support-15%2B-red.svg) [ ![Download](https://img.shields.io/badge/Android-Arsenal-brightgreen.svg)](https://android-arsenal.com/details/1/5689)<a href="http://www.methodscount.com/?lib=com.yun.ospl%3Ajtabstrip%3A1.5"><img src="https://img.shields.io/badge/Methods count-core: 432 | deps: 19163-e91e63.svg"/></a>
 
  - ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/new.gif)  ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/new2.gif)
 
