@@ -1,6 +1,6 @@
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-V1.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)  [![License](https://img.shields.io/badge/JPagerSlidingTabStrip-download-yellowgreen.svg)](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/JPagerSlidingTabStrip.apk) [ ![Download](https://api.bintray.com/packages/jonas-j/maven/JTabStrip/images/download.svg?version=1.3) ](https://bintray.com/jonas-j/maven/JTabStrip/1.3/link)
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0) ![](https://img.shields.io/badge/support-15%2B-red.svg) [ ![Download](https://img.shields.io/badge/Android-Arsenal-brightgreen.svg)](https://android-arsenal.com/details/1/5689)
 
- - ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/new.gif)  ![new.gif](http://upload-images.jianshu.io/upload_images/1088393-519b0d7fd0d09670.gif)
+ - ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/new.gif)  ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/new2.gif)
 
 
 # [中文版](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/README_CN.md)
@@ -18,7 +18,7 @@
   ## 1. Add dependence.
   
   
-  	compile 'com.yun.ospl:jtabstrip:1.4.1'
+  	compile 'com.yun.ospl:jtabstrip:1.5'
   
  
   ## 2. Set up the attribute width JTabStyleDelegate( or xml)
@@ -41,7 +41,7 @@
 	- tabStyleDelegate.setJTabStyle(type) //provide 3 types:STYLE_DEFAULT,STYLE_ROUND,STYLE_DOTS
 	- tabStyleDelegate.setJTabStyle(JTabStyle)  //define your own tabStyle
 
- - reference [CustomTabStyle](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/case/src/main/java/com/jonas/acase/CustomTabStyle/CustomTabStyle.java)
+ - make your own tabstyle: example [CustomTabStyle](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/case/src/main/java/com/jonas/acase/CustomTabStyle/CustomTabStyle.java)
 ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/custom.gif)
   - STYLE_DEFAULT
 ![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/default2.gif)
