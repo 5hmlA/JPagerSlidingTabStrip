@@ -24,13 +24,15 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import april.yun.other.JTabStyleDelegate;
 import april.yun.other.SavedState;
 import april.yun.tabstyle.JTabStyle;
 import april.yun.widget.PromptView;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author yun.
@@ -80,10 +82,11 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         tabsContainer = new LinearLayout(context);
         tabsContainer.setGravity(Gravity.CENTER_VERTICAL);
         tabsContainer.setOrientation(LinearLayout.HORIZONTAL);
-        tabsContainer.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-1, -2);
+        tabsContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-1, -1);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
-        addView(tabsContainer, layoutParams);
+        addView(tabsContainer,layoutParams);
+
         defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.MATCH_PARENT);
         expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f);
@@ -157,8 +160,10 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
             return;
         }
         PromptView tab = new PromptView(getContext());
+        tab.setMaxLines(mTabStyleDelegate.getMaxLines());
         tab.setColor_bg(mTabStyleDelegate.getPromptBgColor());
         tab.setColor_num(mTabStyleDelegate.getPromptNumColor());
+        setPadding(0, getPaddingTop(), 0, getPaddingBottom());
         if (!mTabStyleDelegate.isNotDrawIcon()) {
             if (mTabStyleDelegate.getTabIconGravity() == Gravity.NO_GRAVITY) {
                 if (resId.length > 1) {
@@ -174,7 +179,6 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                 }
             }
             else {
-                setPadding(0, getPaddingTop(), 0, getPaddingBottom());
                 mTabStyleDelegate.setShouldExpand(true);
                 tab.setCompoundDrawablePadding(0);
                 Drawable tabIcon = ContextCompat.getDrawable(getContext(), resId[0]);
@@ -291,6 +295,11 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         mJTabStyle.onDraw(canvas, tabsContainer, currentPositionOffset, mLastCheckedPosition);
     }
 
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b){
+        super.onLayout(changed, l, t, r, b);
+        mJTabStyle.afterLayout();
+    }
 
     private class PageListener implements OnPageChangeListener {
 

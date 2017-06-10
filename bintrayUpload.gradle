@@ -60,3 +60,5 @@ bintray {
         publish = true
     }
 }
+
+//gradlew bintrayUpload

@@ -17,16 +17,14 @@
     <april.yun.JPagerSlidingTabStrip
         android:layout_margin="10dp"
         android:id="@+id/tabs"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:minHeight="@dimen/sug_event_tabheight"/>
+        android:layout_height="@dimen/sug_event_tabheight"
+        android:layout_width="match_parent"/>
 
     <april.yun.JPagerSlidingTabStrip
         android:layout_margin="10dp"
         android:id="@+id/tabs_1"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:minHeight="@dimen/sug_event_tabheight"/>
+        android:layout_height="@dimen/sug_event_tabheight"
+        android:layout_width="match_parent"/>
 
     <april.yun.JPagerSlidingTabStrip
         android:layout_margin="10dp"

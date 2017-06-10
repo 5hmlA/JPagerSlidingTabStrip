@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@android:color/darker_gray">
- <april.yun.widget.PromptView
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:padding="10dp"
-     android:text="@string/title_activity_expand"
-     android:drawableTop="@drawable/ic_tab_profile_h"/>
- <TextView
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:padding="10dp"
-     android:text="@string/title_activity_expand"
-     android:drawableTop="@drawable/ic_tab_moments_h"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@android:color/darker_gray"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_tab_moments_h"
+        android:padding="10dp"
+        android:text="@string/title_activity_expand"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_tab_moments_h"
+        android:padding="10dp"
+        android:text="@string/title_activity_expand"/>
+
+    <april.yun.widget.PromptView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_tab_profile_h"/>
+    <april.yun.widget.PromptView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_tab_moments_h"/>
 </LinearLayout>

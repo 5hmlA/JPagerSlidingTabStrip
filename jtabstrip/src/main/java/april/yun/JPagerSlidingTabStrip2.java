@@ -22,13 +22,15 @@ import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import april.yun.other.JTabStyleDelegate;
 import april.yun.other.SavedState;
 import april.yun.tabstyle.JTabStyle;
 import april.yun.widget.PromptView;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * @author yun.
@@ -76,7 +78,6 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
         //tabsContainer = this;
         setGravity(Gravity.CENTER_VERTICAL);
         setOrientation(LinearLayout.HORIZONTAL);
-        //tabsContainer.setLayoutParams(new LinearLayout.LayoutParams(-1, -1));
         expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
         if (locale == null) {
             locale = getResources().getConfiguration().locale;
@@ -144,6 +145,7 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
         PromptView tab = new PromptView(getContext());
         tab.setColor_bg(mTabStyleDelegate.getPromptBgColor());
         tab.setColor_num(mTabStyleDelegate.getPromptNumColor());
+        setPadding(0, getPaddingTop(), 0, getPaddingBottom());
         if (!mTabStyleDelegate.isNotDrawIcon() && resId.length > 0) {
             if (mTabStyleDelegate.getTabIconGravity() == Gravity.NO_GRAVITY) {
                 if (resId.length > 1) {
@@ -159,7 +161,6 @@ public class JPagerSlidingTabStrip2 extends LinearLayout implements ISlidingTabS
                 }
             }
             else {
-                setPadding(0, getPaddingTop(), 0, getPaddingBottom());
                 mTabStyleDelegate.setShouldExpand(true);
                 tab.setCompoundDrawablePadding(0);
                 Drawable tabIcon = ContextCompat.getDrawable(getContext(), resId[0]);

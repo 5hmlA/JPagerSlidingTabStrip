@@ -71,6 +71,7 @@ public class JTabStyleDelegate {
     private int mPromptNumColor=Color.WHITE;
     private int mBackgroundColor;
     private boolean mNeedTabTextColorScrollUpdate;
+    private int mMaxLines = 1;
 
     public JTabStyleDelegate obtainAttrs(ISlidingTabStrip tabStrip, AttributeSet attrs, Context context) {
         mTabStrip = tabStrip;mContext = context;
@@ -460,5 +461,13 @@ public class JTabStyleDelegate {
     public JTabStyleDelegate setNeedTabTextColorScrollUpdate(boolean needTabTextColorScrollUpdate) {
         mNeedTabTextColorScrollUpdate = needTabTextColorScrollUpdate;
         return this;
+    }
+
+    public int getMaxLines(){
+        return mMaxLines;
+    }
+
+    public void setMaxLines(int maxLines){
+        mMaxLines = maxLines;
     }
 }

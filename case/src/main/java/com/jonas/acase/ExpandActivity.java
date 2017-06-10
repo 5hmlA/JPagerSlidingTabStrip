@@ -84,6 +84,9 @@ public class ExpandActivity extends FragmentActivity {
             case R.id.sts_badge:
                 startActivity(new Intent(this, NotExpandActicity.class));
                 return true;
+            case R.id.sts_promptview:
+                startActivity(new Intent(this, PromptActivity.class));
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

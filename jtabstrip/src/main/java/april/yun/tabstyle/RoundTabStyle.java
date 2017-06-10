@@ -31,14 +31,16 @@ public class RoundTabStyle extends JTabStyle {
 
     @Override public void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        float pading = dp2dip(padingOffect);
-        mH = h - pading;
+        mH = h - dp2dip(padingOffect);
+    }
+
+    @Override
+    public void afterLayout(){
         if (mLastTab != null) {
-            getClipPath(pading, mLastTab.getRight());
+            getClipPath(dp2dip(padingOffect), mLastTab.getRight());
             mOutRadio = mTabStyleDelegate.getCornerRadio() == 0 ? mH / 2 : mTabStyleDelegate.getCornerRadio();
         }
     }
-
 
     private void getClipPath(float pading, float width) {
         RectF clip = new RectF(pading, pading, width - pading, mH);
@@ -58,18 +60,6 @@ public class RoundTabStyle extends JTabStyle {
             drawRoundRect(canvas, dp2dip(padingOffect), dp2dip(padingOffect),
                     mLastTab.getRight() - dp2dip(padingOffect), this.mH, mOutRadio, mOutRadio, mDividerPaint);
         }
-        if (mTabStyleDelegate.getIndicatorColor() != Color.TRANSPARENT) {
-            canvas.save();
-            canvas.clipPath(mClipath);
-            // draw indicator line
-            mIndicatorPaint.setColor(mTabStyleDelegate.getIndicatorColor());
-
-            calcuteIndicatorLinePosition(tabsContainer, currentPositionOffset, lastCheckedPosition);
-
-            //draw indicator
-            canvas.drawRect(mLinePosition.x, 0, mLinePosition.y, mH, mIndicatorPaint);
-        }
-
         if (mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {
             // draw underline
             mIndicatorPaint.setColor(mTabStyleDelegate.getUnderlineColor());
@@ -85,6 +75,18 @@ public class RoundTabStyle extends JTabStyle {
                 canvas.drawLine(tab.getRight(), mTabStyleDelegate.getDividerPadding(), tab.getRight(),
                         mH - mTabStyleDelegate.getDividerPadding(), mDividerPaint);
             }
+        }
+        if (mTabStyleDelegate.getIndicatorColor() != Color.TRANSPARENT&&mClipath!=null) {
+            int save = canvas.save();
+            canvas.clipPath(mClipath);
+            // draw indicator line
+            mIndicatorPaint.setColor(mTabStyleDelegate.getIndicatorColor());
+
+            calcuteIndicatorLinePosition(tabsContainer, currentPositionOffset, lastCheckedPosition);
+
+            //draw indicator
+            canvas.drawRect(mLinePosition.x, 0, mLinePosition.y, mH, mIndicatorPaint);
+            canvas.restoreToCount(save);
         }
     }
 }

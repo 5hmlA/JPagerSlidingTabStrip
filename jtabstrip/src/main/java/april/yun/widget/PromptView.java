@@ -42,7 +42,7 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
     private Paint mNumPaint;
     private int color_bg = Color.RED;
     private int color_num = Color.WHITE;
-    private int num_size = 12;
+    private int num_size = 11;
     private float mHalfW;
     private float mNumHeight;
     private String msg_str = "";
@@ -109,13 +109,13 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
         mNumPaint.setTextSize(dp2px(num_size));
         mNumHeight = getFontHeight(mNumPaint);
         refreshNotifyBg();
-        Drawable[] compoundDrawables = getCompoundDrawables();
-        if (haveCompoundDrawable(compoundDrawables)) {
-            setPadding(getPaddingLeft(), (int) (mNumHeight / 2), getPaddingRight(), (int) (mNumHeight / 2));
-        }
-        else {
-            setPadding(getPaddingLeft(), (int) (mNumHeight), getPaddingRight(), (int) (mNumHeight));
-        }
+//        Drawable[] compoundDrawables = getCompoundDrawables();
+//        if (haveCompoundDrawable(compoundDrawables)) {
+//            setPadding(getPaddingLeft(), (int) (mNumHeight / 2), getPaddingRight(), (int) (mNumHeight / 2));
+//        }
+//        else {
+//            setPadding(getPaddingLeft(), (int) (mNumHeight), getPaddingRight(), (int) (mNumHeight));
+//        }
         //TypedValue outValue = new TypedValue();
         //getContext().getTheme().resolveAttribute(android.R.attr.selectableItemBackground, outValue, true);
         //cardView.setBackgroundResource(outValue.resourceId);
@@ -339,10 +339,5 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
             }
         }
         return this;
-    }
-
-
-    @Override public void setChecked(boolean checked) {
-        super.setChecked(checked);
     }
 }

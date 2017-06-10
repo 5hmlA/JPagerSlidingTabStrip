@@ -72,6 +72,7 @@ public abstract class JTabStyle {
 
 
     public abstract void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition);
+    public void afterLayout(){};
 
 
     public float dp2dip(float dp) {
