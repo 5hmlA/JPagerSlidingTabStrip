@@ -18,7 +18,7 @@
   ## 1. Add dependence.
   
   
-  	compile 'com.yun.ospl:jtabstrip:1.5'
+  	compile 'com.yun.ospl:jtabstrip:1.5.5'
   
  
   ## 2. Set up the attribute width JTabStyleDelegate( or xml)
