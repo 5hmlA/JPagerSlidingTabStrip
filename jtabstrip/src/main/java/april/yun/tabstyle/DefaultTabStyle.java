@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import april.yun.ISlidingTabStrip;
 
 /**
@@ -54,6 +55,23 @@ public class DefaultTabStyle extends JTabStyle {
                     mLastTab.getRight() - dp2dip(padingOffect), this.mH, mOutRadio, mOutRadio, mDividerPaint);
         }
 
+        if (mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {
+            // draw underline
+            mIndicatorPaint.setColor(mTabStyleDelegate.getUnderlineColor());
+            canvas.drawRect(0, mH - mTabStyleDelegate.getUnderlineHeight(), tabsContainer.getWidth(), mH,
+                    mIndicatorPaint);
+        }
+
+        if (mTabStyleDelegate.getDividerColor() != Color.TRANSPARENT) {
+            // draw divider
+            mDividerPaint.setColor(mTabStyleDelegate.getDividerColor());
+            for (int i = 0; i < tabsContainer.getChildCount() - 1; i++) {
+                View tab = tabsContainer.getChildAt(i);
+                canvas.drawLine(tab.getRight(), mTabStyleDelegate.getDividerPadding(), tab.getRight(),
+                        mH - mTabStyleDelegate.getDividerPadding(), mDividerPaint);
+            }
+        }
+
         if (mTabStyleDelegate.getIndicatorColor() != Color.TRANSPARENT) {
             // draw indicator line
             mIndicatorPaint.setColor(mTabStyleDelegate.getIndicatorColor());
@@ -63,7 +81,6 @@ public class DefaultTabStyle extends JTabStyle {
                 //画在中间
                 int halfIndHeight = mTabStyleDelegate.getIndicatorHeight() / 2;
                 float indPading = mH / 2 - halfIndHeight;
-
                 drawRoundRect(canvas, mLinePosition.x + indPading, indPading, mLinePosition.y - indPading,
                         mH - indPading, mOutRadio, mOutRadio, mIndicatorPaint);
             }
@@ -76,21 +93,6 @@ public class DefaultTabStyle extends JTabStyle {
                 //IndicatorHeight<0 画在顶部
                 drawRoundRect(canvas, mLinePosition.x, 0, mLinePosition.y,
                         -mTabStyleDelegate.getIndicatorHeight(), mOutRadio, mOutRadio, mIndicatorPaint);
-            }
-        }
-        if (mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {
-            // draw underline
-            mIndicatorPaint.setColor(mTabStyleDelegate.getUnderlineColor());
-            canvas.drawRect(0, mH - mTabStyleDelegate.getUnderlineHeight(), tabsContainer.getWidth(), mH,
-                    mIndicatorPaint);
-        }
-        if (mTabStyleDelegate.getDividerColor() != Color.TRANSPARENT) {
-            // draw divider
-            mDividerPaint.setColor(mTabStyleDelegate.getDividerColor());
-            for (int i = 0; i < tabsContainer.getChildCount() - 1; i++) {
-                View tab = tabsContainer.getChildAt(i);
-                canvas.drawLine(tab.getRight(), mTabStyleDelegate.getDividerPadding(), tab.getRight(),
-                        mH - mTabStyleDelegate.getDividerPadding(), mDividerPaint);
             }
         }
     }

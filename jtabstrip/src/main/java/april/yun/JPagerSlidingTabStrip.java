@@ -1,5 +1,7 @@
 package april.yun;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -19,6 +21,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
@@ -41,7 +44,7 @@ import april.yun.widget.PromptView;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
-public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlidingTabStrip {
+public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlidingTabStrip, ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
 
     private static final String TAG = JPagerSlidingTabStrip.class.getSimpleName();
     private JTabStyleDelegate mTabStyleDelegate;
@@ -63,19 +66,21 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     private int lastScrollX = 0;
     private float currentPositionOffset = 0f;
     private List<TextPaint> mTextPaints = new ArrayList<>();
+    private ValueAnimator mValueAnimator = ValueAnimator.ofFloat(1, 0).setDuration(400);
+    private int mLastLastCheckPosition = 0;
 
 
-    public JPagerSlidingTabStrip(Context context) {
+    public JPagerSlidingTabStrip(Context context){
         this(context, null);
     }
 
 
-    public JPagerSlidingTabStrip(Context context, AttributeSet attrs) {
+    public JPagerSlidingTabStrip(Context context, AttributeSet attrs){
         this(context, attrs, 0);
     }
 
 
-    public JPagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle) {
+    public JPagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle){
         super(context, attrs, defStyle);
         setFillViewport(true);
         setWillNotDraw(false);
@@ -85,14 +90,13 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         tabsContainer.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-1, -1);
         layoutParams.gravity = Gravity.CENTER_VERTICAL;
-        addView(tabsContainer,layoutParams);
+        addView(tabsContainer, layoutParams);
 
-        defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.MATCH_PARENT);
+        defaultTabLayoutParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
         expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT, 1.0f);
         //expandedTabLayoutParams.gravity=Gravity.CENTER_VERTICAL;
         //defaultTabLayoutParams.gravity=Gravity.CENTER_VERTICAL;
-        if (locale == null) {
+        if(locale == null) {
             locale = getResources().getConfiguration().locale;
         }
         mTabStyleDelegate = new JTabStyleDelegate().obtainAttrs(this, attrs, getContext());
@@ -100,9 +104,9 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     }
 
 
-    public void bindViewPager(ViewPager pager) {
+    public void bindViewPager(ViewPager pager){
         this.pager = pager;
-        if (pager.getAdapter() == null) {
+        if(pager.getAdapter() == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
 
@@ -111,31 +115,28 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         notifyDataSetChanged();
     }
 
-
-    public void setOnPageChangeListener(OnPageChangeListener listener) {
+    public void setOnPageChangeListener(OnPageChangeListener listener){
         this.delegatePageListener = listener;
     }
 
 
-    public void notifyDataSetChanged() {
+    public void notifyDataSetChanged(){
 
         tabsContainer.removeAllViews();
         mTabCount = pager.getAdapter().getCount();
-        if (mJTabStyle.needChildView()) {
-            for (int i = 0; i < mTabCount; i++) {
-                if (pager.getAdapter() instanceof IconTabProvider) {
+        if(mJTabStyle.needChildView()) {
+            for(int i = 0; i<mTabCount; i++) {
+                if(pager.getAdapter() instanceof IconTabProvider) {
                     //有提供icon
                     Log.d(TAG, "haove tabIcon");
-                    if (((IconTabProvider) pager.getAdapter()).getPageIconResIds(i) != null) {
+                    if(( (IconTabProvider)pager.getAdapter() ).getPageIconResIds(i) != null) {
                         addIconTab(i, pager.getAdapter().getPageTitle(i).toString(),
-                                ((IconTabProvider) pager.getAdapter()).getPageIconResIds(i));
-                    }
-                    else {
+                                ( (IconTabProvider)pager.getAdapter() ).getPageIconResIds(i));
+                    }else {
                         addIconTab(i, pager.getAdapter().getPageTitle(i).toString(),
-                                ((IconTabProvider) pager.getAdapter()).getPageIconResId(i));
+                                ( (IconTabProvider)pager.getAdapter() ).getPageIconResId(i));
                     }
-                }
-                else {
+                }else {
                     //没有提供icon
                     Log.d(TAG, "haove no tabIcon");
                     mTabStyleDelegate.setNotDrawIcon(true);
@@ -145,17 +146,16 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
             updateTabStyles();
             check(mTabStyleDelegate.setCurrentPosition(pager.getCurrentItem()));
         }
-        mJTabStyle.afterSetViewPager(tabsContainer);
     }
 
 
-    private void addTextTab(final int position, String title) {
+    private void addTextTab(final int position, String title){
         addIconTab(position, title, 0);
     }
 
 
-    private void addIconTab(final int position, String title, @NonNull @Size(min = 1) int... resId) {
-        if (TextUtils.isEmpty(title)) {
+    private void addIconTab(final int position, String title, @NonNull @Size(min = 1) int... resId){
+        if(TextUtils.isEmpty(title)) {
             Log.e(TAG, "title is null ");
             return;
         }
@@ -164,28 +164,25 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         tab.setColor_bg(mTabStyleDelegate.getPromptBgColor());
         tab.setColor_num(mTabStyleDelegate.getPromptNumColor());
         setPadding(0, getPaddingTop(), 0, getPaddingBottom());
-        if (!mTabStyleDelegate.isNotDrawIcon()) {
-            if (mTabStyleDelegate.getTabIconGravity() == Gravity.NO_GRAVITY) {
-                if (resId.length > 1) {
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+        if(!mTabStyleDelegate.isNotDrawIcon()) {
+            if(mTabStyleDelegate.getTabIconGravity() == Gravity.NO_GRAVITY) {
+                if(resId.length>1) {
+                    if(Build.VERSION.SDK_INT>Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                         tab.setBackground(getListDrable(resId));
-                    }
-                    else {
+                    }else {
                         tab.setBackgroundDrawable(getListDrable(resId));
                     }
-                }
-                else {
+                }else {
                     tab.setBackgroundResource(resId[0]);
                 }
-            }
-            else {
+            }else {
                 mTabStyleDelegate.setShouldExpand(true);
                 tab.setCompoundDrawablePadding(0);
                 Drawable tabIcon = ContextCompat.getDrawable(getContext(), resId[0]);
-                if (resId.length > 1) {
+                if(resId.length>1) {
                     tabIcon = getListDrable(resId);
                 }
-                switch (mTabStyleDelegate.getTabIconGravity()) {
+                switch(mTabStyleDelegate.getTabIconGravity()) {
                     case Gravity.TOP:
                         tab.setCompoundDrawablesWithIntrinsicBounds(null, tabIcon, null, null);
                         break;
@@ -206,28 +203,29 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         }
         tab.setText(title);
         addTab(position, tab);
-        if (mTabStyleDelegate.getCurrentPosition() == 0) {
-            pageListener.onPageSelected(0);
-        }
+//        if(mTabStyleDelegate.getCurrentPosition() == 0) {
+//            pageListener.onPageSelected(0);
+//        }
     }
 
 
-    private StateListDrawable getListDrable(@NonNull int... resId) {
+    private StateListDrawable getListDrable(@NonNull int... resId){
         StateListDrawable listDrawable = new StateListDrawable();
-        listDrawable.addState(new int[] { android.R.attr.state_checked },
-                ContextCompat.getDrawable(getContext(), resId[0]));
-        listDrawable.addState(new int[] { android.R.attr.state_pressed },
-                ContextCompat.getDrawable(getContext(), resId[0]));
-        listDrawable.addState(new int[] {}, ContextCompat.getDrawable(getContext(), resId[1]));
+        listDrawable
+                .addState(new int[]{android.R.attr.state_checked}, ContextCompat.getDrawable(getContext(), resId[0]));
+        listDrawable
+                .addState(new int[]{android.R.attr.state_pressed}, ContextCompat.getDrawable(getContext(), resId[0]));
+        listDrawable.addState(new int[]{}, ContextCompat.getDrawable(getContext(), resId[1]));
         return listDrawable;
     }
 
 
-    private void addTab(final int position, View tab) {
+    private void addTab(final int position, View tab){
         //        tab.setFocusable(true);
         tab.setOnClickListener(new OnClickListener() {
-            @Override public void onClick(View v) {
-                pager.setCurrentItem(position);
+            @Override
+            public void onClick(View v){
+                onItemTabClicked(position);
             }
         });
         tab.setPadding(mTabStyleDelegate.getTabPadding(), 0, mTabStyleDelegate.getTabPadding(), 0);
@@ -235,20 +233,18 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                 mTabStyleDelegate.isShouldExpand() ? expandedTabLayoutParams : defaultTabLayoutParams);
     }
 
+    private void updateTabStyles(){
 
-    private void updateTabStyles() {
-
-        for (int i = 0; i < mTabCount; i++) {
+        for(int i = 0; i<mTabCount; i++) {
 
             View v = tabsContainer.getChildAt(i);
-            if (v instanceof TextView) {
-                TextView tab = (TextView) v;
+            if(v instanceof TextView) {
+                TextView tab = (TextView)v;
                 tab.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTabStyleDelegate.getTabTextSize());
                 tab.setTypeface(mTabStyleDelegate.getTabTypeface(), mTabStyleDelegate.getTabTypefaceStyle());
-                if (mTabStyleDelegate.getTabTextColorStateList() == null) {
+                if(mTabStyleDelegate.getTabTextColorStateList() == null) {
                     tab.setTextColor(mTabStyleDelegate.getTabTextColor());
-                }
-                else {
+                }else {
                     tab.setTextColor(mTabStyleDelegate.getTabTextColorStateList());
                 }
                 // setAllCaps() is only available from API 14, so the upper case is made manually if we are on a
@@ -256,42 +252,46 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                 tab.setAllCaps(mTabStyleDelegate.isTextAllCaps());
             }
         }
+        mJTabStyle.afterSetViewPager(tabsContainer);
     }
 
 
-    private void scrollToChild(int position, int offset) {
-        if (!mJTabStyle.needChildView()) return;
-        if (mTabCount == 0) {
+    private void scrollToChild(int position, int offset){
+        if(!mJTabStyle.needChildView()) {
             return;
         }
-        int newScrollX = tabsContainer.getChildAt(position).getLeft() + offset;
+        if(mTabCount == 0) {
+            return;
+        }
+        int newScrollX = tabsContainer.getChildAt(position).getLeft()+offset;
 
-        if (position > 0 || offset > 0) {
+        if(position>0 || offset>0) {
             newScrollX -= scrollOffset;
         }
-        if (newScrollX != lastScrollX) {
+        if(newScrollX != lastScrollX) {
             lastScrollX = newScrollX;
             scrollTo(newScrollX, 0);
         }
     }
 
 
-    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w, h, oldw, oldh);
-        if (!mJTabStyle.needChildView() || tabsContainer.getChildCount() > 0) {
+        if(!mJTabStyle.needChildView() || tabsContainer.getChildCount()>0) {
             mJTabStyle.onSizeChanged(w, h, oldw, oldh);
         }
     }
 
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override
+    protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        if (mJTabStyle.needChildView() && tabsContainer.getChildCount() == 0 || isInEditMode() ||
-                mTabCount == 0) {
+        if(mJTabStyle.needChildView() && tabsContainer.getChildCount() == 0 || isInEditMode() || mTabCount == 0) {
             return;
         }
-
+        System.out.println(mLastCheckedPosition);
         mJTabStyle.onDraw(canvas, tabsContainer, currentPositionOffset, mLastCheckedPosition);
     }
 
@@ -301,54 +301,126 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         mJTabStyle.afterLayout();
     }
 
+
+    public void bindTitles(String... titles){
+        bindTitles(0, titles);
+    }
+
+    public void bindTitles(int current, String... titles){
+        for(int i = 0; i<titles.length; i++) {
+            addTextTab(i, titles[i]);
+        }
+        onItemTabClicked(current);
+        setTag(current);
+        mTabCount = titles.length;
+        updateTabStyles();
+    }
+
+    private void onItemTabClicked(int position){
+        setTag(position);
+        if(mLastCheckedPosition == position || mValueAnimator.isRunning()) {
+            return;
+        }
+        if(pager != null) {
+            pager.setCurrentItem(position);
+        }else {
+            tabsContainer.setTag(true);
+            mValueAnimator = ValueAnimator.ofFloat(1, 0);
+            if(mLastCheckedPosition<position) {
+                tabsContainer.setTag(false);
+                mValueAnimator = ValueAnimator.ofFloat(0, 1);
+            }
+            check(position);
+            mValueAnimator.setDuration(400).setInterpolator(new DecelerateInterpolator());
+            mValueAnimator.addUpdateListener(this);
+            mValueAnimator.addListener(this);
+            mValueAnimator.start();
+        }
+    }
+
+    @Override
+    public void onAnimationUpdate(ValueAnimator animation){
+        float positionOffset = (float)animation.getAnimatedValue();
+        mTabStyleDelegate.setCurrentPosition(mLastCheckedPosition);
+        currentPositionOffset = positionOffset;
+        invalidate();
+    }
+
+    @Override
+    public void onAnimationStart(Animator animation){
+        if(!( (Boolean)tabsContainer.getTag() )) {
+            mLastCheckedPosition -= 1;
+        }
+    }
+
+    @Override
+    public void onAnimationEnd(Animator animation){
+        if(!( (Boolean)tabsContainer.getTag() )) {
+            mLastCheckedPosition += 1;
+            invalidate();
+        }
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation){
+
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation){
+
+    }
+
     private class PageListener implements OnPageChangeListener {
 
         private int mSelectedPosition;
 
 
-        @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels){
             mTabStyleDelegate.setCurrentPosition(position);
             currentPositionOffset = positionOffset;
-            if (mLastCheckedPosition != mSelectedPosition) {
+            if(mLastCheckedPosition != mSelectedPosition) {
                 check(mSelectedPosition);
             }
-            if (mJTabStyle.needChildView()) {
-                scrollToChild(position,
-                        (int) (positionOffset * tabsContainer.getChildAt(position).getWidth()));
+            if(mJTabStyle.needChildView()) {
+                scrollToChild(position, (int)( positionOffset*tabsContainer.getChildAt(position).getWidth() ));
             }
             invalidate();
 
-            if (delegatePageListener != null) {
+            if(delegatePageListener != null) {
                 delegatePageListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
         }
 
 
-        @Override public void onPageScrollStateChanged(int state) {
+        @Override
+        public void onPageScrollStateChanged(int state){
             //setCurrentItem触发 2--0
             //由手指滑动触发 1--2--0
-            if (state == 1) {
+            if(state == 1) {
                 mJTabStyle.scrollSelected(true);
             }
-            if (state == 2) {
-                mJTabStyle.scrollSelected(mState==1);//由手指滑动触发 1--2--0
+            if(state == 2) {
+                mJTabStyle.scrollSelected(mState == 1);//由手指滑动触发 1--2--0
             }
             mState = state;
-            if (state == ViewPager.SCROLL_STATE_IDLE) {
+            if(state == ViewPager.SCROLL_STATE_IDLE) {
                 mJTabStyle.scrollSelected(false);
                 scrollToChild(pager.getCurrentItem(), 0);
             }
 
-            if (delegatePageListener != null) {
+            if(delegatePageListener != null) {
                 delegatePageListener.onPageScrollStateChanged(state);
             }
         }
 
 
-        @Override public void onPageSelected(int position) {
+        @Override
+        public void onPageSelected(int position){
             mSelectedPosition = position;
             //check(position);
-            if (delegatePageListener != null) {
+            if(delegatePageListener != null) {
                 delegatePageListener.onPageSelected(position);
             }
         }
@@ -356,27 +428,33 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
 
     //单选
-    private void check(int position) {
-        if (mLastCheckedPosition != -1 && mJTabStyle.needChildView()) {
-            ((Checkable) tabsContainer.getChildAt(mLastCheckedPosition)).setChecked(false);
+    private void check(int position){
+        if(mLastCheckedPosition != -1 && mJTabStyle.needChildView()) {
+            ( (Checkable)tabsContainer.getChildAt(mLastCheckedPosition) ).setChecked(false);
         }
+        mLastLastCheckPosition = mLastCheckedPosition;
         mLastCheckedPosition = position;
-        if (!mJTabStyle.needChildView()) {
+        if(pager == null && delegatePageListener != null) {
+            delegatePageListener.onPageSelected(position);
+        }
+        if(!mJTabStyle.needChildView()) {
             return;
         }
-        ((Checkable) tabsContainer.getChildAt(position)).setChecked(true);
+        ( (Checkable)tabsContainer.getChildAt(position) ).setChecked(true);
     }
 
 
-    @Override public void onRestoreInstanceState(Parcelable state) {
-        SavedState savedState = (SavedState) state;
+    @Override
+    public void onRestoreInstanceState(Parcelable state){
+        SavedState savedState = (SavedState)state;
         super.onRestoreInstanceState(savedState.getSuperState());
         mTabStyleDelegate.setCurrentPosition(savedState.currentPosition);
         requestLayout();
     }
 
 
-    @Override public Parcelable onSaveInstanceState() {
+    @Override
+    public Parcelable onSaveInstanceState(){
         Parcelable superState = super.onSaveInstanceState();
         SavedState savedState = new SavedState(superState);
         savedState.currentPosition = mTabStyleDelegate.getCurrentPosition();
@@ -384,45 +462,48 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     }
 
 
-    public JTabStyleDelegate getTabStyleDelegate() {
+    public JTabStyleDelegate getTabStyleDelegate(){
         return mTabStyleDelegate;
     }
 
 
-    public void setJTabStyle(JTabStyle JTabStyle) {
+    public void setJTabStyle(JTabStyle JTabStyle){
         mJTabStyle = JTabStyle;
     }
 
 
-    public int getTabCount() {
+    public int getTabCount(){
         return mTabCount;
     }
 
 
-    public int getState() {
+    public int getState(){
         return mState;
     }
 
 
-    public ViewGroup getTabsContainer() {
+    public ViewGroup getTabsContainer(){
         return tabsContainer;
     }
 
 
-    public ISlidingTabStrip setPromptNum(int index, int num) {
-        if (index < tabsContainer.getChildCount()) {
-            ((PromptView) tabsContainer.getChildAt(index)).setPromptNum(num);
+    public ISlidingTabStrip setPromptNum(int index, int num){
+        if(index<tabsContainer.getChildCount()) {
+            ( (PromptView)tabsContainer.getChildAt(index) ).setPromptNum(num);
         }
         return this;
     }
 
 
-    @Override protected void onAttachedToWindow() {
+    @Override
+    protected void onAttachedToWindow(){
         super.onAttachedToWindow();
     }
 
 
-    @Override protected void onDetachedFromWindow() {
+    @Override
+    protected void onDetachedFromWindow(){
         super.onDetachedFromWindow();
+        mValueAnimator.cancel();
     }
 }
