@@ -291,7 +291,6 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         if(mJTabStyle.needChildView() && tabsContainer.getChildCount() == 0 || isInEditMode() || mTabCount == 0) {
             return;
         }
-        System.out.println(mLastCheckedPosition);
         mJTabStyle.onDraw(canvas, tabsContainer, currentPositionOffset, mLastCheckedPosition);
     }
 
