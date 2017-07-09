@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Size;
 import android.support.v4.content.ContextCompat;
@@ -67,7 +68,9 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     private float currentPositionOffset = 0f;
     private List<TextPaint> mTextPaints = new ArrayList<>();
     private ValueAnimator mValueAnimator = ValueAnimator.ofFloat(1, 0).setDuration(400);
-    private int mLastLastCheckPosition = 0;
+    private int mLastLastCheckPosition = -1;
+    private int[] mIconIds = new int[1];
+    private int[][] mIconsIds = new int[1][2];
 
 
     public JPagerSlidingTabStrip(Context context){
@@ -305,9 +308,46 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         bindTitles(0, titles);
     }
 
+    /**
+     * 设置title的icon必须在bindTitles之前调用
+     *
+     * @param iconIds
+     */
+    public JPagerSlidingTabStrip coifigTabIcons(@DrawableRes @Size(min = 1) int... iconIds){
+        mIconIds = iconIds;
+        return this;
+    }
+
+    /**
+     * 两张图片为一组[选中,默认]
+     *
+     * @param iconsIds
+     * @return
+     */
+    public JPagerSlidingTabStrip coifigTabIcons(@DrawableRes @Size(min = 1) int[]... iconsIds){
+        mIconsIds = iconsIds;
+        return this;
+    }
+
     public void bindTitles(int current, String... titles){
-        for(int i = 0; i<titles.length; i++) {
-            addTextTab(i, titles[i]);
+        if(titles.length == 1) {
+            for(int i = 0; i<titles.length; i++) {
+                addTextTab(i, titles[i]);
+            }
+        }else {
+            if(titles.length == mIconsIds.length) {
+                for(int i = 0; i<titles.length; i++) {
+                    addIconTab(i, titles[i], mIconsIds[i][0], mIconsIds[i][1]);
+                }
+            }else if(titles.length == mIconIds.length) {
+                for(int i = 0; i<titles.length; i++) {
+                    addIconTab(i, titles[i], mIconIds[i]);
+                }
+            }else {
+                for(int i = 0; i<titles.length; i++) {
+                    addTextTab(i, titles[i]);
+                }
+            }
         }
         onItemTabClicked(current);
         setTag(current);
