@@ -46,7 +46,8 @@ public class PromptActivity extends AppCompatActivity {
             }
         });
 
-        tabStrip.bindTitles(5,"1", "2", "3","4","5","6");
+        tabStrip.bindTitles(3,"1", "2", "3","4","5","6");
+//        tabStrip.bindTitles("1", "2", "3","4","5","6");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {

@@ -53,7 +53,7 @@ public class DefaultTabStyle extends JTabStyle {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
             drawRoundRect(canvas, dp2dip(padingOffect), dp2dip(padingOffect), mLastTab.getRight()-dp2dip(padingOffect),
-                    this.mH-dp2dip(padingOffect), mOutRadio, mOutRadio, mDividerPaint);
+                    this.mH-dp2dip(padingOffect*1.5f), mOutRadio, mOutRadio, mDividerPaint);
         }
 
         if(mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {

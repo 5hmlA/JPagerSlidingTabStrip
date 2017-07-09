@@ -203,9 +203,9 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         }
         tab.setText(title);
         addTab(position, tab);
-//        if(mTabStyleDelegate.getCurrentPosition() == 0) {
-//            pageListener.onPageSelected(0);
-//        }
+        //        if(mTabStyleDelegate.getCurrentPosition() == 0) {
+        //            pageListener.onPageSelected(0);
+        //        }
     }
 
 
@@ -325,7 +325,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         }else {
             tabsContainer.setTag(true);
             mValueAnimator = ValueAnimator.ofFloat(1, 0);
-            if(mLastCheckedPosition<position) {
+            if(mLastCheckedPosition != -1 && mLastCheckedPosition<position) {
                 tabsContainer.setTag(false);
                 mValueAnimator = ValueAnimator.ofFloat(0, 1);
             }
@@ -349,6 +349,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     public void onAnimationStart(Animator animation){
         if(!( (Boolean)tabsContainer.getTag() )) {
             mLastCheckedPosition -= 1;
+            mLastCheckedPosition = Math.max(mLastCheckedPosition, 0);
         }
     }
 
