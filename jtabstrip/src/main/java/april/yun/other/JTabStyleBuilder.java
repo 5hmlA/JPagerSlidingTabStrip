@@ -1,6 +1,10 @@
 package april.yun.other;
 
 import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import april.yun.ISlidingTabStrip;
 import april.yun.tabstyle.DefaultTabStyle;
 import april.yun.tabstyle.DotsTabStyle;
@@ -13,6 +17,7 @@ public class JTabStyleBuilder {
     public static final int STYLE_DOTS = 2;
     public static final int STYLE_GRADIENT = -1;
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({ STYLE_DEFAULT, STYLE_ROUND, STYLE_DOTS }) public @interface TabStyle {}
 
 

@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import april.yun.ISlidingTabStrip;
 import april.yun.other.JTabStyleDelegate;
 import april.yun.widget.PromptView;
@@ -34,7 +35,7 @@ public abstract class JTabStyle {
     protected PromptView mCurrentTab;
     protected PromptView mNextTab;
     protected int mTabCounts;
-    protected float padingOffect = 0.3f;
+    protected float padingVerticalOffect = 0f;
     /**
      * x:left  y:fight <br>
      * the left and right position of indicator
@@ -52,59 +53,59 @@ public abstract class JTabStyle {
     protected boolean mScrollSelected;
 
 
-    public JTabStyle(ISlidingTabStrip slidingTabStrip) {
+    public JTabStyle(ISlidingTabStrip slidingTabStrip){
         mTabStyleDelegate = slidingTabStrip.getTabStyleDelegate();
         mTabStrip = slidingTabStrip;
-        mDividerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mDividerPaint.setStyle(Paint.Style.STROKE);
+        mDividerPaint = new Paint(Paint.ANTI_ALIAS_FLAG) {
+            {
+                setStyle(Paint.Style.STROKE);
+            }
+        };
         mIndicatorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mIndicatorPaint.setStyle(Paint.Style.FILL);
     }
 
 
-    public void onSizeChanged(int w, int h, int oldw, int oldh) {
-        float pading = dp2dip(0.5f);
-        mW = w - pading;
-        mH = h - pading;
+    public void onSizeChanged(int w, int h, int oldw, int oldh){
+        mW = w;
+        mH = h;
         mTabCounts = mTabStrip.getTabsContainer().getChildCount();
-        mLastTab = mTabStrip.getTabsContainer().getChildAt(mTabCounts - 1);
+        mLastTab = mTabStrip.getTabsContainer().getChildAt(mTabCounts-1);
     }
 
 
     public abstract void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition);
-    public void afterLayout(){};
 
+    public void afterLayout(){
+    }
 
-    public float dp2dip(float dp) {
+    public float dp2dip(float dp){
         DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, dm);
     }
 
 
-    public boolean needChildView() {
+    public boolean needChildView(){
         return true;
     }
 
 
-    protected void calcuteIndicatorLinePosition(ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition) {
-        if (mTabCounts > 0) {
+    protected void calcuteIndicatorLinePosition(ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition){
+        if(mTabCounts>0) {
 
             // default: line below current tab
-            mCurrentTab = (PromptView) tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition());
+            mCurrentTab = (PromptView)tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition());
 
             mLinePosition.x = mCurrentTab.getLeft();
             mLinePosition.y = mCurrentTab.getRight();
             // if there is an offset, start interpolating left and right coordinates between current and next tab
-            if (currentPositionOffset > 0f &&
-                    mTabStyleDelegate.getCurrentPosition() < tabsContainer.getChildCount() - 1) {
+            if(currentPositionOffset>0f && mTabStyleDelegate.getCurrentPosition()<tabsContainer.getChildCount()-1) {
 
-                mNextTab = (PromptView) tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition() + 1);
+                mNextTab = (PromptView)tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition()+1);
                 final float nextTabLeft = mNextTab.getLeft();
                 final float nextTabRight = mNextTab.getRight();
-                if (moveStyle == MOVESTYLE_DEFAULT) {
+                if(moveStyle == MOVESTYLE_DEFAULT) {
                     moveStyle_normal(currentPositionOffset, nextTabLeft, nextTabRight);
-                }
-                else {
+                }else {
                     moveStyle_sticky(currentPositionOffset, lastCheckedPosition, nextTabLeft, nextTabRight);
                 }
             }
@@ -112,81 +113,71 @@ public abstract class JTabStyle {
     }
 
 
-    protected void moveStyle_normal(float currentPositionOffset, float nextTabLeft, float nextTabRight) {
-        mLinePosition.x = (currentPositionOffset * nextTabLeft +
-                (1f - currentPositionOffset) * mLinePosition.x);
-        mLinePosition.y = (currentPositionOffset * nextTabRight +
-                (1f - currentPositionOffset) * mLinePosition.y);
+    protected void moveStyle_normal(float currentPositionOffset, float nextTabLeft, float nextTabRight){
+        mLinePosition.x = ( currentPositionOffset*nextTabLeft+( 1f-currentPositionOffset )*mLinePosition.x );
+        mLinePosition.y = ( currentPositionOffset*nextTabRight+( 1f-currentPositionOffset )*mLinePosition.y );
     }
 
 
-    protected void moveStyle_sticky(float currentPositionOffset, int lastCheckedPosition, float nextTabLeft, float nextTabRight) {
-        if (mTabStrip.getState() == ViewPager.SCROLL_STATE_DRAGGING ||
-                mTabStrip.getState() == ViewPager.SCROLL_STATE_IDLE) {
-            if (lastCheckedPosition == mTabStyleDelegate.getCurrentPosition()) {
+    protected void moveStyle_sticky(float currentPositionOffset, int lastCheckedPosition, float nextTabLeft, float nextTabRight){
+        if(mTabStrip.getState() == ViewPager.SCROLL_STATE_DRAGGING || mTabStrip
+                .getState() == ViewPager.SCROLL_STATE_IDLE) {
+            if(lastCheckedPosition == mTabStyleDelegate.getCurrentPosition()) {
                 mDragRight = true;
                 //Log.d(TAG, "indicator 往右滑动 ------>> ");
-            }
-            else {
+            }else {
                 mDragRight = false;
                 //Log.d(TAG, "往左 <<------");
             }
         }
-        if (mDragRight) {
+        if(mDragRight) {
             //                ------>>
-            if (currentPositionOffset >= 0.5) {
-                mLinePosition.x = (
-                        2 * (nextTabLeft - mLinePosition.x) * currentPositionOffset + 2 * mLinePosition.x -
-                                nextTabLeft);
+            if(currentPositionOffset>=0.5) {
+                mLinePosition.x = ( 2*( nextTabLeft-mLinePosition.x )*currentPositionOffset+2*mLinePosition.x-nextTabLeft );
             }
-            mLinePosition.y = (currentPositionOffset * nextTabRight +
-                    (1f - currentPositionOffset) * mLinePosition.y);
-        }
-        else {
+            mLinePosition.y = ( currentPositionOffset*nextTabRight+( 1f-currentPositionOffset )*mLinePosition.y );
+        }else {
             //                <<------
-            mLinePosition.x = (currentPositionOffset * nextTabLeft +
-                    (1f - currentPositionOffset) * mLinePosition.x);
-            if (currentPositionOffset <= 0.5) {
-                mLinePosition.y = (2 * (nextTabRight - mLinePosition.y) * currentPositionOffset +
-                        mLinePosition.y);
-            }
-            else {
+            mLinePosition.x = ( currentPositionOffset*nextTabLeft+( 1f-currentPositionOffset )*mLinePosition.x );
+            if(currentPositionOffset<=0.5) {
+                mLinePosition.y = ( 2*( nextTabRight-mLinePosition.y )*currentPositionOffset+mLinePosition.y );
+            }else {
                 mLinePosition.y = nextTabRight;
             }
         }
     }
 
 
-    protected void updateScrollDirection(boolean right) {
+    protected void updateScrollDirection(boolean right){
         mNextTab.setScroll2Checked(right);
         mCurrentTab.setScroll2Checked(!right);
     }
 
 
-    protected float getTabWidth(View tab) {
+    protected float getTabWidth(View tab){
         //要把tab外部的pading加上
-        return tab.getWidth() + mTabStyleDelegate.getTabPadding() * 2;
+        return tab.getWidth()+mTabStyleDelegate.getTabPadding()*2;
     }
 
 
     /**
      * 更新 tab栏中文字颜色 左右滑动颜色
      */
-    protected void updateTabTextScrollColor() {
-        if (isNeedUpdateTabSrcollColor()) {
+    protected void updateTabTextScrollColor(){
+        if(isNeedUpdateTabSrcollColor()) {
             //做往右相反
             updateScrollDirection(true);
-            mNextTab.setScrollOffset((mLinePosition.y - mNextTab.getLeft()) / getTabWidth(mNextTab));
-            mCurrentTab.setScrollOffset((mLinePosition.x - mCurrentTab.getLeft()) / getTabWidth(mCurrentTab));
+            mNextTab.setScrollOffset(( mLinePosition.y-mNextTab.getLeft() )/getTabWidth(mNextTab));
+            mCurrentTab.setScrollOffset(( mLinePosition.x-mCurrentTab.getLeft() )/getTabWidth(mCurrentTab));
         }
     }
 
 
-    public void afterSetViewPager(LinearLayout tabsContainer) {
-
-        mDividerPaint.setStrokeWidth(mTabStyleDelegate.getDividerWidth());
-        mDividerPaint.setStrokeWidth(mTabStyleDelegate.getDividerColor());
-        mIndicatorPaint.setColor(mTabStyleDelegate.getIndicatorColor());
+    public void afterSetViewPager(LinearLayout tabsContainer){
+        //
+        //        mDividerPaint.setStrokeWidth(mTabStyleDelegate.getDividerWidth());
+        //        mDividerPaint.setStrokeWidth(mTabStyleDelegate.getDividerColor());
+        //        mIndicatorPaint.setColor(mTabStyleDelegate.getIndicatorColor());
 
         mDividerPaint.setStrokeWidth(mTabStyleDelegate.getDividerWidth());
         mDividerPaint.setColor(mTabStyleDelegate.getDividerColor());
@@ -194,24 +185,23 @@ public abstract class JTabStyle {
     }
 
 
-    protected boolean isNeedUpdateTabSrcollColor() {
-        return mTabStyleDelegate.isNeedTabTextColorScrollUpdate() && mTabStyleDelegate.isShouldExpand() &&
-                mScrollSelected && mNextTab != null && mCurrentTab != null;
+    protected boolean isNeedUpdateTabSrcollColor(){
+        return mTabStyleDelegate.isNeedTabTextColorScrollUpdate() && mTabStyleDelegate
+                .isShouldExpand() && mScrollSelected && mNextTab != null && mCurrentTab != null;
     }
 
 
-    protected void drawRoundRect(Canvas canvas, float left, float top, float right, float bottom, float rx, float ry, Paint paint) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+    protected void drawRoundRect(Canvas canvas, float left, float top, float right, float bottom, float rx, float ry, Paint paint){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
             canvas.drawRoundRect(left, top, right, bottom, rx, ry, paint);
-        }
-        else {
+        }else {
             mRectF4round.set(left, top, right, bottom);
             canvas.drawRoundRect(mRectF4round, rx, ry, paint);
         }
     }
 
 
-    public void scrollSelected(boolean scrollSelected) {
+    public void scrollSelected(boolean scrollSelected){
         mScrollSelected = scrollSelected;
     }
 }

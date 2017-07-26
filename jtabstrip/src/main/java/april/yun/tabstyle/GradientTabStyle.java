@@ -55,7 +55,7 @@ public class GradientTabStyle extends JTabStyle {
 
     @Override public void onSizeChanged(int w, int h, int oldw, int oldh) {
 
-        mH = (int) (h - dp2dip(padingOffect));
+        mH = (int) (h - dp2dip(padingVerticalOffect));
         mTabCounts = mTabStrip.getTabsContainer().getChildCount();
         mLastTab = mTabStrip.getTabsContainer().getChildAt(mTabCounts - 1);
     }
@@ -69,8 +69,8 @@ public class GradientTabStyle extends JTabStyle {
         if (mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             rectPaint.setStrokeWidth(dp2dip(1));
-            canvas.drawRoundRect(dp2dip(padingOffect), dp2dip(padingOffect),
-                    mLastTab.getRight() - dp2dip(padingOffect), this.mH, mOutRadio, mOutRadio, rectPaint);
+            canvas.drawRoundRect(dp2dip(padingVerticalOffect), dp2dip(padingVerticalOffect),
+                    mLastTab.getRight() - dp2dip(padingVerticalOffect), this.mH, mOutRadio, mOutRadio, rectPaint);
         }
 
         if (mTabStrip.getState() == ViewPager.SCROLL_STATE_DRAGGING ||

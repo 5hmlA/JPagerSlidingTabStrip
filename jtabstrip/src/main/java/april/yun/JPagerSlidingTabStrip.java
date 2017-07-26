@@ -169,6 +169,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         setPadding(0, getPaddingTop(), 0, getPaddingBottom());
         if(!mTabStyleDelegate.isNotDrawIcon()) {
             if(mTabStyleDelegate.getTabIconGravity() == Gravity.NO_GRAVITY) {
+                setPadding(0, 0, 0, 0);//disable pading
                 if(resId.length>1) {
                     if(Build.VERSION.SDK_INT>Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
                         tab.setBackground(getListDrable(resId));
@@ -179,6 +180,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                     tab.setBackgroundResource(resId[0]);
                 }
             }else {
+
                 mTabStyleDelegate.setShouldExpand(true);
                 tab.setCompoundDrawablePadding(0);
                 Drawable tabIcon = ContextCompat.getDrawable(getContext(), resId[0]);
@@ -187,9 +189,13 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                 }
                 switch(mTabStyleDelegate.getTabIconGravity()) {
                     case Gravity.TOP:
+                        //有图片 需要设置pading不然可能图片和文字的pading很大
+                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
                         tab.setCompoundDrawablesWithIntrinsicBounds(null, tabIcon, null, null);
                         break;
                     case Gravity.BOTTOM:
+                        //有图片 需要设置pading不然可能图片和文字的pading很大
+                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
                         tab.setCompoundDrawablesWithIntrinsicBounds(null, null, null, tabIcon);
                         break;
                     case Gravity.LEFT:
@@ -228,7 +234,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         tab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v){
-                onItemTabClicked(position);
+                setCurrentPosition(position);
             }
         });
         tab.setPadding(mTabStyleDelegate.getTabPadding(), 0, mTabStyleDelegate.getTabPadding(), 0);
@@ -349,13 +355,13 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                 }
             }
         }
-        onItemTabClicked(current);
+        setCurrentPosition(current);
         setTag(current);
         mTabCount = titles.length;
         updateTabStyles();
     }
 
-    private void onItemTabClicked(int position){
+    public void setCurrentPosition(int position){
         setTag(position);
         if(mLastCheckedPosition == position || mValueAnimator.isRunning()) {
             return;

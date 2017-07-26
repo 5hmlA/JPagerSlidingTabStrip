@@ -59,7 +59,7 @@
             android:layout_height="35dip"/>
     </FrameLayout>
 
-    <april.yun.JPagerSlidingTabStrip2
+    <april.yun.JPagerSlidingTabStrip
         android:id="@+id/tab_buttom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

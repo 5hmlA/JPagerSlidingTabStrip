@@ -6,6 +6,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.view.View;
 import android.view.ViewGroup;
+
 import april.yun.ISlidingTabStrip;
 
 /**
@@ -18,65 +19,68 @@ import april.yun.ISlidingTabStrip;
 public class RoundTabStyle extends JTabStyle {
 
     private float mOutRadio;
-    private float mH;
     private Path mClipath;
 
     private static final String TAG = RoundTabStyle.class.getSimpleName();
 
 
-    public RoundTabStyle(ISlidingTabStrip slidingTabStrip) {
+    public RoundTabStyle(ISlidingTabStrip slidingTabStrip){
         super(slidingTabStrip);
     }
 
 
-    @Override public void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override
+    public void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w, h, oldw, oldh);
-        mH = h - dp2dip(padingOffect);
+//        mH = h;
     }
 
     @Override
     public void afterLayout(){
-        if (mLastTab != null) {
-            getClipPath(dp2dip(padingOffect), mLastTab.getRight());
-            mOutRadio = mTabStyleDelegate.getCornerRadio() == 0 ? mH / 2 : mTabStyleDelegate.getCornerRadio();
+        if(mLastTab != null) {
+            getClipPath(padingVerticalOffect, mLastTab.getRight());
+            mOutRadio = mTabStyleDelegate.getCornerRadio() == 0 ? mH/2 : mTabStyleDelegate.getCornerRadio();
         }
     }
 
-    private void getClipPath(float pading, float width) {
-        RectF clip = new RectF(pading, pading, width - pading, mH);
+    private void getClipPath(float pading, float width){
+        RectF clip = new RectF(pading, pading, width-pading, mH-pading);
         mClipath = new Path();
-        mClipath.addRoundRect(clip, mH / 2f, mH / 2f, Path.Direction.CCW);
+        mClipath.addRoundRect(clip, mH/2f, mH/2f, Path.Direction.CCW);
     }
 
 
     @Override
-    public void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition) {
+    public void onDraw(Canvas canvas, ViewGroup tabsContainer, float currentPositionOffset, int lastCheckedPosition){
 
         updateTabTextScrollColor();
 
-        if (mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
-            //画边框
-            mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
-            drawRoundRect(canvas, dp2dip(padingOffect), dp2dip(padingOffect),
-                    mLastTab.getRight() - dp2dip(padingOffect), this.mH, mOutRadio, mOutRadio, mDividerPaint);
-        }
-        if (mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {
+        if(mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {
             // draw underline
             mIndicatorPaint.setColor(mTabStyleDelegate.getUnderlineColor());
-            canvas.drawRect(0, mH - mTabStyleDelegate.getUnderlineHeight(), tabsContainer.getWidth(), mH,
-                    mIndicatorPaint);
+            canvas.drawRect(padingVerticalOffect, mH-padingVerticalOffect-mTabStyleDelegate.getUnderlineHeight(),
+                    tabsContainer.getWidth(), mH, mIndicatorPaint);
         }
 
-        if (mTabStyleDelegate.getDividerColor() != Color.TRANSPARENT) {
+        if(mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
+            //画边框
+            mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
+            drawRoundRect(canvas, padingVerticalOffect+mTabStyleDelegate.getDividerWidth()/2,
+                    padingVerticalOffect+mTabStyleDelegate.getDividerWidth()/2,
+                    mLastTab.getRight()-mTabStyleDelegate.getDividerWidth()/2-padingVerticalOffect,
+                    this.mH-mTabStyleDelegate.getDividerWidth()/2-padingVerticalOffect, mOutRadio, mOutRadio, mDividerPaint);
+        }
+
+        if(mTabStyleDelegate.getDividerColor() != Color.TRANSPARENT) {
             // draw divider
             mDividerPaint.setColor(mTabStyleDelegate.getDividerColor());
-            for (int i = 0; i < tabsContainer.getChildCount() - 1; i++) {
+            for(int i = 0; i<tabsContainer.getChildCount()-1; i++) {
                 View tab = tabsContainer.getChildAt(i);
-                canvas.drawLine(tab.getRight(), mTabStyleDelegate.getDividerPadding(), tab.getRight(),
-                        mH - mTabStyleDelegate.getDividerPadding(), mDividerPaint);
+                canvas.drawLine(tab.getRight(), padingVerticalOffect+mTabStyleDelegate.getDividerPadding(),
+                        tab.getRight(), mH-mTabStyleDelegate.getDividerPadding()-padingVerticalOffect, mDividerPaint);
             }
         }
-        if (mTabStyleDelegate.getIndicatorColor() != Color.TRANSPARENT&&mClipath!=null) {
+        if(mTabStyleDelegate.getIndicatorColor() != Color.TRANSPARENT && mClipath != null) {
             int save = canvas.save();
             canvas.clipPath(mClipath);
             // draw indicator line
@@ -85,7 +89,7 @@ public class RoundTabStyle extends JTabStyle {
             calcuteIndicatorLinePosition(tabsContainer, currentPositionOffset, lastCheckedPosition);
 
             //draw indicator
-            canvas.drawRect(mLinePosition.x, 0, mLinePosition.y, mH, mIndicatorPaint);
+            canvas.drawRect(mLinePosition.x, padingVerticalOffect, mLinePosition.y, mH-padingVerticalOffect, mIndicatorPaint);
             canvas.restoreToCount(save);
         }
     }

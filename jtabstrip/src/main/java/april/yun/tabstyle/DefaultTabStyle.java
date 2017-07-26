@@ -32,12 +32,11 @@ public class DefaultTabStyle extends JTabStyle {
     }
 
 
-    @Override
-    public void onSizeChanged(int w, int h, int oldw, int oldh){
-        super.onSizeChanged(w, h, oldw, oldh);
-        float pading = dp2dip(padingOffect);
-        mH = h-pading;
-    }
+//    @Override
+//    public void onSizeChanged(int w, int h, int oldw, int oldh){
+//        super.onSizeChanged(w, h, oldw, oldh);
+//        mH = h;
+//    }
 
 
     @Override
@@ -46,21 +45,24 @@ public class DefaultTabStyle extends JTabStyle {
         if(mTabStyleDelegate.getBackgroundColor() != Color.TRANSPARENT) {
             //画背景
             mIndicatorPaint.setColor(mTabStyleDelegate.getBackgroundColor());
-            drawRoundRect(canvas, dp2dip(padingOffect), dp2dip(padingOffect), mLastTab.getRight()-dp2dip(padingOffect),
-                    this.mH, mOutRadio, mOutRadio, mIndicatorPaint);
+            drawRoundRect(canvas, padingVerticalOffect, padingVerticalOffect, mLastTab.getRight()-padingVerticalOffect,
+                    this.mH-padingVerticalOffect, mOutRadio, mOutRadio, mIndicatorPaint);
         }
         if(mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
-            drawRoundRect(canvas, dp2dip(padingOffect), dp2dip(padingOffect), mLastTab.getRight()-dp2dip(padingOffect),
-                    this.mH-dp2dip(padingOffect*1.5f), mOutRadio, mOutRadio, mDividerPaint);
+            drawRoundRect(canvas, padingVerticalOffect+mTabStyleDelegate.getDividerWidth()/2,
+                    padingVerticalOffect+mTabStyleDelegate.getDividerWidth()/2,
+                    mLastTab.getRight()-mTabStyleDelegate.getDividerWidth()/2-padingVerticalOffect,
+                    this.mH-padingVerticalOffect-mTabStyleDelegate.getDividerWidth()/2, mOutRadio, mOutRadio,
+                    mDividerPaint);
         }
 
         if(mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {
             // draw underline
             mIndicatorPaint.setColor(mTabStyleDelegate.getUnderlineColor());
-            canvas.drawRect(0, mH-mTabStyleDelegate.getUnderlineHeight(), tabsContainer.getWidth(), mH,
-                    mIndicatorPaint);
+            canvas.drawRect(padingVerticalOffect, mH-mTabStyleDelegate.getUnderlineHeight(),
+                    tabsContainer.getWidth()-padingVerticalOffect, mH-padingVerticalOffect, mIndicatorPaint);
         }
 
         if(mTabStyleDelegate.getDividerColor() != Color.TRANSPARENT) {
@@ -86,12 +88,16 @@ public class DefaultTabStyle extends JTabStyle {
                         mOutRadio, mOutRadio, mIndicatorPaint);
             }else if(mTabStyleDelegate.getIndicatorHeight()>=0) {
                 //画在底部
-                drawRoundRect(canvas, mLinePosition.x, mH-mTabStyleDelegate.getIndicatorHeight(), mLinePosition.y,
-                        mH+dp2dip(padingOffect), mOutRadio, mOutRadio, mIndicatorPaint);
+                drawRoundRect(canvas, mLinePosition.x+padingVerticalOffect,
+                        mH-mTabStyleDelegate.getIndicatorHeight()-padingVerticalOffect,
+                        mLinePosition.y-padingVerticalOffect, mH-padingVerticalOffect, mOutRadio, mOutRadio,
+                        mIndicatorPaint);
             }else {
                 //IndicatorHeight<0 画在顶部
-                drawRoundRect(canvas, mLinePosition.x, 0, mLinePosition.y, -mTabStyleDelegate.getIndicatorHeight(),
-                        mOutRadio, mOutRadio, mIndicatorPaint);
+                drawRoundRect(canvas, mLinePosition.x+padingVerticalOffect, padingVerticalOffect,
+                        mLinePosition.y-padingVerticalOffect,
+                        padingVerticalOffect-mTabStyleDelegate.getIndicatorHeight(), mOutRadio, mOutRadio,
+                        mIndicatorPaint);
             }
         }
     }

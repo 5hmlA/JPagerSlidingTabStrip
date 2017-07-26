@@ -33,4 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:minHeight="@dimen/sug_event_tabheight"/>
+    <april.yun.JPagerSlidingTabStrip
+        android:layout_margin="10dp"
+        android:id="@+id/tabs2"
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="@dimen/sug_event_tabheight"/>
 </LinearLayout>

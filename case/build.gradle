@@ -19,12 +19,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
+    repositories {
+        flatDir {
+            dirs 'libs' //this way we can find the .aar file in libs folder
+        }
+    }}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:${project.supportlV}"
     compile 'org.greenrobot:eventbus:3.0.0'
+
+//    compile(name:'jtabstrip-release', ext:'aar')
     compile project(':jtabstrip')
     //    compile 'com.yun.ospl:jtabstrip:1.3'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
