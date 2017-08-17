@@ -18,6 +18,7 @@ import april.yun.ISlidingTabStrip;
 public class DefaultTabStyle extends JTabStyle {
 
     private float mOutRadio = 0;
+    private float top;
 
 
     public DefaultTabStyle(ISlidingTabStrip slidingTabStrip){
@@ -32,11 +33,11 @@ public class DefaultTabStyle extends JTabStyle {
     }
 
 
-//    @Override
-//    public void onSizeChanged(int w, int h, int oldw, int oldh){
-//        super.onSizeChanged(w, h, oldw, oldh);
-//        mH = h;
-//    }
+    //    @Override
+    //    public void onSizeChanged(int w, int h, int oldw, int oldh){
+    //        super.onSizeChanged(w, h, oldw, oldh);
+    //        mH = h;
+    //    }
 
 
     @Override
@@ -51,10 +52,11 @@ public class DefaultTabStyle extends JTabStyle {
         if(mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
-            drawRoundRect(canvas, padingVerticalOffect+mTabStyleDelegate.getDividerWidth()/2,
-                    padingVerticalOffect+mTabStyleDelegate.getDividerWidth()/2,
-                    mLastTab.getRight()-mTabStyleDelegate.getDividerWidth()/2-padingVerticalOffect,
-                    this.mH-padingVerticalOffect-mTabStyleDelegate.getDividerWidth()/2, mOutRadio, mOutRadio,
+            mDividerPaint.setStrokeWidth(mTabStyleDelegate.getFrameWidth());
+            drawRoundRect(canvas, padingVerticalOffect+mTabStyleDelegate.getFrameWidth()/2f+1,
+                    padingVerticalOffect+mTabStyleDelegate.getFrameWidth()/2f+1,
+                    mLastTab.getRight()-mTabStyleDelegate.getFrameWidth()/2f-1-padingVerticalOffect,
+                    this.mH-padingVerticalOffect-mTabStyleDelegate.getFrameWidth()/2f-1, mOutRadio, mOutRadio,
                     mDividerPaint);
         }
 
@@ -68,6 +70,7 @@ public class DefaultTabStyle extends JTabStyle {
         if(mTabStyleDelegate.getDividerColor() != Color.TRANSPARENT) {
             // draw divider
             mDividerPaint.setColor(mTabStyleDelegate.getDividerColor());
+            mDividerPaint.setColor(mTabStyleDelegate.getDividerWidth());
             for(int i = 0; i<tabsContainer.getChildCount()-1; i++) {
                 View tab = tabsContainer.getChildAt(i);
                 canvas.drawLine(tab.getRight(), mTabStyleDelegate.getDividerPadding(), tab.getRight(),
@@ -80,25 +83,52 @@ public class DefaultTabStyle extends JTabStyle {
             mIndicatorPaint.setColor(mTabStyleDelegate.getIndicatorColor());
             calcuteIndicatorLinePosition(tabsContainer, currentPositionOffset, lastCheckedPosition);
             //draw indicator
+            float left = 0;
+            float top = 0;
+            float right = 0;
+            float bottom = 0;
             if(mTabStyleDelegate.getIndicatorHeight()>=mH/2) {
                 //画在中间
                 int halfIndHeight = mTabStyleDelegate.getIndicatorHeight()/2;
                 float indPading = mH/2-halfIndHeight;
-                drawRoundRect(canvas, mLinePosition.x+indPading, indPading, mLinePosition.y-indPading, mH-indPading,
-                        mOutRadio, mOutRadio, mIndicatorPaint);
+
+                left = mLinePosition.x+indPading;
+                top = indPading;
+                right = mLinePosition.y-indPading;
+                bottom = mH-indPading;
+
+                //                drawRoundRect(canvas, mLinePosition.x+indPading, indPading, mLinePosition.y-indPading, mH-indPading,
+                //                        mOutRadio, mOutRadio, mIndicatorPaint);
             }else if(mTabStyleDelegate.getIndicatorHeight()>=0) {
                 //画在底部
-                drawRoundRect(canvas, mLinePosition.x+padingVerticalOffect,
-                        mH-mTabStyleDelegate.getIndicatorHeight()-padingVerticalOffect,
-                        mLinePosition.y-padingVerticalOffect, mH-padingVerticalOffect, mOutRadio, mOutRadio,
-                        mIndicatorPaint);
+                left = mLinePosition.x+padingVerticalOffect;
+                top = mH-mTabStyleDelegate.getIndicatorHeight()-padingVerticalOffect;
+                right = mLinePosition.y-padingVerticalOffect;
+                bottom = mH-padingVerticalOffect;
+                //                drawRoundRect(canvas, left,
+                //                        mH-mTabStyleDelegate.getIndicatorHeight()-padingVerticalOffect,
+                //                        mLinePosition.y-padingVerticalOffect, mH-padingVerticalOffect, mOutRadio, mOutRadio,
+                //                        mIndicatorPaint);
             }else {
                 //IndicatorHeight<0 画在顶部
-                drawRoundRect(canvas, mLinePosition.x+padingVerticalOffect, padingVerticalOffect,
-                        mLinePosition.y-padingVerticalOffect,
-                        padingVerticalOffect-mTabStyleDelegate.getIndicatorHeight(), mOutRadio, mOutRadio,
-                        mIndicatorPaint);
+                //                drawRoundRect(canvas, left, padingVerticalOffect,
+                //                        mLinePosition.y-padingVerticalOffect,
+                //                        padingVerticalOffect-mTabStyleDelegate.getIndicatorHeight(), mOutRadio, mOutRadio,
+                //                        mIndicatorPaint);
+                left = mLinePosition.x+padingVerticalOffect;
+                top = padingVerticalOffect;
+                right = mLinePosition.y-padingVerticalOffect;
+                bottom = padingVerticalOffect-mTabStyleDelegate.getIndicatorHeight();
             }
+            int underLineFixWidth = mTabStyleDelegate.getUnderLineFixWidth();
+            if(underLineFixWidth>0) {
+                //                float tabWidth = mLinePosition.y-mLinePosition.x;
+                float tabWidth = mCurrentTab.getWidth();
+                underLineFixWidth = (int)Math.min(underLineFixWidth, tabWidth);
+                left = mLinePosition.x+tabWidth/2-underLineFixWidth/2;
+                right = mLinePosition.y-tabWidth/2+underLineFixWidth/2;
+            }
+            drawRoundRect(canvas, left, top, right, bottom, mOutRadio, mOutRadio, mIndicatorPaint);
         }
     }
 }

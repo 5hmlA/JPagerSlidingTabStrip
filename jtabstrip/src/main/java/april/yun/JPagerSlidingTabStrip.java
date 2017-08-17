@@ -182,7 +182,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
             }else {
 
                 mTabStyleDelegate.setShouldExpand(true);
-                tab.setCompoundDrawablePadding(0);
+                tab.setCompoundDrawablePadding(mTabStyleDelegate.getDrawablePading());
                 Drawable tabIcon = ContextCompat.getDrawable(getContext(), resId[0]);
                 if(resId.length>1) {
                     tabIcon = getListDrable(resId);
@@ -190,12 +190,12 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                 switch(mTabStyleDelegate.getTabIconGravity()) {
                     case Gravity.TOP:
                         //有图片 需要设置pading不然可能图片和文字的pading很大
-                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
+//                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
                         tab.setCompoundDrawablesWithIntrinsicBounds(null, tabIcon, null, null);
                         break;
                     case Gravity.BOTTOM:
                         //有图片 需要设置pading不然可能图片和文字的pading很大
-                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
+//                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
                         tab.setCompoundDrawablesWithIntrinsicBounds(null, null, null, tabIcon);
                         break;
                     case Gravity.LEFT:

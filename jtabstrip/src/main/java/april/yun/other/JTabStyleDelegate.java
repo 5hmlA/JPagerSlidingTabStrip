@@ -72,6 +72,9 @@ public class JTabStyleDelegate {
     private int mBackgroundColor;
     private boolean mNeedTabTextColorScrollUpdate;
     private int mMaxLines = 1;
+    private int mDrawablePading;
+    private float mFrameWidth;
+    private int mUnderLineFixWidth;
 
     public JTabStyleDelegate obtainAttrs(ISlidingTabStrip tabStrip, AttributeSet attrs, Context context) {
         mTabStrip = tabStrip;mContext = context;
@@ -469,5 +472,30 @@ public class JTabStyleDelegate {
 
     public void setMaxLines(int maxLines){
         mMaxLines = maxLines;
+    }
+
+
+    public int getDrawablePading(){
+        return mDrawablePading;
+    }
+
+    public void setDrawablePading(int drawablePading){
+        mDrawablePading = drawablePading;
+    }
+
+    public float getFrameWidth(){
+        return mFrameWidth;
+    }
+
+    public void setFrameWidth(float frameWidth){
+        mFrameWidth = frameWidth;
+    }
+
+    public int getUnderLineFixWidth(){
+        return mUnderLineFixWidth;
+    }
+
+    public void setUnderLineFixWidth(int underLineFixWidth){
+        mUnderLineFixWidth = underLineFixWidth;
     }
 }
