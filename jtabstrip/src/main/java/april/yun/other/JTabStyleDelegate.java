@@ -18,6 +18,7 @@ import april.yun.tabstyle.JTabStyle;
 import april.yun.widget.PromptView;
 import com.jonas.librarys.R;
 
+import static android.R.attr.drawablePadding;
 import static april.yun.other.JTabStyleBuilder.STYLE_DEFAULT;
 
 /**
@@ -48,8 +49,7 @@ public class JTabStyleDelegate {
     //边框颜色
     private int mFrameColor = Color.TRANSPARENT;
     // @formatter:off
-    private static final int[] ATTRS = new int[]{android.R.attr.textSize, android.R.attr.textColor};
-
+    private static final int[] ATTRS = new int[]{android.R.attr.textSize, android.R.attr.textColor, drawablePadding};
 
     private boolean shouldExpand = true;
     private boolean textAllCaps = false;
@@ -79,7 +79,6 @@ public class JTabStyleDelegate {
     public JTabStyleDelegate obtainAttrs(ISlidingTabStrip tabStrip, AttributeSet attrs, Context context) {
         mTabStrip = tabStrip;mContext = context;
         DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
-        scrollOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, scrollOffset, dm);
         indicatorHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indicatorHeight, dm);
         underlineHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, underlineHeight, dm);
         dividerPadding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dividerPadding, dm);
@@ -93,11 +92,11 @@ public class JTabStyleDelegate {
 
         tabTextSize = a.getDimensionPixelSize(0, tabTextSize);
         tabTextColor = a.getColor(1, tabTextColor);
+        mDrawablePading = a.getDimensionPixelSize(2, mDrawablePading);
 
         a.recycle();
 
         // get custom attrs
-
         a = context.obtainStyledAttributes(attrs, R.styleable.PagerSlidingTabStrip);
 
         indicatorColor = a.getColor(R.styleable.PagerSlidingTabStrip_pstsIndicatorColor, indicatorColor);

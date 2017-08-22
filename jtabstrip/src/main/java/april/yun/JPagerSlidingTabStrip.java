@@ -53,7 +53,9 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     private JTabStyle mJTabStyle;
     private int mLastCheckedPosition = -1;
     private int mState = -1;
-
+    int mDrawablePadding;
+//            case com.android.internal.R.styleable.TextView_drawablePadding:
+//    drawablePadding = a.getDimensionPixelSize(attr, drawablePadding);
     private LinearLayout.LayoutParams defaultTabLayoutParams;
     private LinearLayout.LayoutParams expandedTabLayoutParams;
 
@@ -85,6 +87,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
     public JPagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle){
         super(context, attrs, defStyle);
+
         setFillViewport(true);
         setWillNotDraw(false);
         tabsContainer = new LinearLayout(context);
@@ -105,7 +108,6 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         mTabStyleDelegate = new JTabStyleDelegate().obtainAttrs(this, attrs, getContext());
         mJTabStyle = mTabStyleDelegate.getJTabStyle();
     }
-
 
     public void bindViewPager(ViewPager pager){
         this.pager = pager;
@@ -190,12 +192,12 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                 switch(mTabStyleDelegate.getTabIconGravity()) {
                     case Gravity.TOP:
                         //有图片 需要设置pading不然可能图片和文字的pading很大
-//                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
+                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
                         tab.setCompoundDrawablesWithIntrinsicBounds(null, tabIcon, null, null);
                         break;
                     case Gravity.BOTTOM:
                         //有图片 需要设置pading不然可能图片和文字的pading很大
-//                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
+                        expandedTabLayoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1.0f);
                         tab.setCompoundDrawablesWithIntrinsicBounds(null, null, null, tabIcon);
                         break;
                     case Gravity.LEFT:
@@ -287,6 +289,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w, h, oldw, oldh);
+        scrollOffset = mTabStyleDelegate.getScrollOffset();
         if(!mJTabStyle.needChildView() || tabsContainer.getChildCount()>0) {
             mJTabStyle.onSizeChanged(w, h, oldw, oldh);
         }

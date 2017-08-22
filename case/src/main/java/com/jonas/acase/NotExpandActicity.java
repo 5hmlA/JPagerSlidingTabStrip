@@ -189,7 +189,7 @@ public class NotExpandActicity extends FragmentActivity {
                         .setUnderlineColor(Color.parseColor("#3045C01A"))
                         .setUnderlineHeight(0)
                         .setIndicatorColor(Color.parseColor("#7045C01A"))
-                        .setIndicatorHeight(getDimen(R.dimen.sug_event_tabheight));
+                        .setIndicatorHeight(getDimen(R.dimen.sug_event_tabheight)).setScrollOffset(200);
     }
 
 
