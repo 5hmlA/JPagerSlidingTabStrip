@@ -40,4 +40,19 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:minHeight="@dimen/sug_event_tabheight"/>
+
+    <april.yun.widget.PromptImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:src="@mipmap/ic_launcher"/>
+
+    <april.yun.widget.PromptTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_marginTop="9dp"
+        android:text="通知公告"/>
 </LinearLayout>

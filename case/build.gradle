@@ -33,6 +33,6 @@ dependencies {
 //    compile(name:'jtabstrip-release', ext:'aar')
     compile project(':jtabstrip')
     //    compile 'com.yun.ospl:jtabstrip:1.3'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
+//    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     compile 'com.android.support:design:25.2.0'
 }

@@ -26,6 +26,7 @@
         <activity
             android:name=".PromptActivity"
             android:label="@string/title_activity_prompt"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
