@@ -48,6 +48,7 @@ import april.yun.widget.PromptView;
 public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlidingTabStrip, ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
 
     private static final String TAG = JPagerSlidingTabStrip.class.getSimpleName();
+    public static String PROMPTMSGFORMART = "%d";
     private JTabStyleDelegate mTabStyleDelegate;
     private int scrollOffset = 52;
     private JTabStyle mJTabStyle;
@@ -165,6 +166,8 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
             return;
         }
         PromptView tab = new PromptView(getContext());
+        tab.setGravity(Gravity.CENTER);
+        tab.MSGFORMART = PROMPTMSGFORMART;
         tab.setMaxLines(mTabStyleDelegate.getMaxLines());
         tab.setColor_bg(mTabStyleDelegate.getPromptBgColor());
         tab.setColor_num(mTabStyleDelegate.getPromptNumColor());

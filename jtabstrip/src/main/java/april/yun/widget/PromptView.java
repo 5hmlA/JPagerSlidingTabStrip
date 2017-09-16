@@ -199,7 +199,9 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
                 //画提示圆点即可
                 canvas.drawCircle(mPromptCenterPoint.x, mPromptCenterPoint.y, mNumHeight/2, mBgPaint);
             }else {
-                canvas.drawRoundRect(mMsgBg, mNumHeight, mNumHeight, mBgPaint);
+                if(color_bg != Color.TRANSPARENT) {
+                    canvas.drawRoundRect(mMsgBg, mNumHeight, mNumHeight, mBgPaint);
+                }
                 canvas.drawText(msg_str, mPromptCenterPoint.x, mPromptCenterPoint.y+mNumHeight/2, mNumPaint);
             }
         }

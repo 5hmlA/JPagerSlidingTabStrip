@@ -85,6 +85,7 @@ public class NotExpandActicity extends FragmentActivity {
             showPromptMsg(tabs_up1);
             showPromptMsg(tabs_up2);
             showPromptMsg(tabs_up3);
+            tabs_buttom.getTabStyleDelegate().setPromptBgColor(Color.TRANSPARENT);
             showPromptMsg(tabs_buttom);
         }
     }
@@ -232,7 +233,7 @@ public class NotExpandActicity extends FragmentActivity {
 
 
         @Override public int getCount() {
-            return 2*mTitles.length;
+            return mTitles.length;
             //return mTitles.length;
             //return 1;
         }

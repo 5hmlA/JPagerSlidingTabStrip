@@ -51,4 +51,38 @@ public class PromptImageView extends android.support.v7.widget.AppCompatImageVie
         mPromptHelper.setPromptMsg(SuperPrompt.NOTIFY);
         return this;
     }
+
+
+    public PromptImageView forcePromptCircle(){
+        mPromptHelper.forcePromptCircle(true);
+        return this;
+    }
+
+
+    /**
+     * @param offset
+     *         px
+     * @return
+     */
+    public PromptImageView setPromptOffset(int offset){
+        mPromptHelper.setPromptOutOffset(offset);
+        return this;
+    }
+
+    public PromptImageView centerVertical(){
+        mPromptHelper.centerVertical(true);
+        return this;
+    }
+
+
+    public PromptImageView configPrompt(int promptBgColor, int promptColor){
+        mPromptHelper.setColor_bg(promptBgColor).setColor_num(promptBgColor);
+        return this;
+    }
+
+    @Override
+    protected void onDetachedFromWindow(){
+        super.onDetachedFromWindow();
+        mPromptHelper.cancelAni();
+    }
 }

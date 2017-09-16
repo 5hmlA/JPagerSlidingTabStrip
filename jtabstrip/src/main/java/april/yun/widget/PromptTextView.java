@@ -13,7 +13,7 @@ import android.util.AttributeSet;
  * @another 江祖赟
  * @date 2017/9/12 0012.
  */
-public class PromptTextView extends android.support.v7.widget.AppCompatTextView {
+public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTextView {
 
     private SuperPrompt mPromptHelper;
 
@@ -27,14 +27,15 @@ public class PromptTextView extends android.support.v7.widget.AppCompatTextView 
 
     public PromptTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
+
         mPromptHelper = new SuperPrompt(this) {
             @Override
             protected void refreshNotifyBg(){
                 float textWidth = getTextWidth(getPaint(), getText().toString());
                 float msgWidth = getTextWidth(mNumPaint, msg_str);
                 //prompt背景和 prompt文字的offset
-                float promptOffset = mNumHeight/2;
-                mHalfMsgBgW = msgWidth/2f+promptOffset;
+                mPromptOffset = mPromptOffset == 0 ? mNumHeight/2f : mPromptOffset;
+                mHalfMsgBgW = msgWidth/2f+mPromptOffset;
                 mHalfMsgBgH = mNumHeight;
                 mHalfMsgBgW = mHalfMsgBgW>mNumHeight ? mHalfMsgBgW : mNumHeight;
 
@@ -48,7 +49,7 @@ public class PromptTextView extends android.support.v7.widget.AppCompatTextView 
                 //compoundDrawables size allways 4
                 Drawable[] compoundDrawables = getCompoundDrawables();
                 if(!haveCompoundDrawable(compoundDrawables)) {
-                    promptOffset = -promptOffset/3;
+                    mPromptOffset = -mPromptOffset/3;
                 }
 
                 mPointCenterY = mHalfH-getTextHeight(getPaint(), getText().toString())*getLineCount()/2f-mNumHeight/2f;
@@ -68,23 +69,17 @@ public class PromptTextView extends android.support.v7.widget.AppCompatTextView 
 
                 mPromptCenterPoint = new PointF(mHalfW+textWidth/2+mHalfMsgBgW/2f, mPointCenterY);
 
+                if(mForcePromptCircle) {
+                    mPromptRoundConor = mHalfMsgBgH = mHalfMsgBgW;
+                }else if(mPromptRoundConor == 0) {
+                    mPromptRoundConor = mNumHeight;
+                }
+
                 mMsgBg = new RectF(mPromptCenterPoint.x-mHalfMsgBgW, mPromptCenterPoint.y-mHalfMsgBgH,
                         mPromptCenterPoint.x+mHalfMsgBgW, mPromptCenterPoint.y+mHalfMsgBgH);
 
-                if(mPromptOutOffset != null) {
-                    mPromptCenterPoint.offset(-mPromptOutOffset[0], mPromptOutOffset[1]);
-                    mMsgBg.offset(-mPromptOutOffset[0], mPromptOutOffset[1]);
-                }
-                //防止画到屏幕外  右上角
-                if(mMsgBg.right>2*mHalfW || mMsgBg.top<0) {
-                    //顺序不可变 因为mPromptCenterPoint依赖mMsgBg
-                    float offsetX = 2*mHalfW-mMsgBg.right;
-                    offsetX = offsetX<0 ? offsetX : 0;
-                    float offsetY = mMsgBg.top<0 ? -mMsgBg.top : 0;
-                    mPromptCenterPoint.offset(offsetX, offsetY);
-                    mMsgBg.offset(offsetX, offsetY);
-                }
-                mPointCenterY = mPromptCenterPoint.y;
+                //位置检查
+                checkPromptPosition();
             }
         };
     }
@@ -110,8 +105,52 @@ public class PromptTextView extends android.support.v7.widget.AppCompatTextView 
         return this;
     }
 
+    public PromptTextView setPromptMsg(int num){
+        mPromptHelper.setPromptMsg(mPromptHelper.getMsgByNum(num));
+        return this;
+    }
+
     public PromptTextView showNotify(){
         mPromptHelper.setPromptMsg(SuperPrompt.NOTIFY);
         return this;
+    }
+
+
+    public PromptTextView forcePromptCircle(){
+        mPromptHelper.forcePromptCircle(true);
+        return this;
+    }
+
+
+    /**
+     * @param offset
+     *         px
+     * @return
+     */
+    public PromptTextView setPromptOffset(int offset){
+        mPromptHelper.setPromptOutOffset(offset);
+        return this;
+    }
+
+    public PromptTextView centerVertical(){
+        mPromptHelper.centerVertical(true);
+        return this;
+    }
+
+    public PromptTextView asOnlyNum(){
+        mPromptHelper.asNewMsgNums();
+        return this;
+    }
+
+
+    public PromptTextView configPrompt(int promptBgColor, int promptColor){
+        mPromptHelper.setColor_bg(promptBgColor).setColor_num(promptColor);
+        return this;
+    }
+
+    @Override
+    protected void onDetachedFromWindow(){
+        super.onDetachedFromWindow();
+        mPromptHelper.cancelAni();
     }
 }

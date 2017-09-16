@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
 
 import april.yun.ISlidingTabStrip;
@@ -32,8 +33,8 @@ public abstract class JTabStyle {
     protected ISlidingTabStrip mTabStrip;
     protected boolean mDragRight;
     //indicator往左 <<------mCurrentTab和nextTab意义相反
-    protected PromptView mCurrentTab;
-    protected PromptView mNextTab;
+    protected CheckedTextView mCurrentTab;
+    protected CheckedTextView mNextTab;
     protected int mTabCounts;
     protected float padingVerticalOffect = 0f;
     /**
@@ -93,14 +94,14 @@ public abstract class JTabStyle {
         if(mTabCounts>0) {
 
             // default: line below current tab
-            mCurrentTab = (PromptView)tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition());
+            mCurrentTab = (CheckedTextView)tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition());
 
             mLinePosition.x = mCurrentTab.getLeft();
             mLinePosition.y = mCurrentTab.getRight();
             // if there is an offset, start interpolating left and right coordinates between current and next tab
             if(currentPositionOffset>0f && mTabStyleDelegate.getCurrentPosition()<tabsContainer.getChildCount()-1) {
 
-                mNextTab = (PromptView)tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition()+1);
+                mNextTab = (CheckedTextView)tabsContainer.getChildAt(mTabStyleDelegate.getCurrentPosition()+1);
                 final float nextTabLeft = mNextTab.getLeft();
                 final float nextTabRight = mNextTab.getRight();
                 if(moveStyle == MOVESTYLE_DEFAULT) {
@@ -149,8 +150,10 @@ public abstract class JTabStyle {
 
 
     protected void updateScrollDirection(boolean right){
-        mNextTab.setScroll2Checked(right);
-        mCurrentTab.setScroll2Checked(!right);
+        if(mNextTab instanceof PromptView) {
+            ( (PromptView)mNextTab ).setScroll2Checked(right);
+            ( (PromptView)mCurrentTab ).setScroll2Checked(!right);
+        }
     }
 
 
@@ -167,8 +170,10 @@ public abstract class JTabStyle {
         if(isNeedUpdateTabSrcollColor()) {
             //做往右相反
             updateScrollDirection(true);
-            mNextTab.setScrollOffset(( mLinePosition.y-mNextTab.getLeft() )/getTabWidth(mNextTab));
-            mCurrentTab.setScrollOffset(( mLinePosition.x-mCurrentTab.getLeft() )/getTabWidth(mCurrentTab));
+            if(mNextTab instanceof PromptView) {
+                ( (PromptView)mNextTab ).setScrollOffset(( mLinePosition.y-mNextTab.getLeft() )/getTabWidth(mNextTab));
+                ( (PromptView)mCurrentTab ).setScrollOffset(( mLinePosition.x-mCurrentTab.getLeft() )/getTabWidth(mCurrentTab));
+            }
         }
     }
 

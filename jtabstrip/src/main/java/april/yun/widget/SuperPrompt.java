@@ -27,7 +27,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     protected static final String TAG = "SuperPrompt";
     public static final String NOTIFY = "n";
     public static final String ALOT = "~";
-    protected static final int SHOWTIME = 666;
+    public static final int SHOWTIME = 666;
     public static String MSGFORMART = "%d";
     protected Paint mBgPaint;
     protected Paint mNumPaint;
@@ -37,6 +37,9 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     protected float mHalfW;
     protected float mNumHeight;
     protected String msg_str = "";
+    /**
+     * prompt矩阵 中点
+     */
     protected PointF mPromptCenterPoint;
     protected RectF mMsgBg;
     //protected static final String ALOT = "...~~";
@@ -44,18 +47,30 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     protected ValueAnimator mShowAni;
     //是否要清楚消息
     protected boolean msgIs_dirty;
-    protected boolean mIsAniShow;
+    protected boolean mIsAniShow = true;
+    protected boolean mForcePromptCircle = true;
+    protected boolean mCenterVertical;
     protected float[] mPromptOutOffset;
     protected View mView;
+    /**
+     * 提示背景 的 中点Y
+     */
     protected float mPointCenterY;
     protected float mHalfH;
     protected float mHalfMsgBgW;
     protected float mHalfMsgBgH;
+    protected float mPromptRoundConor;
+    /**
+     * 文字与背景边框的距离
+     */
+    protected float mPromptOffset;
+
 
     public static float dp2px(float px){
         DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px, dm);
     }
+
 
     {
         mNumPaint = new Paint(Paint.ANTI_ALIAS_FLAG) {
@@ -75,14 +90,17 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         mShowAni.addUpdateListener(this);
     }
 
+
     public SuperPrompt(View view){
         mView = view;
     }
+
 
     public static float getFontHeight(Paint paint){
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         return -fontMetrics.top-fontMetrics.bottom;
     }
+
 
     protected boolean haveCompoundDrawable(Drawable[] compoundDrawables){
         for(Drawable compoundDrawable : compoundDrawables) {
@@ -93,14 +111,18 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         return false;
     }
 
+
     protected void onSizeChanged(int w, int h, int oldw, int oldh){
         mHalfW = w/2f;
         mHalfH = h/2f;
         mNumPaint.setTextSize(dp2px(num_size));
         mNumHeight = getFontHeight(mNumPaint);
-        refreshNotifyBg();
-        startShowAni();
+        if(!TextUtils.isEmpty(msg_str)) {
+            refreshNotifyBg();
+            startShowAni();
+        }
     }
+
 
     public SuperPrompt asNewMsgNums(){
         color_bg = Color.TRANSPARENT;
@@ -110,19 +132,22 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         return this;
     }
 
+
     private float getHalfMsgBgW(){
         return calcutePosition(false, true);
     }
+
 
     private float getCenterPointX(boolean isX){
         return calcutePosition(isX, false);
     }
 
+
     private float calcutePosition(boolean isX, Boolean getHalfMsgBgW){
         float msgWidth = getTextWidth(mNumPaint, msg_str);
         //prompt背景和 prompt文字的offset
         float promptOffset = mNumHeight/2f;
-        float centerY = mNumHeight;
+        float centerY = mPromptRoundConor = mNumHeight;
         //prompt 背景的宽度
         float halfMsgBgW = msgWidth/2f+promptOffset;
         if(color_bg != Color.TRANSPARENT && !NOTIFY.equals(msg_str)) {
@@ -144,15 +169,19 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         }
     }
 
+
     /**
      * 更新 promptView的位置
      */
     protected void refreshNotifyBg(){
         float msgWidth = getTextWidth(mNumPaint, msg_str);
         //prompt背景和 prompt文字的offset
-        float promptOffset = mNumHeight/2f;
-        mHalfMsgBgW = msgWidth/2f+promptOffset;
+        mPromptOffset = mPromptOffset == 0 ? mNumHeight/2f : mPromptOffset;
+        mHalfMsgBgW = msgWidth/2f+mPromptOffset;
         mHalfMsgBgH = mNumHeight;
+        //if (mPromptRoundConor == 0) {
+        //    mPromptRoundConor = mNumHeight;
+        //}
         mPointCenterY = mNumHeight;
         if(color_bg != Color.TRANSPARENT && !NOTIFY.equals(msg_str)) {
             mHalfMsgBgW = mHalfMsgBgW>mNumHeight ? mHalfMsgBgW : mNumHeight;
@@ -167,20 +196,55 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
             mPromptCenterPoint = new PointF(mHalfW*2-mHalfMsgBgW, mPointCenterY);
         }
 
+        if(mForcePromptCircle) {
+            mPromptRoundConor = mHalfMsgBgH = mHalfMsgBgW;
+        }else if(mPromptRoundConor == 0) {
+            mPromptRoundConor = mNumHeight;
+        }
+
         mMsgBg = new RectF(mPromptCenterPoint.x-mHalfMsgBgW, mPromptCenterPoint.y-mHalfMsgBgH,
                 mPromptCenterPoint.x+mHalfMsgBgW, mPromptCenterPoint.y+mHalfMsgBgH);
+
+        //位置检查
+        checkPromptPosition();
+    }
+
+
+    /**
+     * 防止 prompt绘制到控件外
+     */
+    protected void checkPromptPosition(){
+        //根据设置 移动prompt
         if(mPromptOutOffset != null) {
             mPromptCenterPoint.offset(-mPromptOutOffset[0], mPromptOutOffset[1]);
             mMsgBg.offset(-mPromptOutOffset[0], mPromptOutOffset[1]);
         }
-        //防止画到屏幕外  右上角
-        if(mMsgBg.right>2*mHalfW || mMsgBg.top<0) {
+        float offsetX = 0;
+        float offsetY = 0;
+        //左右
+        if(mMsgBg.right>2*mHalfW) {
+            offsetX = 2*mHalfW-mMsgBg.right;//右边 左移 -
+        }else if(mMsgBg.left<0) {
+            //在左边 右移 +
+            offsetX = -mMsgBg.left;
+        }
+        //上下
+        if(mMsgBg.top<0) {
+            offsetY = -mMsgBg.top;//上面 下移 +
+        }else if(mMsgBg.bottom>2*mHalfH) {
+            //在下面 往上移 -
+            offsetY = 2*mHalfH-mMsgBg.bottom;
+        }
+        if(offsetX != 0 || offsetY != 0) {
             //顺序不可变 因为mPromptCenterPoint依赖mMsgBg
-            float offsetX = 2*mHalfW-mMsgBg.right;
-            offsetX = offsetX<0 ? offsetX : 0;
-            float offsetY = mMsgBg.top<0 ? -mMsgBg.top : 0;
             mPromptCenterPoint.offset(offsetX, offsetY);
             mMsgBg.offset(offsetX, offsetY);
+        }
+        //prompt移动的水平居中
+        if(mCenterVertical) {
+            float offset2CenterY = mHalfH-mMsgBg.centerY();
+            mPromptCenterPoint.offset(0, offset2CenterY);
+            mMsgBg.offset(0, offset2CenterY);
         }
         mPointCenterY = mPromptCenterPoint.y;
     }
@@ -193,12 +257,13 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
                 canvas.drawCircle(mPromptCenterPoint.x, mPromptCenterPoint.y, mNumHeight/2, mBgPaint);
             }else {
                 if(color_bg != Color.TRANSPARENT) {
-                    canvas.drawRoundRect(mMsgBg, mNumHeight, mNumHeight, mBgPaint);
+                    canvas.drawRoundRect(mMsgBg, mPromptRoundConor, mPromptRoundConor, mBgPaint);
                 }
                 canvas.drawText(msg_str, mPromptCenterPoint.x, mPromptCenterPoint.y+mNumHeight/2, mNumPaint);
             }
         }
     }
+
 
     public static int computeMaxStringWidth(int currentMax, String[] strings, Paint p){
         float maxWidthF = 0.0f;
@@ -214,6 +279,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         return maxWidth;
     }
 
+
     public static float getTextWidth(Paint paint, String str){
         //                Rect bounds = new Rect();
         //                paint.getTextBounds(str, 0, str.length(), bounds);
@@ -221,12 +287,9 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         return paint.measureText(str);
     }
 
+
     /**
      * 获取单个文字的高度 比较准确
-     *
-     * @param paint
-     * @param str
-     * @return
      */
     public static int getTextHeight(Paint paint, String str){
         Rect bounds = new Rect();
@@ -234,12 +297,9 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         return bounds.bottom-bounds.top;
     }
 
+
     /**
      * 获取单个字符文字的高度
-     *
-     * @param paint
-     * @param str
-     * @return
      */
     public static float getTextHeight2(Paint paint, String str){
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
@@ -275,6 +335,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         mLastMsg = msg;
         return this;
     }
+
 
     @SuppressLint("DefaultLocale")
     public String getMsgByNum(int num){
@@ -332,6 +393,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         return this;
     }
 
+
     @Override
     public void onAnimationUpdate(ValueAnimator animation){
         float ratio = (float)animation.getAnimatedValue();
@@ -346,9 +408,11 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         invalidatePrompt();
     }
 
+
     private void invalidatePrompt(){
         mView.invalidate();
     }
+
 
     public SuperPrompt setPromptOutOffset(@Size(value = 2) float[] promptOutOffset){
         mPromptOutOffset = promptOutOffset;
@@ -360,4 +424,42 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         return this;
     }
 
+
+    public boolean isAniShow(){
+        return mIsAniShow;
+    }
+
+
+    public void setAniShow(boolean aniShow){
+        mIsAniShow = aniShow;
+    }
+
+
+    public boolean isForcePromptCircle(){
+        return mForcePromptCircle;
+    }
+
+
+    public void forcePromptCircle(boolean forcePromptCircle){
+        mForcePromptCircle = forcePromptCircle;
+    }
+
+
+    public boolean isCenterVertical(){
+        return mCenterVertical;
+    }
+
+
+    public void centerVertical(boolean centerVertical){
+        mCenterVertical = centerVertical;
+    }
+
+
+    public float[] getPromptOutOffset(){
+        return mPromptOutOffset;
+    }
+
+    public void cancelAni(){
+        mShowAni.cancel();
+    }
 }

@@ -56,7 +56,7 @@
     <april.yun.JPagerSlidingTabStrip2
         android:id="@+id/tab_buttom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:padding="5dp"/>
     <!--<april.yun.JPagerSlidingTabStrip-->
     <!--android:id="@+id/tab_buttom"-->
