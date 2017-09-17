@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 /**
  * @another 江祖赟
@@ -31,6 +32,27 @@ public class PromptImageView extends android.support.v7.widget.AppCompatImageVie
         super.onSizeChanged(w, h, oldw, oldh);
         mPromptHelper.onSizeChanged(w, h, oldw, oldh);
     }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        if(isClickable()) {
+            switch(event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    setColorFilter(mPromptHelper.mDimColorFilter);
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                    clearColorFilter();
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    clearColorFilter();
+                    invalidate();
+                    break;
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
 
     @Override
     protected void onDraw(Canvas canvas){

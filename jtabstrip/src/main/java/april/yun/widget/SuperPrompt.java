@@ -5,11 +5,16 @@ import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Size;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -64,6 +69,55 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
      * 文字与背景边框的距离
      */
     protected float mPromptOffset;
+
+    public static final int MASK_HINT_COLOR = 0x99000000;
+    /**
+     * 变暗
+     */
+    public static final float[] SELECTED_DARK = new float[]
+            {1, 0, 0, 0, -80,
+                    0, 1, 0, 0, -80,
+                    0, 0, 1, 0, -80,
+                    0, 0, 0, 1, 0};
+    /**
+     * 变亮
+     */
+
+    public static final float[] SELECTED_BRIGHT = new float[]
+            {1, 0, 0, 0, 80,
+                    0, 1, 0, 0, 80,
+                    0, 0, 1, 0, 80,
+                    0, 0, 0, 1, 0};
+
+    /**
+     * 高对比度
+     */
+
+    public static final float[] SELECTED_HDR = new float[]
+            {5, 0, 0, 0, -250,
+                    0, 5, 0, 0, -250,
+                    0, 0, 5, 0, -250,
+                    0, 0, 0, 1, 0};
+
+    /**
+     * 高饱和度
+     */
+    public static final float[] SELECTED_HSAT = new float[]
+            {(float) 3, (float) -2, (float) -0.2, 0, 50,
+                    -1, 2, -0, 0, 50,
+                    -1, -2, 4, 0, 50,
+                    0, 0, 0, 1, 0};
+
+    /**
+     * 改变色调
+     */
+    public static final float[] SELECTED_DISCOLOR = new float[]
+            {(float) -0.5, (float) -0.6, (float) -0.8, 0, 0,
+                    (float) -0.4, (float) -0.6, (float) -0.1, 0, 0,
+                    (float) -0.3, 2, (float) -0.4, 0, 0,
+                    0, 0, 0, 1, 0};
+
+    public ColorFilter mDimColorFilter = new ColorMatrixColorFilter(SELECTED_DARK);
 
 
     public static float dp2px(float px){
@@ -457,6 +511,18 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
 
     public float[] getPromptOutOffset(){
         return mPromptOutOffset;
+    }
+
+    public void setDimMask(){
+        mDimColorFilter = new PorterDuffColorFilter(MASK_HINT_COLOR, PorterDuff.Mode.DARKEN);
+    }
+
+    public void setDimMask(float[] filter){
+        mDimColorFilter = new ColorMatrixColorFilter(filter);
+    }
+
+    public void setDimMask(@ColorInt int filter){
+        mDimColorFilter = new PorterDuffColorFilter(filter, PorterDuff.Mode.DARKEN);
     }
 
     public void cancelAni(){
