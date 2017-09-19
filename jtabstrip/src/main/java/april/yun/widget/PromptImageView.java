@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.jonas.librarys.R;
+
 /**
  * @another 江祖赟
  * @date 2017/9/12 0012.
@@ -25,6 +27,7 @@ public class PromptImageView extends android.support.v7.widget.AppCompatImageVie
     public PromptImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
         mPromptHelper = new SuperPrompt(this);
+        mPromptHelper.mIsAniShow = getContext().getResources().getBoolean(R.bool.jtabstrip_anishow);
     }
 
     @Override

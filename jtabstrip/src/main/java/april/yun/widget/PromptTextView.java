@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.jonas.librarys.R;
+
 /**
  * @another 江祖赟
  * @date 2017/9/12 0012.
@@ -82,6 +84,8 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
                 checkPromptPosition();
             }
         };
+
+        mPromptHelper.mIsAniShow = getContext().getResources().getBoolean(R.bool.jtabstrip_anishow);
     }
 
     @Override

@@ -65,6 +65,7 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
     private int mColorForChecked;
     private int mColorForNormal;
     private boolean mChecked2 = true;
+    private boolean mIsAniShow;
 
 
     public static float dp2px(float px){
@@ -103,6 +104,7 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
         //mShowAni.setInterpolator(new AccelerateDecelerateInterpolator());
         mShowAni.addUpdateListener(this);
         setTag(R.id.jtabstrip_prompt_last, DOTSNOTIFY);//存储上一次显示的内容
+        mIsAniShow = getContext().getResources().getBoolean(R.bool.jtabstrip_anishow);
     }
 
 
@@ -224,7 +226,6 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
         return bounds.width();
     }
 
-
     /**
      * 当num的值小于0 显示提示小圆点
      * 等于0 不现实任何
@@ -240,10 +241,16 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
             msg_str = ALOT;
         }else if(num == 0) {
             //清除消息
-            msgIs_dirty = !msgIs_dirty;
+            msgIs_dirty = true;
+            if(!mIsAniShow) {
+                mLastMsg = msg_str = "";
+                invalidate();
+                return this;
+            }
         }else if(num<0) {
             msg_str = NOTIFY;
         }else {
+            msgIs_dirty = false;
             msg_str = String.format(MSGFORMART, num);
         }
         Log.d(TAG, "num: "+num);
@@ -257,7 +264,7 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
 
     private void startShowAni(){
         //为空表示不显示提示信息，清除提示信息会把msg_str置为空但是在动画结束之后
-        if(!TextUtils.isEmpty(msg_str)) {
+        if(!TextUtils.isEmpty(msg_str) && mIsAniShow) {
             if(msgIs_dirty) {//移除消息
                 Log.d(TAG, "remove prompt msg");
                 mLastMsg = "";

@@ -52,7 +52,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     protected ValueAnimator mShowAni;
     //是否要清楚消息
     protected boolean msgIs_dirty;
-    protected boolean mIsAniShow = true;
+    public boolean mIsAniShow;
     protected boolean mForcePromptCircle = true;
     protected boolean mCenterVertical;
     protected float[] mPromptOutOffset;
