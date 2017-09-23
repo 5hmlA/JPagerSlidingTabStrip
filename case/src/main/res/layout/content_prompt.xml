@@ -55,7 +55,6 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         android:padding="18dp"
-        android:gravity="center"
         android:layout_marginTop="9dp"
         android:text="Conta"/>
 </LinearLayout>

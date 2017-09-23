@@ -6,8 +6,11 @@ import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
 
 import com.jonas.librarys.R;
 
@@ -33,6 +36,9 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
         mPromptHelper = new SuperPrompt(this) {
             @Override
             protected void refreshNotifyBg(){
+                if(TextUtils.isEmpty(getText())) {
+                    return;
+                }
                 float textWidth = getTextWidth(getPaint(), getText().toString());
                 float msgWidth = getTextWidth(mNumPaint, msg_str);
                 //prompt背景和 prompt文字的offset
@@ -70,6 +76,21 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
                 }
 
                 mPromptCenterPoint = new PointF(mHalfW+textWidth/2+mHalfMsgBgW/2f, mPointCenterY);
+                if(( getGravity()&Gravity.LEFT ) == Gravity.LEFT || ( getGravity()&Gravity.START ) == Gravity.START) {
+                    int padleft = getPaddingLeft();
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        padleft = Math.max(getPaddingLeft(), getPaddingStart());
+                    }
+                    mPromptCenterPoint.x = padleft+textWidth+mHalfMsgBgW/2f;
+                    //                    mPromptCenterPoint.y = mPointCenterY;
+                }else if(( getGravity()&Gravity.END ) == Gravity.END || ( getGravity()&Gravity.RIGHT ) == Gravity.RIGHT) {
+                    int paddingRight = getPaddingRight();
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                        paddingRight = Math.max(getPaddingRight(),getPaddingEnd());
+                    }
+                    mPromptCenterPoint.x = mHalfW*2-( paddingRight+textWidth+mHalfMsgBgW/2f );
+                    //                    mPromptCenterPoint.y = mPointCenterY;
+                }
 
                 if(mForcePromptCircle) {
                     mPromptRoundConor = mHalfMsgBgH = mHalfMsgBgW;
@@ -84,9 +105,10 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
                 checkPromptPosition();
             }
         };
-
+        setPromptMsg("90");
         mPromptHelper.mIsAniShow = getContext().getResources().getBoolean(R.bool.jtabstrip_anishow);
     }
+
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh){
