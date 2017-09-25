@@ -14,13 +14,16 @@ import android.view.Gravity;
 
 import com.jonas.librarys.R;
 
+import april.yun.other.IPrompt;
+
 /**
  * @another 江祖赟
  * @date 2017/9/12 0012.
  */
-public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTextView {
+public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTextView implements IPrompt {
 
     private SuperPrompt mPromptHelper;
+    private boolean mPromptRight;
 
     public PromptTextView(Context context){
         this(context, null);
@@ -36,76 +39,80 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
         mPromptHelper = new SuperPrompt(this) {
             @Override
             protected void refreshNotifyBg(){
-                if(TextUtils.isEmpty(getText())) {
-                    return;
-                }
-                float textWidth = getTextWidth(getPaint(), getText().toString());
-                float msgWidth = getTextWidth(mNumPaint, msg_str);
-                //prompt背景和 prompt文字的offset
-                mPromptOffset = mPromptOffset == 0 ? mNumHeight/2f : mPromptOffset;
-                mHalfMsgBgW = msgWidth/2f+mPromptOffset;
-                mHalfMsgBgH = mNumHeight;
-                mHalfMsgBgW = mHalfMsgBgW>mNumHeight ? mHalfMsgBgW : mNumHeight;
-
-                //                if(!TextUtils.isEmpty(getText())) {
-                //                    //textWidth的宽度不小于3个字的宽度
-                //                    textWidth = getText().length()<3 ? textWidth/getText().length()*3 : textWidth;
-                //                }else {
-                //                    textWidth = (int)( mHalfW*2 );
-                //                }
-
-                //compoundDrawables size allways 4
-                Drawable[] compoundDrawables = getCompoundDrawables();
-                if(!haveCompoundDrawable(compoundDrawables)) {
-                    mPromptOffset = -mPromptOffset/3;
-                }
-
-                mPointCenterY = mHalfH-getTextHeight(getPaint(), getText().toString())*getLineCount()/2f-mNumHeight/2f;
-
-                if(color_bg != Color.TRANSPARENT && !NOTIFY.equals(msg_str)) {
-                    mHalfMsgBgW = mHalfMsgBgW>mNumHeight ? mHalfMsgBgW : mNumHeight;
-                    mPointCenterY += mHalfMsgBgH/3f;
+                if(mPromptRight) {
+                    //提示信息固定 右上角 和 默认superPrompt一样
+                    super.refreshNotifyBg();
                 }else {
-                    if(NOTIFY.equals(msg_str)) {
-                        mHalfMsgBgH = mHalfMsgBgW = mNumHeight/2f;
-                        mPointCenterY += mHalfMsgBgH;
+                    if(TextUtils.isEmpty(getText())) {
+                        return;
+                    }
+                    float textWidth = getTextWidth(getPaint(), getText().toString());
+                    float msgWidth = getTextWidth(mNumPaint, msg_str);
+                    //prompt背景和 prompt文字的offset
+                    mPromptOffset = mPromptOffset == 0 ? mNumHeight/2f : mPromptOffset;
+                    mHalfMsgBgW = msgWidth/2f+mPromptOffset;
+                    mHalfMsgBgH = mNumHeight;
+                    mHalfMsgBgW = mHalfMsgBgW>mNumHeight ? mHalfMsgBgW : mNumHeight;
+
+                    //                if(!TextUtils.isEmpty(getText())) {
+                    //                    //textWidth的宽度不小于3个字的宽度
+                    //                    textWidth = getText().length()<3 ? textWidth/getText().length()*3 : textWidth;
+                    //                }else {
+                    //                    textWidth = (int)( mHalfW*2 );
+                    //                }
+
+                    //compoundDrawables size allways 4
+                    Drawable[] compoundDrawables = getCompoundDrawables();
+                    if(!haveCompoundDrawable(compoundDrawables)) {
+                        mPromptOffset = -mPromptOffset/3;
+                    }
+
+                    mPointCenterY = mHalfH-getTextHeight(getPaint(),
+                            getText().toString())*getLineCount()/2f-mNumHeight/2f;
+
+                    if(color_bg != Color.TRANSPARENT && !NOTIFY.equals(msg_str)) {
+                        mHalfMsgBgW = mHalfMsgBgW>mNumHeight ? mHalfMsgBgW : mNumHeight;
+                        mPointCenterY += mHalfMsgBgH/3f;
                     }else {
-                        mHalfMsgBgW = msgWidth/2f;
-                        mHalfMsgBgH = mNumHeight/2f;
+                        if(NOTIFY.equals(msg_str)) {
+                            mHalfMsgBgH = mHalfMsgBgW = mNumHeight/2f;
+                            mPointCenterY += mHalfMsgBgH;
+                        }else {
+                            mHalfMsgBgW = msgWidth/2f;
+                            mHalfMsgBgH = mNumHeight/2f;
+                        }
                     }
-                }
-
-                mPromptCenterPoint = new PointF(mHalfW+textWidth/2+mHalfMsgBgW/2f, mPointCenterY);
-                if(( getGravity()&Gravity.LEFT ) == Gravity.LEFT || ( getGravity()&Gravity.START ) == Gravity.START) {
-                    int padleft = getPaddingLeft();
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        padleft = Math.max(getPaddingLeft(), getPaddingStart());
+                    mPromptCenterPoint = new PointF(mHalfW+textWidth/2+mHalfMsgBgW/2f, mPointCenterY);
+                    if(( getGravity()&Gravity.LEFT ) == Gravity.LEFT || ( getGravity()&Gravity.START ) == Gravity.START) {
+                        int padleft = getPaddingLeft();
+                        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            padleft = Math.max(getPaddingLeft(), getPaddingStart());
+                        }
+                        mPromptCenterPoint.x = padleft+textWidth+mHalfMsgBgW/2f;
+                        //                    mPromptCenterPoint.y = mPointCenterY;
+                    }else if(( getGravity()&Gravity.END ) == Gravity.END || ( getGravity()&Gravity.RIGHT ) == Gravity.RIGHT) {
+                        int paddingRight = getPaddingRight();
+                        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                            paddingRight = Math.max(getPaddingRight(), getPaddingEnd());
+                        }
+                        mPromptCenterPoint.x = mHalfW*2-( paddingRight+textWidth+mHalfMsgBgW/2f );
+                        //                    mPromptCenterPoint.y = mPointCenterY;
                     }
-                    mPromptCenterPoint.x = padleft+textWidth+mHalfMsgBgW/2f;
-                    //                    mPromptCenterPoint.y = mPointCenterY;
-                }else if(( getGravity()&Gravity.END ) == Gravity.END || ( getGravity()&Gravity.RIGHT ) == Gravity.RIGHT) {
-                    int paddingRight = getPaddingRight();
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        paddingRight = Math.max(getPaddingRight(),getPaddingEnd());
+
+                    if(mForcePromptCircle) {
+                        mPromptRoundConor = mHalfMsgBgH = mHalfMsgBgW;
+                    }else if(mPromptRoundConor == 0) {
+                        mPromptRoundConor = mNumHeight;
                     }
-                    mPromptCenterPoint.x = mHalfW*2-( paddingRight+textWidth+mHalfMsgBgW/2f );
-                    //                    mPromptCenterPoint.y = mPointCenterY;
+
+                    mMsgBg = new RectF(mPromptCenterPoint.x-mHalfMsgBgW, mPromptCenterPoint.y-mHalfMsgBgH,
+                            mPromptCenterPoint.x+mHalfMsgBgW, mPromptCenterPoint.y+mHalfMsgBgH);
+
+                    //位置检查
+                    checkPromptPosition();
                 }
-
-                if(mForcePromptCircle) {
-                    mPromptRoundConor = mHalfMsgBgH = mHalfMsgBgW;
-                }else if(mPromptRoundConor == 0) {
-                    mPromptRoundConor = mNumHeight;
-                }
-
-                mMsgBg = new RectF(mPromptCenterPoint.x-mHalfMsgBgW, mPromptCenterPoint.y-mHalfMsgBgH,
-                        mPromptCenterPoint.x+mHalfMsgBgW, mPromptCenterPoint.y+mHalfMsgBgH);
-
-                //位置检查
-                checkPromptPosition();
             }
         };
-        setPromptMsg("90");
         mPromptHelper.mIsAniShow = getContext().getResources().getBoolean(R.bool.jtabstrip_anishow);
     }
 
@@ -147,7 +154,6 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
         return this;
     }
 
-
     /**
      * @param offset
      *         px
@@ -178,5 +184,13 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
     protected void onDetachedFromWindow(){
         super.onDetachedFromWindow();
         mPromptHelper.cancelAni();
+    }
+
+    public boolean isPromptRight(){
+        return mPromptRight;
+    }
+
+    public void fixedPromptRight(boolean promptRight){
+        mPromptRight = promptRight;
     }
 }

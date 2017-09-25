@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 
 import april.yun.other.JTabStyleDelegate;
+import april.yun.other.OntheSamePositionClickListener;
 import april.yun.other.SavedState;
 import april.yun.tabstyle.JTabStyle;
 import april.yun.widget.PromptView;
@@ -55,8 +56,8 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     private int mLastCheckedPosition = -1;
     private int mState = -1;
     int mDrawablePadding;
-//            case com.android.internal.R.styleable.TextView_drawablePadding:
-//    drawablePadding = a.getDimensionPixelSize(attr, drawablePadding);
+    //            case com.android.internal.R.styleable.TextView_drawablePadding:
+    //    drawablePadding = a.getDimensionPixelSize(attr, drawablePadding);
     private LinearLayout.LayoutParams defaultTabLayoutParams;
     private LinearLayout.LayoutParams expandedTabLayoutParams;
 
@@ -74,6 +75,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     private int mLastLastCheckPosition = -1;
     private int[] mIconIds = new int[1];
     private int[][] mIconsIds = new int[1][2];
+    private OntheSamePositionClickListener mSamePositionClickListener;
 
 
     public JPagerSlidingTabStrip(Context context){
@@ -370,9 +372,11 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     public void setCurrentPosition(int position){
         setTag(position);
         if(mLastCheckedPosition == position || mValueAnimator.isRunning()) {
-            return;
-        }
-        if(pager != null) {
+            if(mSamePositionClickListener != null) {
+                mSamePositionClickListener.onClickTheSamePosition(mLastCheckedPosition);
+                return;
+            }
+        } if(pager != null) {
             pager.setCurrentItem(position);
         }else {
             tabsContainer.setTag(true);
@@ -557,5 +561,10 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     protected void onDetachedFromWindow(){
         super.onDetachedFromWindow();
         mValueAnimator.cancel();
+    }
+
+    public JPagerSlidingTabStrip setOntheSamePositionClickListener(OntheSamePositionClickListener samePositionClickListener){
+        mSamePositionClickListener = samePositionClickListener;
+        return this;
     }
 }

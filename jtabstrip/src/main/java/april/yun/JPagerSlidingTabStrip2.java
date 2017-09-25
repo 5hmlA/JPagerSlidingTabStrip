@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Locale;
 
 import april.yun.other.JTabStyleDelegate;
+import april.yun.other.OntheSamePositionClickListener;
 import april.yun.other.SavedState;
 import april.yun.tabstyle.JTabStyle;
 import april.yun.widget.PromptTextView;
@@ -72,7 +73,8 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
     private int mLastLastCheckPosition = -1;
     private int[] mIconIds = new int[1];
     private int[][] mIconsIds = new int[1][2];
-    public boolean mPromptOnlyNum ;
+    public boolean mPromptOnlyNum;
+    private OntheSamePositionClickListener mSamePositionClickListener;
 
 
     public JPagerSlidingTabStrip2(Context context){
@@ -367,6 +369,9 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
     public void setCurrentPosition(int position){
         setTag(position);
         if(mLastCheckedPosition == position || mValueAnimator.isRunning()) {
+            if(mSamePositionClickListener != null) {
+                mSamePositionClickListener.onClickTheSamePosition(position);
+            }
             return;
         }
         if(pager != null) {
@@ -562,4 +567,10 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
         super.onDetachedFromWindow();
         mValueAnimator.cancel();
     }
+
+    public JPagerSlidingTabStrip2 setOntheSamePositionClickListener(OntheSamePositionClickListener samePositionClickListener){
+        mSamePositionClickListener = samePositionClickListener;
+        return this;
+    }
+
 }

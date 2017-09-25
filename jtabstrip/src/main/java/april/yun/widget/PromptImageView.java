@@ -8,11 +8,13 @@ import android.view.MotionEvent;
 
 import com.jonas.librarys.R;
 
+import april.yun.other.IPrompt;
+
 /**
  * @another 江祖赟
  * @date 2017/9/12 0012.
  */
-public class PromptImageView extends android.support.v7.widget.AppCompatImageView {
+public class PromptImageView extends android.support.v7.widget.AppCompatImageView implements IPrompt {
 
     private SuperPrompt mPromptHelper;
 
@@ -102,6 +104,12 @@ public class PromptImageView extends android.support.v7.widget.AppCompatImageVie
 
     public PromptImageView configPrompt(int promptBgColor, int promptColor){
         mPromptHelper.setColor_bg(promptBgColor).setColor_num(promptBgColor);
+        return this;
+    }
+
+    @Override
+    public IPrompt asOnlyNum(){
+        mPromptHelper.asNewMsgNums();
         return this;
     }
 

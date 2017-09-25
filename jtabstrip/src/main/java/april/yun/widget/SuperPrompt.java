@@ -156,7 +156,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     }
 
 
-    protected boolean haveCompoundDrawable(Drawable[] compoundDrawables){
+    public boolean haveCompoundDrawable(Drawable[] compoundDrawables){
         for(Drawable compoundDrawable : compoundDrawables) {
             if(compoundDrawable != null) {
                 return true;
@@ -166,7 +166,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     }
 
 
-    protected void onSizeChanged(int w, int h, int oldw, int oldh){
+    public void onSizeChanged(int w, int h, int oldw, int oldh){
         mHalfW = w/2f;
         mHalfH = h/2f;
         mNumPaint.setTextSize(dp2px(num_size));
