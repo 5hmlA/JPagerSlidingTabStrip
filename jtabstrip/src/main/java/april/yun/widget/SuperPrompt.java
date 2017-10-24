@@ -74,48 +74,28 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     /**
      * 变暗
      */
-    public static final float[] SELECTED_DARK = new float[]
-            {1, 0, 0, 0, -80,
-                    0, 1, 0, 0, -80,
-                    0, 0, 1, 0, -80,
-                    0, 0, 0, 1, 0};
+    public static final float[] SELECTED_DARK = new float[]{1, 0, 0, 0, -80, 0, 1, 0, 0, -80, 0, 0, 1, 0, -80, 0, 0, 0, 1, 0};
     /**
      * 变亮
      */
 
-    public static final float[] SELECTED_BRIGHT = new float[]
-            {1, 0, 0, 0, 80,
-                    0, 1, 0, 0, 80,
-                    0, 0, 1, 0, 80,
-                    0, 0, 0, 1, 0};
+    public static final float[] SELECTED_BRIGHT = new float[]{1, 0, 0, 0, 80, 0, 1, 0, 0, 80, 0, 0, 1, 0, 80, 0, 0, 0, 1, 0};
 
     /**
      * 高对比度
      */
 
-    public static final float[] SELECTED_HDR = new float[]
-            {5, 0, 0, 0, -250,
-                    0, 5, 0, 0, -250,
-                    0, 0, 5, 0, -250,
-                    0, 0, 0, 1, 0};
+    public static final float[] SELECTED_HDR = new float[]{5, 0, 0, 0, -250, 0, 5, 0, 0, -250, 0, 0, 5, 0, -250, 0, 0, 0, 1, 0};
 
     /**
      * 高饱和度
      */
-    public static final float[] SELECTED_HSAT = new float[]
-            {(float) 3, (float) -2, (float) -0.2, 0, 50,
-                    -1, 2, -0, 0, 50,
-                    -1, -2, 4, 0, 50,
-                    0, 0, 0, 1, 0};
+    public static final float[] SELECTED_HSAT = new float[]{(float)3, (float)-2, (float)-0.2, 0, 50, -1, 2, -0, 0, 50, -1, -2, 4, 0, 50, 0, 0, 0, 1, 0};
 
     /**
      * 改变色调
      */
-    public static final float[] SELECTED_DISCOLOR = new float[]
-            {(float) -0.5, (float) -0.6, (float) -0.8, 0, 0,
-                    (float) -0.4, (float) -0.6, (float) -0.1, 0, 0,
-                    (float) -0.3, 2, (float) -0.4, 0, 0,
-                    0, 0, 0, 1, 0};
+    public static final float[] SELECTED_DISCOLOR = new float[]{(float)-0.5, (float)-0.6, (float)-0.8, 0, 0, (float)-0.4, (float)-0.6, (float)-0.1, 0, 0, (float)-0.3, 2, (float)-0.4, 0, 0, 0, 0, 0, 1, 0};
 
     public ColorFilter mDimColorFilter = new ColorMatrixColorFilter(SELECTED_DARK);
 
@@ -197,7 +177,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     }
 
 
-    private float calcutePosition(boolean isX, Boolean getHalfMsgBgW){
+    public float calcutePosition(boolean isX, Boolean getHalfMsgBgW){
         float msgWidth = getTextWidth(mNumPaint, msg_str);
         //prompt背景和 prompt文字的offset
         float promptOffset = mNumHeight/2f;
@@ -227,7 +207,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     /**
      * 更新 promptView的位置
      */
-    protected void refreshNotifyBg(){
+    public void refreshNotifyBg(){
         float msgWidth = getTextWidth(mNumPaint, msg_str);
         //prompt背景和 prompt文字的offset
         mPromptOffset = mPromptOffset == 0 ? mNumHeight/2f : mPromptOffset;
@@ -267,7 +247,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     /**
      * 防止 prompt绘制到控件外
      */
-    protected void checkPromptPosition(){
+    public void checkPromptPosition(){
         //根据设置 移动prompt
         if(mPromptOutOffset != null) {
             mPromptCenterPoint.offset(-mPromptOutOffset[0], mPromptOutOffset[1]);
@@ -305,7 +285,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
 
 
     public void onDraw(Canvas canvas){
-        if(!TextUtils.isEmpty(msg_str)) {
+        if(!TextUtils.isEmpty(msg_str) && mPromptCenterPoint != null && canvas != null && mMsgBg != null) {
             if(msg_str.equals(NOTIFY)) {
                 //画提示圆点即可
                 canvas.drawCircle(mPromptCenterPoint.x, mPromptCenterPoint.y, mNumHeight/2, mBgPaint);

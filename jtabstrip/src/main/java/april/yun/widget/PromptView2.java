@@ -37,6 +37,8 @@ import java.security.SecureRandom;
  */
 public class PromptView2 extends android.support.v7.widget.AppCompatCheckedTextView implements ValueAnimator.AnimatorUpdateListener {
     private static final String TAG = PromptView2.class.getSimpleName();
+    public static final String ELLIPSES = "…";
+    public static String ALOT = "…";
     private static final int SHOWTIME = 666;
     private static final int CLEARPROMPT = 0;
     private static final int DOTSNOTIFY = -1991;
@@ -52,7 +54,6 @@ public class PromptView2 extends android.support.v7.widget.AppCompatCheckedTextV
     private PointF mPromptCenterPoint;
     private RectF mMsgBg;
     private static final String NOTIFY = "n";
-    private static final String ALOT = "~";
     //private static final String ALOT = "...~~";
     private String mLastMsg = "";
     private ValueAnimator mShowAni;

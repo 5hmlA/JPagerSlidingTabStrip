@@ -22,8 +22,8 @@ import april.yun.other.IPrompt;
  */
 public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTextView implements IPrompt {
 
-    private SuperPrompt mPromptHelper;
-    private boolean mPromptRight;
+    protected SuperPrompt mPromptHelper;
+    protected boolean mPromptRight;
 
     public PromptTextView(Context context){
         this(context, null);
@@ -38,7 +38,7 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
 
         mPromptHelper = new SuperPrompt(this) {
             @Override
-            protected void refreshNotifyBg(){
+            public void refreshNotifyBg(){
                 if(mPromptRight) {
                     //提示信息固定 右上角 和 默认superPrompt一样
                     super.refreshNotifyBg();
@@ -116,6 +116,13 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
         mPromptHelper.mIsAniShow = getContext().getResources().getBoolean(R.bool.jtabstrip_anishow);
     }
 
+    @Override
+    public void setText(CharSequence text, BufferType type){
+        super.setText(text, type);
+        if(mPromptHelper != null) {
+            mPromptHelper.refreshNotifyBg();
+        }
+    }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh){

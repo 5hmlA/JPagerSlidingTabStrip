@@ -16,7 +16,7 @@ import april.yun.other.IPrompt;
  */
 public class PromptImageView extends android.support.v7.widget.AppCompatImageView implements IPrompt {
 
-    private SuperPrompt mPromptHelper;
+    protected SuperPrompt mPromptHelper;
 
     public PromptImageView(Context context){
         this(context, null);

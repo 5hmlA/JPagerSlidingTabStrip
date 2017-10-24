@@ -35,8 +35,10 @@ import java.security.SecureRandom;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
-public class PromptView extends android.support.v7.widget.AppCompatCheckedTextView implements ValueAnimator.AnimatorUpdateListener {
+public class PromptView extends android.support.v7.widget.AppCompatCheckedTextView implements ValueAnimator.AnimatorUpdateListener{
     private static final String TAG = PromptView.class.getSimpleName();
+    public static final String ELLIPSES = "…";
+    public static String ALOT = "…";
     private static final int SHOWTIME = 666;
     private static final int CLEARPROMPT = 0;
     private static final int DOTSNOTIFY = -1991;
@@ -52,7 +54,6 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
     private PointF mPromptCenterPoint;
     private RectF mMsgBg;
     private static final String NOTIFY = "n";
-    private static final String ALOT = "~";
     //private static final String ALOT = "...~~";
     private String mLastMsg = "";
     private ValueAnimator mShowAni;
@@ -66,7 +67,6 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
     private int mColorForNormal;
     private boolean mChecked2 = true;
     private boolean mIsAniShow;
-
 
     public static float dp2px(float px){
         DisplayMetrics dm = Resources.getSystem().getDisplayMetrics();
@@ -151,7 +151,6 @@ public class PromptView extends android.support.v7.widget.AppCompatCheckedTextVi
         super.onAttachedToWindow();
         //before onSizechange
     }
-
 
     private boolean haveCompoundDrawable(Drawable[] compoundDrawables){
         for(Drawable compoundDrawable : compoundDrawables) {
