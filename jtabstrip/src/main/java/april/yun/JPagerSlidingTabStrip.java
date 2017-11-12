@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import april.yun.other.Damping;
 import april.yun.other.JTabStyleDelegate;
 import april.yun.other.OntheSamePositionClickListener;
 import april.yun.other.SavedState;
@@ -76,6 +77,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     private int[] mIconIds = new int[1];
     private int[][] mIconsIds = new int[1][2];
     private OntheSamePositionClickListener mSamePositionClickListener;
+    private Damping mDamping;
 
 
     public JPagerSlidingTabStrip(Context context){
@@ -110,6 +112,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         }
         mTabStyleDelegate = new JTabStyleDelegate().obtainAttrs(this, attrs, getContext());
         mJTabStyle = mTabStyleDelegate.getJTabStyle();
+        mDamping = Damping.wrapper(this);
     }
 
     public void bindViewPager(ViewPager pager){
@@ -376,7 +379,8 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                 mSamePositionClickListener.onClickTheSamePosition(mLastCheckedPosition);
                 return;
             }
-        } if(pager != null) {
+        }
+        if(pager != null) {
             pager.setCurrentItem(position);
         }else {
             tabsContainer.setTag(true);
@@ -550,6 +554,17 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         return this;
     }
 
+    boolean overScrollBy;
+
+    @Override
+    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent){
+        overScrollBy = super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX,
+                maxOverScrollY, isTouchEvent);
+        if(overScrollBy && mDamping != null) {
+            mDamping.overScrollBy(deltaX);
+        }
+        return overScrollBy;
+    }
 
     @Override
     protected void onAttachedToWindow(){

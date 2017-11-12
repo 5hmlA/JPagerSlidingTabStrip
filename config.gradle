@@ -1,0 +1,74 @@
+//获取local.properties的内容
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def releaseTime() {
+    return new Date().format("MM.dd-HH.mm", TimeZone.getTimeZone("GMT+8"))
+}
+def debugTime() {
+    return new Date().format("MM.dd-HH", TimeZone.getTimeZone("GMT+8"))
+}
+def supportLibVersion = "26.1.0"
+ext {
+
+    config = [
+            buildToolsVersion: "27.0.0",
+            compileSdkVersion: 26,
+            minSdkVersion    : 16,
+            targetSdkVersion : 25,
+            versionCode      : 1,
+            versionName      : "1.0.0",
+    ]
+
+    libsVersion = [
+            retrofit2         : "2.3.0",
+            rxandroid         : "2.0.1",
+            rxjava2           : "2.1.0",
+            dagger            : "2.0",
+            okhttp3           : "3.8.0",
+            picasso           : "2.5.2",
+            butterknife       : "8.6.0",
+            glide             : "3.6.1",
+            constraint        : "1.0.2",
+            gson              : "2.8.1",
+            rxbinding         : "2.0.0",
+            logger            : "2.1.0",
+            JblueStar         : "1.3.3",
+            jtabstrip         : "1.6.8-beta@aar",
+            jstatelayout      : "1.7.0-visi",
+            rxsimplify        : "1.0.4-beta@aar",
+    ]
+
+    thirdLibs = [
+            //android support lib
+            support_v4    : "com.android.support:support-v4:${supportLibVersion}",
+            recycv_v7     : "com.android.support:recyclerview-v7:${supportLibVersion}",
+//            recycv_v7     : 'jp.wasabeef:recyclerview-animators:2.2.3',
+            appcompat     : "com.android.support:appcompat-v7:${supportLibVersion}",
+            mdesigh       : "com.android.support:design:${supportLibVersion}",
+            svdrawable    : "com.android.support:support-vector-drawable:${supportLibVersion}",
+            cardview      : "com.android.support:cardview-v7:${supportLibVersion}",
+            palette       : "com.android.support:palette-v7:${supportLibVersion}",
+
+            //github
+            okhttp3       : "com.squareup.okhttp3:okhttp:${libsVersion.okhttp3}",
+            retrofit2     : "com.squareup.retrofit2:retrofit:${libsVersion.retrofit2}",
+            gson          : "com.google.code.gson:gson:${libsVersion.gson}",
+            butterknife   : "com.jakewharton:butterknife:${libsVersion.butterknife}",
+            rxjava2       : "io.reactivex.rxjava2:rxjava:${libsVersion.rxjava2}",
+            rxandroid     : "io.reactivex.rxjava2:rxandroid:${libsVersion.rxandroid}",
+
+            constraint    : "com.android.support.constraint:constraint-layout:${libsVersion.constraint}",
+            picasso       : "com.squareup.picasso:picasso:${libsVersion.picasso}",
+//            compile 'jp.wasabeef:picasso-transformations:2.1.0'
+//            compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+
+            rxbinding     :"com.jakewharton.rxbinding2:rxbinding:${libsVersion.rxbinding}",//包括 rxjava rxandroid
+            logger        :"com.orhanobut:logger:${libsVersion.rxbinding}",
+
+            jstatelayout  :"com.yun.ospl:JstateLayout:${libsVersion.jstatelayout}",
+            jtabstrip     :"com.yun.ospl:jtabstrip:${libsVersion.jtabstrip}",
+            JblueStar    :"com.yun.ospl:JblueStar:${libsVersion.JblueStar}",
+            rxsimplify   :"com.yun.ospl:rxsimplify:${libsVersion.rxsimplify}"
+    ]
+}

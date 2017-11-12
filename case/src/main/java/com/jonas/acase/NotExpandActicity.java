@@ -2,7 +2,9 @@ package com.jonas.acase;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,14 +14,18 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toolbar;
-import april.yun.ISlidingTabStrip;
-import april.yun.other.JTabStyleDelegate;
+
 import com.jonas.acase.CustomTabStyle.CustomTabStyle;
 import com.jonas.acase.eventbusmsg.PromptMsg;
 import com.jonas.acase.fragment.DemoCardFragment;
-import java.security.SecureRandom;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.security.SecureRandom;
+
+import april.yun.ISlidingTabStrip;
+import april.yun.other.JTabStyleDelegate;
 
 import static april.yun.other.JTabStyleBuilder.STYLE_DEFAULT;
 import static april.yun.other.JTabStyleBuilder.STYLE_DOTS;
@@ -102,6 +108,7 @@ public class NotExpandActicity extends FragmentActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_not_expand_acticity);
@@ -233,7 +240,7 @@ public class NotExpandActicity extends FragmentActivity {
 
 
         @Override public int getCount() {
-            return mTitles.length;
+            return mTitles.length*2;
             //return mTitles.length;
             //return 1;
         }
