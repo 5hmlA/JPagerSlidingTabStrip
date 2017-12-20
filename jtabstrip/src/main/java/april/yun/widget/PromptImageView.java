@@ -96,7 +96,7 @@ public class PromptImageView extends android.support.v7.widget.AppCompatImageVie
         return this;
     }
 
-    public PromptImageView centerVertical(){
+    public PromptImageView forceCenterVertical(){
         mPromptHelper.centerVertical(true);
         return this;
     }

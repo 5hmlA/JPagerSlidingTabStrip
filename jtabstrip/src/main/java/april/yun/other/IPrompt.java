@@ -18,7 +18,7 @@ public interface IPrompt {
 
     public IPrompt setPromptOffset(int offset);
 
-    public IPrompt centerVertical();
+    public IPrompt forceCenterVertical();
 
     public IPrompt configPrompt(int promptBgColor, int promptColor);
 

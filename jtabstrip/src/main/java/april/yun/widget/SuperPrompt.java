@@ -40,6 +40,9 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     protected int color_num = Color.WHITE;
     protected int num_size = 11;
     protected float mHalfW;
+    /**
+     * 字体的高度，与 行 无关
+     */
     protected float mNumHeight;
     protected String msg_str = "";
     /**
@@ -53,7 +56,7 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     //是否要清楚消息
     protected boolean msgIs_dirty;
     public boolean mIsAniShow;
-    protected boolean mForcePromptCircle = true;
+    protected boolean mForcePromptCircle = false;
     protected boolean mCenterVertical;
     protected float[] mPromptOutOffset;
     protected View mView;

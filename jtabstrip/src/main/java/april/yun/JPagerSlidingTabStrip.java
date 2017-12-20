@@ -51,12 +51,12 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
     private static final String TAG = JPagerSlidingTabStrip.class.getSimpleName();
     public static String PROMPTMSGFORMART = "%d";
+    public static boolean dampingAble = false;
     private JTabStyleDelegate mTabStyleDelegate;
     private int scrollOffset = 52;
     private JTabStyle mJTabStyle;
     private int mLastCheckedPosition = -1;
     private int mState = -1;
-    int mDrawablePadding;
     //            case com.android.internal.R.styleable.TextView_drawablePadding:
     //    drawablePadding = a.getDimensionPixelSize(attr, drawablePadding);
     private LinearLayout.LayoutParams defaultTabLayoutParams;
@@ -112,7 +112,9 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         }
         mTabStyleDelegate = new JTabStyleDelegate().obtainAttrs(this, attrs, getContext());
         mJTabStyle = mTabStyleDelegate.getJTabStyle();
-        mDamping = Damping.wrapper(this);
+        if(dampingAble) {
+            mDamping = Damping.wrapper(this);
+        }
     }
 
     public void bindViewPager(ViewPager pager){
@@ -141,11 +143,9 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
                     //有提供icon
                     Log.d(TAG, "haove tabIcon");
                     if(( (IconTabProvider)pager.getAdapter() ).getPageIconResIds(i) != null) {
-                        addIconTab(i, pager.getAdapter().getPageTitle(i).toString(),
-                                ( (IconTabProvider)pager.getAdapter() ).getPageIconResIds(i));
+                        addIconTab(i, pager.getAdapter().getPageTitle(i).toString(), ( (IconTabProvider)pager.getAdapter() ).getPageIconResIds(i));
                     }else {
-                        addIconTab(i, pager.getAdapter().getPageTitle(i).toString(),
-                                ( (IconTabProvider)pager.getAdapter() ).getPageIconResId(i));
+                        addIconTab(i, pager.getAdapter().getPageTitle(i).toString(), ( (IconTabProvider)pager.getAdapter() ).getPageIconResId(i));
                     }
                 }else {
                     //没有提供icon
@@ -230,10 +230,8 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
     private StateListDrawable getListDrable(@NonNull int... resId){
         StateListDrawable listDrawable = new StateListDrawable();
-        listDrawable
-                .addState(new int[]{android.R.attr.state_checked}, ContextCompat.getDrawable(getContext(), resId[0]));
-        listDrawable
-                .addState(new int[]{android.R.attr.state_pressed}, ContextCompat.getDrawable(getContext(), resId[0]));
+        listDrawable.addState(new int[]{android.R.attr.state_checked}, ContextCompat.getDrawable(getContext(), resId[0]));
+        listDrawable.addState(new int[]{android.R.attr.state_pressed}, ContextCompat.getDrawable(getContext(), resId[0]));
         listDrawable.addState(new int[]{}, ContextCompat.getDrawable(getContext(), resId[1]));
         return listDrawable;
     }
@@ -248,8 +246,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
             }
         });
         tab.setPadding(mTabStyleDelegate.getTabPadding(), 0, mTabStyleDelegate.getTabPadding(), 0);
-        tabsContainer.addView(tab, position,
-                mTabStyleDelegate.isShouldExpand() ? expandedTabLayoutParams : defaultTabLayoutParams);
+        tabsContainer.addView(tab, position, mTabStyleDelegate.isShouldExpand() ? expandedTabLayoutParams : defaultTabLayoutParams);
     }
 
     private void updateTabStyles(){
@@ -558,8 +555,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
     @Override
     protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent){
-        overScrollBy = super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX,
-                maxOverScrollY, isTouchEvent);
+        overScrollBy = super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
         if(overScrollBy && mDamping != null) {
             mDamping.overScrollBy(deltaX);
         }

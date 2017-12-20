@@ -32,8 +32,8 @@ import java.security.SecureRandom;
  * @author yun.
  * @date 2017/4/22
  * @des [一句话描述]
- * @since [https://github.com/ZuYun]
- * <p><a href="https://github.com/ZuYun">github</a>
+ * @since <p><a href="https://github.com/ZuYun">github</a>
+ *
  */
 public class PromptView2 extends android.support.v7.widget.AppCompatCheckedTextView implements ValueAnimator.AnimatorUpdateListener {
     private static final String TAG = PromptView2.class.getSimpleName();

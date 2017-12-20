@@ -31,13 +31,13 @@ public class Damping implements View.OnTouchListener {
         mRestoreAnimator = ValueAnimator.ofFloat(1f, 1f);
         mRestoreAnimator.setDuration(250);
         mRestoreAnimator.setInterpolator(new OvershootInterpolator(1.6f));
-        mRestoreAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation){
-                mScale = (float)animation.getAnimatedValue();
-                mView.setScaleY(mScale);
-            }
-        });
+//        mRestoreAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator animation){
+//                mScale = (float)animation.getAnimatedValue();
+//                mView.setScaleY(mScale);
+//            }
+//        });
     }
 
     private final Context mApplicationContext;
@@ -157,21 +157,16 @@ public class Damping implements View.OnTouchListener {
         if(mView != null && ( isScrollToTop() || isScrollToBottom() )) {
             switch(event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    direction = NODIRECTION;
+                    direction = LinearLayout.HORIZONTAL;
                     mTdown.set(event.getX(), event.getY());
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if(mTdown.equals(0, 0)) {
-                        direction = NODIRECTION;
+                        direction = LinearLayout.HORIZONTAL;
                         mTdown.set(event.getX(), event.getY());
                     }
-                    float c = event.getY();
-                    float l = mTdown.y;
-//                    checkDragDirection(event);
-                    if(direction == LinearLayout.HORIZONTAL) {
-                        c = event.getX();
-                        l = mTdown.x;
-                    }
+                    float c = event.getX();
+                    float l = mTdown.x;
                     if(direction != NODIRECTION) {
                         calcuteMove(c, l);
                     }
@@ -211,11 +206,7 @@ public class Damping implements View.OnTouchListener {
     }
 
     private void calcuteMove(float y, float ly){
-        if(direction == LinearLayout.VERTICAL) {
-            calcureVerticalMove(y, ly);
-        }else {
-            calcureHorizontalMove(y, ly);
-        }
+        calcureHorizontalMove(y, ly);
     }
 
     private void calcureHorizontalMove(float y, float ly){
@@ -244,32 +235,32 @@ public class Damping implements View.OnTouchListener {
         mDistance = y-ly;
     }
 
-    private void calcureVerticalMove(float y, float ly){
-        if(isScrollToTop() && !isScrollToBottom()) {
-            // 在顶部不在底部
-            mDistance = y-ly;
-            mScale = calculateVerticalDamping(mDistance);
-            pull(mScale);
-        }else if(!isScrollToTop() && isScrollToBottom()) {
-            // 在底部不在顶部
-            mDistance = ly-y;
-            mScale = calculateVerticalDamping(mDistance);
-            push(mScale);
-        }else if(isScrollToTop() && isScrollToBottom()) {
-            // 在底部也在顶部
-            mDistance = y-ly;
-            if(mDistance>0) {
-                mScale = calculateVerticalDamping(mDistance);
-                pull(mScale);
-            }else {
-                mScale = calculateVerticalDamping(-mDistance);
-                push(mScale);
-            }
-        }
-        //去掉 会没有底部反弹效果
-        mDistance = y-ly;
-        //顶部下拉 有filing 底部上拉有filing 两侧都会有回弹效果
-        //        mDistance = ly-y;
-    }
+//    private void calcureVerticalMove(float y, float ly){
+//        if(isScrollToTop() && !isScrollToBottom()) {
+//            // 在顶部不在底部
+//            mDistance = y-ly;
+//            mScale = calculateVerticalDamping(mDistance);
+//            pull(mScale);
+//        }else if(!isScrollToTop() && isScrollToBottom()) {
+//            // 在底部不在顶部
+//            mDistance = ly-y;
+//            mScale = calculateVerticalDamping(mDistance);
+//            push(mScale);
+//        }else if(isScrollToTop() && isScrollToBottom()) {
+//            // 在底部也在顶部
+//            mDistance = y-ly;
+//            if(mDistance>0) {
+//                mScale = calculateVerticalDamping(mDistance);
+//                pull(mScale);
+//            }else {
+//                mScale = calculateVerticalDamping(-mDistance);
+//                push(mScale);
+//            }
+//        }
+//        //去掉 会没有底部反弹效果
+//        mDistance = y-ly;
+//        //顶部下拉 有filing 底部上拉有filing 两侧都会有回弹效果
+//        //        mDistance = ly-y;
+//    }
 }
 
