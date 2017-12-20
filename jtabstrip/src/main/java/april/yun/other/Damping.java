@@ -31,6 +31,13 @@ public class Damping implements View.OnTouchListener {
         mRestoreAnimator = ValueAnimator.ofFloat(1f, 1f);
         mRestoreAnimator.setDuration(250);
         mRestoreAnimator.setInterpolator(new OvershootInterpolator(1.6f));
+        mRestoreAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation){
+                mScale = (float)animation.getAnimatedValue();
+                mView.setScaleY(mScale);
+            }
+        });
     }
 
     private final Context mApplicationContext;
@@ -147,20 +154,20 @@ public class Damping implements View.OnTouchListener {
     }
 
     public boolean dampOnTouch(MotionEvent event){
-        if(mView != null) {
+        if(mView != null && ( isScrollToTop() || isScrollToBottom() )) {
             switch(event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    //                    direction = NODIRECTION;
+                    direction = NODIRECTION;
                     mTdown.set(event.getX(), event.getY());
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if(mTdown.equals(0, 0)) {
-                        //                        direction = NODIRECTION;
+                        direction = NODIRECTION;
                         mTdown.set(event.getX(), event.getY());
                     }
                     float c = event.getY();
                     float l = mTdown.y;
-                    //                    checkDragDirection(event);
+//                    checkDragDirection(event);
                     if(direction == LinearLayout.HORIZONTAL) {
                         c = event.getX();
                         l = mTdown.x;
@@ -178,6 +185,8 @@ public class Damping implements View.OnTouchListener {
                     break;
 
             }
+        }else {
+            animateRestore();
         }
         return false;
     }
