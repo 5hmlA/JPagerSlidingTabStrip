@@ -184,7 +184,6 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
                     tab.setBackgroundResource(resId[0]);
                 }
             }else {
-
                 mTabStyleDelegate.setShouldExpand(true);
                 tab.setCompoundDrawablePadding(mTabStyleDelegate.getDrawablePading());
                 Drawable tabIcon = ContextCompat.getDrawable(getContext(), resId[0]);
