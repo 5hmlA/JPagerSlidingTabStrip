@@ -198,22 +198,20 @@
 
 ## 新增控件
 
-###PromptImageView实现效果
+### PromptImageView实现效果
 
-![](https://raw.githubusercontent.com/ZuYun/JPagerSlidingTabStrip/master/gif/promptIv.bmp)
+![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/promptIv.bmp)
 
-###PromptTextView实现效果
+### PromptTextView实现效果
 
-![](https://raw.githubusercontent.com/ZuYun/JPagerSlidingTabStrip/master/gif/promptTv010.bmp)
+![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/promptTv010.bmp)
 
+![](https://github.com/ZuYun/JPagerSlidingTabStrip/blob/master/gifs/promptv.bmp)
 
+#### 两个控件的公有方法：
 
-![](https://raw.githubusercontent.com/ZuYun/JPagerSlidingTabStrip/master/gif/promptv.bmp)
-
-####两个控件的公有方法：
-
-
-     	public SuperPrompt getPromptHelper();
+```     
+	public SuperPrompt getPromptHelper();
     	//设置提示内容
         public IPrompt setPromptMsg(String promptMsg);
     	//显示提示小圆圈
@@ -230,6 +228,8 @@
         public IPrompt asOnlyNum();
         //PromptTextView中 强制 提示 居右侧，同时设置距离右边边距
         public PromptTextView forceRightOffset(int)
+
+```
 
 ## 感谢
 
