@@ -137,17 +137,17 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
                     //有提供icon
                     Log.d(TAG, "haove tabIcon");
                     if(( (IconTabProvider)pager.getAdapter() ).getPageIconResIds(i) != null) {
-                        addIconTab(i, pager.getAdapter().getPageTitle(i).toString(),
+                        addIconTab(i, pager.getAdapter().getPageTitle(i),
                                 ( (IconTabProvider)pager.getAdapter() ).getPageIconResIds(i));
                     }else {
-                        addIconTab(i, pager.getAdapter().getPageTitle(i).toString(),
+                        addIconTab(i, pager.getAdapter().getPageTitle(i),
                                 ( (IconTabProvider)pager.getAdapter() ).getPageIconResId(i));
                     }
                 }else {
                     //没有提供icon
                     Log.d(TAG, "haove no tabIcon");
                     mTabStyleDelegate.setNotDrawIcon(true);
-                    addTextTab(i, pager.getAdapter().getPageTitle(i).toString());
+                    addTextTab(i, pager.getAdapter().getPageTitle(i));
                 }
             }
             updateTabStyles();
@@ -156,12 +156,12 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
     }
 
 
-    private void addTextTab(final int position, String title){
+    private void addTextTab(final int position, CharSequence title){
         addIconTab(position, title, 0);
     }
 
 
-    private void addIconTab(final int position, String title, @NonNull @Size(min = 1) int... resId){
+    private void addIconTab(final int position, CharSequence title, @NonNull @Size(min = 1) int... resId){
         if(TextUtils.isEmpty(title)) {
             Log.e(TAG, "title is null ");
             return;

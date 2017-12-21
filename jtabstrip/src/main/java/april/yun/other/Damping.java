@@ -178,7 +178,6 @@ public class Damping implements View.OnTouchListener {
                         animateRestore();
                     }
                     break;
-
             }
         }else {
             animateRestore();
