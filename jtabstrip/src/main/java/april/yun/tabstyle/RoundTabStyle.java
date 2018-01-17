@@ -32,7 +32,7 @@ public class RoundTabStyle extends JTabStyle {
     @Override
     public void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w, h, oldw, oldh);
-//        mH = h;
+        //        mH = h;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class RoundTabStyle extends JTabStyle {
     private void getClipPath(float pading, float width){
         RectF clip = new RectF(pading, pading, width-pading, mH-pading);
         mClipath = new Path();
-        mClipath.addRoundRect(clip, mH/2f, mH/2f, Path.Direction.CCW);
+        mClipath.addRoundRect(clip, mOutRadio, mOutRadio, Path.Direction.CCW);
     }
 
 
@@ -58,19 +58,16 @@ public class RoundTabStyle extends JTabStyle {
         if(mTabStyleDelegate.getUnderlineColor() != Color.TRANSPARENT) {
             // draw underline
             mIndicatorPaint.setColor(mTabStyleDelegate.getUnderlineColor());
-            canvas.drawRect(padingVerticalOffect, mH-padingVerticalOffect-mTabStyleDelegate.getUnderlineHeight(),
-                    tabsContainer.getWidth(), mH, mIndicatorPaint);
+            canvas.drawRect(padingVerticalOffect, mH-padingVerticalOffect-mTabStyleDelegate.getUnderlineHeight(), tabsContainer.getWidth(), mH, mIndicatorPaint);
         }
 
         if(mTabStyleDelegate.getFrameColor() != Color.TRANSPARENT) {
             //画边框
             mDividerPaint.setColor(mTabStyleDelegate.getFrameColor());
             mDividerPaint.setStrokeWidth(mTabStyleDelegate.getFrameWidth());
-            drawRoundRect(canvas, padingVerticalOffect+mTabStyleDelegate.getFrameWidth()/2f+1,
-                    padingVerticalOffect+mTabStyleDelegate.getFrameWidth()/2f+1,
-                    mLastTab.getRight()-mTabStyleDelegate.getFrameWidth()/2f-1-padingVerticalOffect,
-                    this.mH-padingVerticalOffect-mTabStyleDelegate.getFrameWidth()/2f-1, mOutRadio, mOutRadio,
-                    mDividerPaint);
+            drawRoundRect(canvas, padingVerticalOffect+mTabStyleDelegate.getFrameWidth()/2f+1, padingVerticalOffect+mTabStyleDelegate.getFrameWidth()/2f+1,
+                          mLastTab.getRight()-mTabStyleDelegate.getFrameWidth()/2f-1-padingVerticalOffect, this.mH-padingVerticalOffect-mTabStyleDelegate.getFrameWidth()/2f-1,
+                          mOutRadio, mOutRadio, mDividerPaint);
         }
 
         if(mTabStyleDelegate.getDividerColor() != Color.TRANSPARENT) {
@@ -78,8 +75,8 @@ public class RoundTabStyle extends JTabStyle {
             mDividerPaint.setColor(mTabStyleDelegate.getDividerColor());
             for(int i = 0; i<tabsContainer.getChildCount()-1; i++) {
                 View tab = tabsContainer.getChildAt(i);
-                canvas.drawLine(tab.getRight(), padingVerticalOffect+mTabStyleDelegate.getDividerPadding(),
-                        tab.getRight(), mH-mTabStyleDelegate.getDividerPadding()-padingVerticalOffect, mDividerPaint);
+                canvas.drawLine(tab.getRight(), padingVerticalOffect+mTabStyleDelegate.getDividerPadding(), tab.getRight(),
+                                mH-mTabStyleDelegate.getDividerPadding()-padingVerticalOffect, mDividerPaint);
             }
         }
         if(mTabStyleDelegate.getIndicatorColor() != Color.TRANSPARENT && mClipath != null) {

@@ -2,6 +2,7 @@ package april.yun.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -117,5 +118,11 @@ public class PromptImageView extends android.support.v7.widget.AppCompatImageVie
     protected void onDetachedFromWindow(){
         super.onDetachedFromWindow();
         mPromptHelper.cancelAni();
+    }
+
+    @Override
+    public void setImageDrawable(@Nullable Drawable drawable){
+//        LayerDrawable
+        super.setImageDrawable(drawable);
     }
 }

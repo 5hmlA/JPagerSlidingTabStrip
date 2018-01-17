@@ -3,7 +3,7 @@ apply plugin: 'com.jfrog.bintray'
 //A TabLayout that supports prompt information Library for Android
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version
 //version = "1.6.8"
-version = "0.1.14"
+version = "0.1.16"
 def siteUrl = 'https://github.com/ZuYun/JPagerSlidingTabStrip'      // 项目的主页
 def gitUrl = 'https://github.com/ZuYun/JPagerSlidingTabStrip.git'   // Git仓库的url
 group = "com.yun.ospl"   // Maven Group ID for the artifact，一般填你唯一的包名

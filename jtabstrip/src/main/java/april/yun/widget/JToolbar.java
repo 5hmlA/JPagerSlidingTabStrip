@@ -58,6 +58,7 @@ public class JToolbar extends Toolbar {
     private int mBottom;
     private PromptImageView mLeftIconView;
     private PromptImageView mTitleCenterIconView;
+    private PromptTextView mCenterTitleTextView;
 
 
     {
@@ -120,6 +121,10 @@ public class JToolbar extends Toolbar {
             measureChild(mYourTitleBarLayout, MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
                          MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
         }
+        if(shouldLayout(mCenterTitleTextView)) {
+            measureChild(mCenterTitleTextView, MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY),
+                         MeasureSpec.makeMeasureSpec(getMeasuredHeight(), MeasureSpec.EXACTLY));
+        }
     }
 
 
@@ -153,6 +158,9 @@ public class JToolbar extends Toolbar {
             if(shouldLayout(mRightIconView)) {
                 width = mRightIconView.getMeasuredWidth();
                 mRightIconView.layout(mRight-width, getPaddingTop(), mRight, b);
+            }
+            if(shouldLayout(mCenterTitleTextView)) {
+                mCenterTitleTextView.layout(0, getPaddingTop(), mRight, b);
             }
 
             if(mTitleOrignLeft == 0 && shouldLayout(mTitleTextView)) {
@@ -244,7 +252,8 @@ public class JToolbar extends Toolbar {
      */
     public PromptImageView setTitleIcon(@DrawableRes int iconId, int width){
         if(iconId != 0) {
-            setNavigationIcon(null);//去掉navigation
+            //去掉navigation
+            setNavigationIcon(null);
             if(mTitleCenterIconView == null) {
                 final Context context = getContext();
                 mTitleCenterIconView = new PromptImageView(context);
@@ -259,6 +268,35 @@ public class JToolbar extends Toolbar {
             mTitleCenterIconView.setImageResource(iconId);
         }
         return mTitleCenterIconView;
+    }
+
+    public PromptTextView setCenterTitle(CharSequence title){
+        if(!TextUtils.isEmpty(title)) {
+            setTitle2(null);
+            if(mCenterTitleTextView == null) {
+                final Context context = getContext();
+                mCenterTitleTextView = new PromptTextView(context);
+                mCenterTitleTextView.setSingleLine();
+                mCenterTitleTextView.setEllipsize(TextUtils.TruncateAt.END);
+                if(mTitleTextAppearance != 0) {
+                    mCenterTitleTextView.setTextAppearance(context, mTitleTextAppearance);
+                }
+                mCenterTitleTextView.setGravity(Gravity.CENTER);
+                if(mTitleTextColor != 0) {
+                    mCenterTitleTextView.setTextColor(mTitleTextColor);
+                }
+            }
+            if(mCenterTitleTextView.getParent() != this) {
+                addView(mCenterTitleTextView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            }
+        }else if(mCenterTitleTextView != null && mCenterTitleTextView.getParent() == this) {
+            removeView(mCenterTitleTextView);
+        }
+        if(mCenterTitleTextView != null) {
+            mCenterTitleTextView.setText(title);
+        }
+        mTitleText = title;
+        return mCenterTitleTextView;
     }
 
 
@@ -316,7 +354,8 @@ public class JToolbar extends Toolbar {
      */
     public PromptImageView setLeftIcon(@DrawableRes int iconId, int width){
         if(iconId != 0) {
-            setNavigationIcon(null);//去掉navigation
+            //去掉navigation
+            setNavigationIcon(null);
             if(mLeftIconView == null) {
                 final Context context = getContext();
                 mLeftIconView = new PromptImageView(context);
@@ -334,7 +373,7 @@ public class JToolbar extends Toolbar {
         return mLeftIconView;
     }
 
-
+    @Override
     public void setNavigationOnClickListener(OnClickListener listener){
         if(shouldLayout(mLeftIconView)) {
             mLeftIconView.setOnClickListener(listener);
