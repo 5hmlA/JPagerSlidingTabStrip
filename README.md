@@ -95,7 +95,7 @@
  - 重点3个方法getPageTitle（提供标题文字内容），getPageIconResIds（提供标题的icon图标），getPageIconResId（提供标题的icon图标），
  - 后面两个方法的区别是：getPageIconResIds只需要两个数组，getPageIconResId需要一个数组+多个selector文件
 
-
+```
   mTitles = getResources().getStringArray(R.array.tabs);
   //for getPageIconResIds
    mNormal = new int[] { R.drawable.ic_tab_msg, R.drawable.ic_tab_contact, 
@@ -109,6 +109,7 @@
    	<item android:state_checked="true" android:drawable="@drawable/ic_tab_msg_h"/>
    	<item android:drawable="@drawable/ic_tab_msg"/>
   </selector>
+```
 
 ## 4，绑定ViewPager
 
