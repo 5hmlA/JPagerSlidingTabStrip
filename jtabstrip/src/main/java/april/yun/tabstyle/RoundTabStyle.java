@@ -38,8 +38,8 @@ public class RoundTabStyle extends JTabStyle {
     @Override
     public void afterLayout(){
         if(mLastTab != null) {
-            getClipPath(padingVerticalOffect, mLastTab.getRight());
             mOutRadio = mTabStyleDelegate.getCornerRadio() == 0 ? mH/2 : mTabStyleDelegate.getCornerRadio();
+            getClipPath(padingVerticalOffect, mLastTab.getRight());
         }
     }
 

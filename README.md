@@ -18,7 +18,7 @@
 
  ## 1，引入依赖
 
-		implementation 'com.yun.ospl:jtabstrip:0.1.13'
+		implementation 'com.yun.ospl:jtabstrip:0.1.17'
 
 ## 2，布局
 
