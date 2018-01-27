@@ -1,44 +1,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-        <Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:titleTextColor="@android:color/white"
-            android:popupTheme="@style/AppTheme.PopupOverlay"/>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:popupTheme="@style/AppTheme.PopupOverlay"
+        android:titleTextColor="@android:color/white"/>
 
 
     <april.yun.JPagerSlidingTabStrip
-        android:layout_margin="10dp"
         android:id="@+id/tabs"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/sug_event_tabheight"
-        android:layout_width="match_parent"/>
+        android:layout_margin="10dp"/>
 
     <april.yun.JPagerSlidingTabStrip
-        android:layout_margin="10dp"
         android:id="@+id/tabs_1"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/sug_event_tabheight"
-        android:layout_width="match_parent"/>
+        android:layout_margin="10dp"/>
 
     <april.yun.JPagerSlidingTabStrip
-        android:layout_margin="10dp"
         android:id="@+id/tabs_2"
-        android:background="#57365C"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_width="match_parent"/>
+        android:layout_margin="10dp"
+        android:background="#57365C"/>
 
     <april.yun.JPagerSlidingTabStrip
-        android:layout_margin="10dp"
         android:id="@+id/tabs_3"
-        android:background="#6B8DB3"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_width="match_parent"/>
+        android:layout_margin="10dp"
+        android:background="#6B8DB3"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -52,11 +52,11 @@
             tools:context=".MainActivity"/>
 
         <april.yun.JPagerSlidingTabStrip
-            android:layout_margin="10dp"
             android:id="@+id/dots"
             android:layout_width="150dp"
+            android:layout_height="35dip"
             android:layout_gravity="center_horizontal"
-            android:layout_height="35dip"/>
+            android:layout_margin="10dp"/>
     </FrameLayout>
 
     <april.yun.JPagerSlidingTabStrip

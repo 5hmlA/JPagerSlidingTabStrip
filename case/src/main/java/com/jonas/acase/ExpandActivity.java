@@ -12,18 +12,17 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toolbar;
-
-import april.yun.ISlidingTabStrip;
-import april.yun.other.JTabStyleDelegate;
 
 import com.jonas.acase.eventbusmsg.PromptMsg;
 import com.jonas.acase.fragment.DemoCardFragment;
 
-import java.security.SecureRandom;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.security.SecureRandom;
+
+import april.yun.ISlidingTabStrip;
+import april.yun.other.JTabStyleDelegate;
 
 import static april.yun.other.JTabStyleBuilder.STYLE_DEFAULT;
 import static april.yun.other.JTabStyleBuilder.STYLE_DOTS;
@@ -61,7 +60,7 @@ public class ExpandActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expand);
-        setActionBar(( (Toolbar)findViewById(R.id.toolbar) ));
+//        setActionBar(( (Toolbar)findViewById(R.id.toolbar) ));
         EventBus.getDefault().register(this);
         tabs_up = (ISlidingTabStrip)findViewById(R.id.tabs);
         tabs_up1 = (ISlidingTabStrip)findViewById(R.id.tabs_1);
