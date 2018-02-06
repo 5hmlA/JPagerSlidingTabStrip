@@ -12,6 +12,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toolbar;
 
 import com.jonas.acase.eventbusmsg.PromptMsg;
 import com.jonas.acase.fragment.DemoCardFragment;
@@ -60,7 +61,7 @@ public class ExpandActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expand);
-//        setActionBar(( (Toolbar)findViewById(R.id.toolbar) ));
+        setActionBar(( (Toolbar)findViewById(R.id.toolbar) ));
         EventBus.getDefault().register(this);
         tabs_up = (ISlidingTabStrip)findViewById(R.id.tabs);
         tabs_up1 = (ISlidingTabStrip)findViewById(R.id.tabs_1);

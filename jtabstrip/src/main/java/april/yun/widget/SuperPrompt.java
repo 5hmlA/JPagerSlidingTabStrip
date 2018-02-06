@@ -30,14 +30,17 @@ import android.view.animation.DecelerateInterpolator;
  */
 public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     protected static final String TAG = "SuperPrompt";
-    public static final String NOTIFY = "n";
-    public static final String ALOT = "~";
-    public static final int SHOWTIME = 666;
+    public static int PROMPT_BG_COLOR = Color.RED;
+    public static int PROMPT_NUM_COLOR = Color.WHITE;
     public static String MSGFORMART = "%d";
+    public static String ALOT = "~";
+
+    public static final String NOTIFY = "n";
+    public static final int SHOWTIME = 666;
     protected Paint mBgPaint;
     protected Paint mNumPaint;
-    protected int color_bg = Color.RED;
-    protected int color_num = Color.WHITE;
+    protected int color_bg = PROMPT_BG_COLOR;
+    protected int color_num = PROMPT_NUM_COLOR;
     protected int num_size = 11;
     protected float mHalfW;
     /**
@@ -253,6 +256,10 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
     public void checkPromptPosition(){
         //根据设置 移动prompt
         if(mPromptOutOffset != null) {
+            mPromptOutOffset[0] = Math.min(mPromptOutOffset[0], 2*mHalfW);
+            mPromptOutOffset[0] = Math.max(mPromptOutOffset[0], -2*mHalfW);
+            mPromptOutOffset[1] = Math.min(mPromptOutOffset[1], 2*mHalfH);
+            mPromptOutOffset[1] = Math.max(mPromptOutOffset[1], -2*mHalfH);
             mPromptCenterPoint.offset(-mPromptOutOffset[0], mPromptOutOffset[1]);
             mMsgBg.offset(-mPromptOutOffset[0], mPromptOutOffset[1]);
         }
@@ -373,6 +380,10 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         return this;
     }
 
+    public SuperPrompt cleanrPrompt(){
+        setPromptMsg("");
+        return this;
+    }
 
     @SuppressLint("DefaultLocale")
     public String getMsgByNum(int num){
@@ -450,12 +461,21 @@ public class SuperPrompt implements ValueAnimator.AnimatorUpdateListener {
         mView.invalidate();
     }
 
-
+    /**
+     * 横向>0 左移，纵向>0 下移
+     * @param promptOutOffset
+     * @return
+     */
     public SuperPrompt setPromptOutOffset(@Size(value = 2) float[] promptOutOffset){
         mPromptOutOffset = promptOutOffset;
         return this;
     }
 
+    /**
+     * 横向 左移，纵向 下移
+     * @param promptOutOffset
+     * @return
+     */
     public SuperPrompt setPromptOutOffset(float promptOutOffset){
         mPromptOutOffset = new float[]{promptOutOffset, promptOutOffset};
         return this;

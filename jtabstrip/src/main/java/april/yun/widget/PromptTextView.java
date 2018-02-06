@@ -24,7 +24,8 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
 
     protected SuperPrompt mPromptHelper;
     protected boolean mPromptRight;
-    private int mForceRightOffset;
+    private int mForceRightOffset = 80000;
+    private int mForceLeftOffset = 80000;
     /**
      * 默认：以第一行 为准计算提示框位置（提示信息提示在第一行右上角）
      */
@@ -126,11 +127,19 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
                     }else if(mPromptRoundConor == 0) {
                         mPromptRoundConor = mNumHeight;
                     }
-                    if(mForceRightOffset>0) {
+                    if(mForceRightOffset != 80000) {
+                        mForceRightOffset = Math.min(mForceRightOffset, getWidth()-getPaddingRight());
+                        mForceRightOffset = Math.max(mForceRightOffset, -getPaddingRight());
                         mPromptCenterPoint.x = getWidth()-getPaddingRight()-mHalfMsgBgW-mForceRightOffset;
                     }
+                    if(mForceLeftOffset != 80000) {
+                        mForceRightOffset = Math.min(mForceLeftOffset, getWidth()-getPaddingLeft());
+                        mForceRightOffset = Math.max(mForceLeftOffset, -getPaddingLeft());
+                        mPromptCenterPoint.x = getPaddingLeft()+mHalfMsgBgW+mForceRightOffset;
+                    }
 
-                    mMsgBg = new RectF(mPromptCenterPoint.x-mHalfMsgBgW, mPromptCenterPoint.y-mHalfMsgBgH, mPromptCenterPoint.x+mHalfMsgBgW, mPromptCenterPoint.y+mHalfMsgBgH);
+                    mMsgBg = new RectF(mPromptCenterPoint.x-mHalfMsgBgW, mPromptCenterPoint.y-mHalfMsgBgH, mPromptCenterPoint.x+mHalfMsgBgW,
+                            mPromptCenterPoint.y+mHalfMsgBgH);
 
                     //位置检查
                     checkPromptPosition();
@@ -226,13 +235,41 @@ public class PromptTextView extends android.support.v7.widget.AppCompatCheckedTe
     }
 
     /**
-     * 强制 提示框 居右侧，同时设置距离右边边距
+     * 靠右边 +往左移动，0=最右边 包括padingRight
      *
      * @param offset
      * @return
      */
     public PromptTextView forceRightOffset(int offset){
         mForceRightOffset = offset;
+        return this;
+    }
+
+    /**
+     *靠右边  无视pading
+     * @return
+     */
+    public PromptTextView forceRight(){
+        mForceRightOffset = -Integer.MAX_VALUE;
+        return this;
+    }
+
+    /**
+     * 靠左边 +往右移动，0=最左边 包括padingLeft
+     * @param offset
+     * @return
+     */
+    public PromptTextView forceLeftOffset(int offset){
+        mForceLeftOffset = offset;
+        return this;
+    }
+
+    /**
+     * 靠左边 无视pading
+     * @return
+     */
+    public PromptTextView forceLeft(){
+        mForceLeftOffset = -Integer.MAX_VALUE;
         return this;
     }
 
