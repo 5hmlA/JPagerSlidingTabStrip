@@ -3,7 +3,7 @@ package april.yun.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
@@ -15,7 +15,7 @@ import april.yun.other.IPrompt;
  * @another 江祖赟
  * @date 2017/9/12 0012.
  */
-public class PromptImageView extends android.support.v7.widget.AppCompatImageView implements IPrompt {
+public class PromptImageView extends androidx.appcompat.widget.AppCompatImageView implements IPrompt {
 
     protected SuperPrompt mPromptHelper;
 

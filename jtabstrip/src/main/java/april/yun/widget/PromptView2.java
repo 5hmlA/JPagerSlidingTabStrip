@@ -35,7 +35,7 @@ import java.security.SecureRandom;
  * @since <p><a href="https://github.com/ZuYun">github</a>
  *
  */
-public class PromptView2 extends android.support.v7.widget.AppCompatCheckedTextView implements ValueAnimator.AnimatorUpdateListener {
+public class PromptView2 extends androidx.appcompat.widget.AppCompatCheckedTextView implements ValueAnimator.AnimatorUpdateListener {
     private static final String TAG = PromptView2.class.getSimpleName();
     public static final String ELLIPSES = "…";
     public static String ALOT = "…";

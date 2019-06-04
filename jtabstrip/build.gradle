@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
-apply from: "../bintrayUpload.gradle"
 
 android {
-     compileSdkVersion build_versions.target_sdk
-    buildToolsVersion build_versions.build_tools
+     compileSdkVersion 28
+
     defaultConfig {
-        minSdkVersion build_versions.min_sdk
-        targetSdkVersion build_versions.target_sdk
+        minSdkVersion 19
+        targetSdkVersion 22
     }
     buildTypes {
         release {
@@ -17,5 +16,5 @@ android {
 }
 
 dependencies {
-    implementation deps.support.app_compat
+    implementation 'androidx.appcompat:appcompat:1.0.2'
 }

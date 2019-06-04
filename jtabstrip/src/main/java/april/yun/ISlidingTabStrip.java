@@ -1,7 +1,7 @@
 package april.yun;
 
-import android.support.annotation.DrawableRes;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.DrawableRes;
+import androidx.viewpager.widget.ViewPager;
 import android.view.ViewGroup;
 import april.yun.other.JTabStyleDelegate;
 import april.yun.tabstyle.JTabStyle;

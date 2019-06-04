@@ -6,10 +6,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,6 +13,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import com.jonas.librarys.R;
 
 /**
  * @author 江祖赟.
@@ -82,9 +83,9 @@ public class JToolbar extends Toolbar {
 
 
     private void wrapperAttrs(Context context, AttributeSet attrs){
-        TypedArray a = context.obtainStyledAttributes(attrs, android.support.v7.appcompat.R.styleable.Toolbar, android.support.v7.appcompat.R.attr.toolbarStyle, 0);
-        mTitleTextAppearance = a.getResourceId(android.support.v7.appcompat.R.styleable.Toolbar_titleTextAppearance, 0);
-        mSubtitleTextAppearance = a.getResourceId(android.support.v7.appcompat.R.styleable.Toolbar_subtitleTextAppearance, 0);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.Toolbar, R.attr.toolbarStyle, 0);
+        mTitleTextAppearance = a.getResourceId(R.styleable.Toolbar_titleTextAppearance, 0);
+        mSubtitleTextAppearance = a.getResourceId(R.styleable.Toolbar_subtitleTextAppearance, 0);
         a.recycle();
         TypedArray sa1 = context.obtainStyledAttributes(attrs, ATTRS);
         mIsTitleCenter = ( a.getInt(0, Gravity.START)&Gravity.CENTER ) == Gravity.CENTER;
