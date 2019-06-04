@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 28
         applicationId "com.jonas.acase"
     }
     buildTypes {
