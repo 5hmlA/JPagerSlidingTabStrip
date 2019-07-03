@@ -3,23 +3,19 @@ package april.yun;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Parcelable;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Size;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -28,17 +24,25 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.Size;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.NestedScrollingChild2;
+import androidx.core.view.NestedScrollingChildHelper;
+import androidx.core.view.ViewCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener;
 import april.yun.other.Damping;
 import april.yun.other.JTabStyleDelegate;
 import april.yun.other.OntheSamePositionClickListener;
 import april.yun.other.SavedState;
 import april.yun.tabstyle.JTabStyle;
 import april.yun.widget.PromptView;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author yun.
@@ -47,7 +51,8 @@ import april.yun.widget.PromptView;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
-public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlidingTabStrip, ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
+public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlidingTabStrip, NestedScrollingChild2,
+    ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
 
   private static final String TAG = JPagerSlidingTabStrip.class.getSimpleName();
   public static String PROMPTMSGFORMART = "%d";
@@ -78,7 +83,9 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
   private int[][] mIconsIds = new int[1][2];
   private OntheSamePositionClickListener mSamePositionClickListener;
   private Damping mDamping;
-
+  private NestedScrollingChildHelper mScrollingChildHelper = new NestedScrollingChildHelper(this);
+  private int mLastEventY;
+  private static final int[] ATTRS = new int[]{android.R.attr.nestedScrollingEnabled};
 
   public JPagerSlidingTabStrip(Context context) {
     this(context, null);
@@ -92,6 +99,9 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
 
   public JPagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
+    TypedArray sa = context.obtainStyledAttributes(attrs, ATTRS);
+    boolean nestedEnable = sa.getBoolean(0, true);
+    sa.recycle();
 
     setFillViewport(true);
     setWillNotDraw(false);
@@ -115,6 +125,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     if (dampingAble) {
       mDamping = Damping.wrapper(this);
     }
+    mScrollingChildHelper.setNestedScrollingEnabled(nestedEnable);
   }
 
   public void bindViewPager(ViewPager pager) {
@@ -302,6 +313,26 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     }
   }
 
+  @Override
+  public boolean onInterceptTouchEvent(MotionEvent ev) {
+    switch (ev.getAction()) {
+      case MotionEvent.ACTION_DOWN:
+        mLastEventY = ((int) ev.getY());
+        startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL, ViewCompat.TYPE_TOUCH);
+        break;
+      case MotionEvent.ACTION_MOVE:
+        int dy = (int) (mLastEventY-ev.getY());
+        mLastEventY = (int) ev.getY();
+        dispatchNestedPreScroll(0, dy, null, null, ViewCompat.TYPE_TOUCH);
+        dispatchNestedScroll(0, 0, 0, dy, null);
+        break;
+      case MotionEvent.ACTION_UP:
+        stopNestedScroll(ViewCompat.TYPE_TOUCH);
+        break;
+    }
+    return super.onInterceptTouchEvent(ev);
+  }
+
 
   @Override
   protected void onDraw(Canvas canvas) {
@@ -423,6 +454,31 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
   @Override
   public void onAnimationRepeat(Animator animation) {
 
+  }
+
+  @Override
+  public boolean startNestedScroll(int axes, int type) {
+    return mScrollingChildHelper.startNestedScroll(axes, type);
+  }
+
+  @Override
+  public void stopNestedScroll(int type) {
+    mScrollingChildHelper.stopNestedScroll(type);
+  }
+
+  @Override
+  public boolean hasNestedScrollingParent(int type) {
+    return mScrollingChildHelper.hasNestedScrollingParent(type);
+  }
+
+  @Override
+  public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, @Nullable int[] offsetInWindow, int type) {
+    return mScrollingChildHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow, type);
+  }
+
+  @Override
+  public boolean dispatchNestedPreScroll(int dx, int dy, @Nullable int[] consumed, @Nullable int[] offsetInWindow, int type) {
+    return mScrollingChildHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow, type);
   }
 
   private class PageListener implements OnPageChangeListener {
