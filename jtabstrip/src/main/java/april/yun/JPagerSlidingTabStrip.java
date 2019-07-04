@@ -324,7 +324,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
         int dy = (int) (mLastEventY-ev.getY());
         mLastEventY = (int) ev.getY();
         dispatchNestedPreScroll(0, dy, null, null, ViewCompat.TYPE_TOUCH);
-        dispatchNestedScroll(0, 0, 0, dy, null);
+        dispatchNestedScroll(0, dy, 0, 0, null, ViewCompat.TYPE_TOUCH);
         break;
       case MotionEvent.ACTION_UP:
         stopNestedScroll(ViewCompat.TYPE_TOUCH);
