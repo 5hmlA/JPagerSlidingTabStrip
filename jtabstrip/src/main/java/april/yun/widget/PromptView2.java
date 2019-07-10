@@ -23,9 +23,8 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.DecelerateInterpolator;
-
+import androidx.annotation.Keep;
 import com.jonas.librarys.R;
-
 import java.security.SecureRandom;
 
 /**
@@ -207,6 +206,7 @@ public class PromptView2 extends androidx.appcompat.widget.AppCompatCheckedTextV
     }
 
 
+    @Keep
     public static int getTextWidth(Paint paint, String str){
         Rect bounds = new Rect();
         paint.getTextBounds(str, 0, str.length(), bounds);
@@ -228,6 +228,7 @@ public class PromptView2 extends androidx.appcompat.widget.AppCompatCheckedTextV
      * 当num的值小于0 显示提示小圆点
      * 等于0 不现实任何
      */
+    @Keep
     public PromptView2 setPromptNum(int num){
         if(num == ( (int)getTag(R.id.jtabstrip_prompt_last) )) {
             Log.e(TAG, "set the same num width last time");
@@ -277,16 +278,19 @@ public class PromptView2 extends androidx.appcompat.widget.AppCompatCheckedTextV
     }
 
 
+    @Keep
     public void setColor_bg(int color_bg){
         this.color_bg = color_bg;
     }
 
 
+    @Keep
     public void setColor_num(int color_num){
         this.color_num = color_num;
     }
 
 
+    @Keep
     public void setNum_size(int num_size){
         this.num_size = num_size;
     }
@@ -309,6 +313,7 @@ public class PromptView2 extends androidx.appcompat.widget.AppCompatCheckedTextV
     /**
      * 进度为0--1之间
      */
+    @Keep
     public PromptView2 setScrollOffset(float offset){
         if(offset>0.1 && offset<0.9) {
             //mMatrix.postTranslate(offset*mHalfW*2, 0);
@@ -323,6 +328,7 @@ public class PromptView2 extends androidx.appcompat.widget.AppCompatCheckedTextV
     }
 
 
+    @Keep
     public PromptView2 setScroll2Checked(boolean checked2){
         if(mChecked2 != checked2) {
             mChecked2 = checked2;

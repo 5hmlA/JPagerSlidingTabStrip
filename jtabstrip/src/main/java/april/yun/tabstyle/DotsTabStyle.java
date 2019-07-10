@@ -4,11 +4,12 @@ import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
+import androidx.annotation.Keep;
+import androidx.viewpager.widget.ViewPager;
 import april.yun.ISlidingTabStrip;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public class DotsTabStyle extends JTabStyle implements ValueAnimator.AnimatorUpdateListener {
     private Paint bgPaint;
     private PointF mCurrentTab;

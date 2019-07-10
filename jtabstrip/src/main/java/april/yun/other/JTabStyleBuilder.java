@@ -1,16 +1,16 @@
 package april.yun.other;
 
 import androidx.annotation.IntDef;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
+import androidx.annotation.Keep;
 import april.yun.ISlidingTabStrip;
 import april.yun.tabstyle.DefaultTabStyle;
 import april.yun.tabstyle.DotsTabStyle;
 import april.yun.tabstyle.JTabStyle;
 import april.yun.tabstyle.RoundTabStyle;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
+@Keep
 public class JTabStyleBuilder {
     public static final int STYLE_DEFAULT = 0;
     public static final int STYLE_ROUND = 1;

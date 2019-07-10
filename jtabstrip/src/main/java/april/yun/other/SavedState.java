@@ -3,6 +3,7 @@ package april.yun.other;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
+import androidx.annotation.Keep;
 
 /**
  * @author yun.
@@ -11,6 +12,7 @@ import android.view.View;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public class SavedState extends View.BaseSavedState {
     public int currentPosition;
 

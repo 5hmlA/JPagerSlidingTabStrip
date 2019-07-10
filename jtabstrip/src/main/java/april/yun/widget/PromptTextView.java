@@ -7,14 +7,13 @@ import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
-
-import com.jonas.librarys.R;
-
+import androidx.annotation.Keep;
+import androidx.annotation.Nullable;
 import april.yun.other.IPrompt;
+import com.jonas.librarys.R;
 
 /**
  * @another 江祖赟
@@ -150,6 +149,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
     }
 
     @Override
+    @Keep
     public void setText(CharSequence text, BufferType type){
         super.setText(text, type);
         if(mPromptHelper != null) {
@@ -169,6 +169,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
         mPromptHelper.onDraw(canvas);
     }
 
+    @Keep
     public SuperPrompt getPromptHelper(){
         return mPromptHelper;
     }
@@ -179,6 +180,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      * @param promptMsg
      * @return
      */
+    @Keep
     public PromptTextView setPromptMsg(String promptMsg){
         mPromptHelper.setPromptMsg(promptMsg);
         return this;
@@ -190,6 +192,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      * @param num
      * @return
      */
+    @Keep
     public PromptTextView setPromptMsg(int num){
         mPromptHelper.setPromptMsg(mPromptHelper.getMsgByNum(num));
         return this;
@@ -200,12 +203,14 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      *
      * @return
      */
+    @Keep
     public PromptTextView showNotify(){
         mPromptHelper.setPromptMsg(SuperPrompt.NOTIFY);
         return this;
     }
 
     @Override
+    @Keep
     public IPrompt forcePromptCircle(){
         mPromptHelper.forcePromptCircle(true);
         return this;
@@ -217,6 +222,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      *
      * @return
      */
+    @Keep
     public PromptTextView forcePromptCircle(boolean circle){
         mPromptHelper.forcePromptCircle(circle);
         return this;
@@ -229,6 +235,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      *         px
      * @return
      */
+    @Keep
     public PromptTextView setPromptOffset(int offset){
         mPromptHelper.setPromptOutOffset(offset);
         return this;
@@ -240,6 +247,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      * @param offset
      * @return
      */
+    @Keep
     public PromptTextView forceRightOffset(int offset){
         mForceRightOffset = offset;
         return this;
@@ -249,6 +257,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      *靠右边  无视pading
      * @return
      */
+    @Keep
     public PromptTextView forceRight(){
         mForceRightOffset = -Integer.MAX_VALUE;
         return this;
@@ -259,6 +268,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      * @param offset
      * @return
      */
+    @Keep
     public PromptTextView forceLeftOffset(int offset){
         mForceLeftOffset = offset;
         return this;
@@ -268,6 +278,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      * 靠左边 无视pading
      * @return
      */
+    @Keep
     public PromptTextView forceLeft(){
         mForceLeftOffset = -Integer.MAX_VALUE;
         return this;
@@ -278,6 +289,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      *
      * @return
      */
+    @Keep
     public PromptTextView forceCenterVertical(){
         mPromptHelper.centerVertical(true);
         return this;
@@ -288,12 +300,14 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      *
      * @return
      */
+    @Keep
     public PromptTextView asOnlyNum(){
         mPromptHelper.asNewMsgNums();
         return this;
     }
 
 
+    @Keep
     public PromptTextView configPrompt(int promptBgColor, int promptColor){
         mPromptHelper.setColor_bg(promptBgColor).setColor_num(promptColor);
         return this;
@@ -305,6 +319,7 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
         mPromptHelper.cancelAni();
     }
 
+    @Keep
     public boolean isPromptRight(){
         return mPromptRight;
     }
@@ -314,14 +329,17 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      *
      * @param promptRight
      */
+    @Keep
     public void fixedPromptRight(boolean promptRight){
         mPromptRight = promptRight;
     }
 
+    @Keep
     public boolean isPromptForFirstLine(){
         return mPromptForFirstLine;
     }
 
+    @Keep
     public void setPromptForFirstLine(boolean promptForFirstLine){
         mPromptForFirstLine = promptForFirstLine;
     }

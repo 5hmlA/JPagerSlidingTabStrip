@@ -1,6 +1,7 @@
 package april.yun;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Keep;
 import androidx.viewpager.widget.ViewPager;
 import android.view.ViewGroup;
 import april.yun.other.JTabStyleDelegate;
@@ -13,10 +14,13 @@ import april.yun.tabstyle.JTabStyle;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public interface ISlidingTabStrip {
 
+    @Keep
     ISlidingTabStrip setPromptNum(int index, int num);
 
+    @Keep
     public interface IconTabProvider {
         /**
          * 如果 返回 null 則調用getPageIconResId

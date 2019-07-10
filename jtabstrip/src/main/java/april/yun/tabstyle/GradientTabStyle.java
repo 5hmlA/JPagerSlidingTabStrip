@@ -3,11 +3,12 @@ package april.yun.tabstyle;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import androidx.annotation.Keep;
+import androidx.viewpager.widget.ViewPager;
 import april.yun.ISlidingTabStrip;
 
 /**
@@ -17,6 +18,7 @@ import april.yun.ISlidingTabStrip;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public class GradientTabStyle extends JTabStyle {
 
     private static final String TAG = GradientTabStyle.class.getSimpleName();

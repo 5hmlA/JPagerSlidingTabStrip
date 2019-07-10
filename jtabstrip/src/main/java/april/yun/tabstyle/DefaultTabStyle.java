@@ -5,7 +5,7 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
+import androidx.annotation.Keep;
 import april.yun.ISlidingTabStrip;
 
 /**
@@ -15,6 +15,7 @@ import april.yun.ISlidingTabStrip;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public class DefaultTabStyle extends JTabStyle {
 
     private float mOutRadio = 0;

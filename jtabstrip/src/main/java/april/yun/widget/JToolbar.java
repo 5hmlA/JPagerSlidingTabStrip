@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import com.jonas.librarys.R;
@@ -191,6 +192,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public static int getStatusBarHeight(){
         Resources system = Resources.getSystem();
         int resourceId = system.getIdentifier("status_bar_height", "dimen", "android");
@@ -198,17 +200,19 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public static int dp2px(float dipValue){
         float fontScale = Resources.getSystem().getDisplayMetrics().density;
         return (int)( dipValue*fontScale+0.5f );
     }
 
-
+    @Keep
     public TextView setTitle2(CharSequence title){
         setTitle(title);
         return mTitleTextView;
     }
 
+    @Keep
     @Override
     public void setTitle(CharSequence title){
         if(mIsTitleCenter) {
@@ -242,6 +246,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public PromptImageView setTitleIcon(@DrawableRes int iconId){
         return setTitleIcon(iconId, 0);
     }
@@ -251,6 +256,7 @@ public class JToolbar extends Toolbar {
      * @param width
      *         单位 dp
      */
+    @Keep
     public PromptImageView setTitleIcon(@DrawableRes int iconId, int width){
         if(iconId != 0) {
             //去掉navigation
@@ -271,6 +277,7 @@ public class JToolbar extends Toolbar {
         return mTitleCenterIconView;
     }
 
+    @Keep
     public PromptTextView setCenterTitle(CharSequence title){
         if(!TextUtils.isEmpty(title)) {
             setTitle2(null);
@@ -301,6 +308,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public PromptTextView setRightTitle(CharSequence title){
         if(!TextUtils.isEmpty(title)) {
             if(mRightTextView == null) {
@@ -329,16 +337,19 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public PromptImageView setRightIcon(@DrawableRes int iconId){
         return setRightIcon(iconId, 0);
     }
 
 
+    @Keep
     public PromptImageView setLeftIcon(@DrawableRes int iconId){
         return setLeftIcon(iconId, 0);
     }
 
 
+    @Keep
     @Override
     public void setNavigationIcon(int resId){
         if(!shouldLayout(mLeftIconView)) {
@@ -353,6 +364,7 @@ public class JToolbar extends Toolbar {
      * @param width
      *         单位 dp
      */
+    @Keep
     public PromptImageView setLeftIcon(@DrawableRes int iconId, int width){
         if(iconId != 0) {
             //去掉navigation
@@ -374,6 +386,7 @@ public class JToolbar extends Toolbar {
         return mLeftIconView;
     }
 
+    @Keep
     @Override
     public void setNavigationOnClickListener(OnClickListener listener){
         if(shouldLayout(mLeftIconView)) {
@@ -388,6 +401,7 @@ public class JToolbar extends Toolbar {
      * @param width
      *         单位 dp
      */
+    @Keep
     public PromptImageView setRightIcon(@DrawableRes int iconId, int width){
         if(iconId != 0) {
             if(mRightIconView == null) {
@@ -426,6 +440,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     @Override
     public void setTitleTextColor(@ColorInt int color){
         if(mIsTitleCenter) {
@@ -439,6 +454,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     @Override
     public CharSequence getTitle(){
         if(mIsTitleCenter) {
@@ -449,6 +465,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     @Override
     public void setSubtitle(CharSequence subtitle){
         if(!mIsTitleCenter) {
@@ -458,6 +475,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public <VG extends ViewGroup> VG yourTitleBarLayout(VG yourTitleBarLayout){
         if(yourTitleBarLayout != null) {
             removeAllViews();
@@ -474,6 +492,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public JToolbar setDivideLineColor(@ColorInt int divideLineColor){
         mDivideLineColor = divideLineColor;
         mDividePaint.setColor(divideLineColor);
@@ -481,6 +500,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public JToolbar setDivideLineHight(int divideLineHight){
         mDivideLineHight = divideLineHight;
         mDividePaint.setStrokeWidth(divideLineHight);

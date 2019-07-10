@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
+import androidx.annotation.Keep;
 
 /**
  * @author yun.
@@ -48,6 +49,7 @@ public class Damping implements View.OnTouchListener {
         return dampOnTouch(event);
     }
 
+    @Keep
     public static Damping wrapper(HorizontalScrollView view){
         view.setClickable(true);
         return new Damping(view);
@@ -60,6 +62,7 @@ public class Damping implements View.OnTouchListener {
         mView.setOnTouchListener(this);
     }
 
+    @Keep
     public Damping configDirection(int direction){
         this.direction = direction;
         return this;

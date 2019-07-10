@@ -7,7 +7,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.Keep;
 import april.yun.ISlidingTabStrip;
 
 import static android.graphics.PorterDuff.Mode.SRC_IN;
@@ -19,6 +19,7 @@ import static android.graphics.PorterDuff.Mode.SRC_IN;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public class RoundTabStyle extends JTabStyle {
 
   private float mOutRadio;

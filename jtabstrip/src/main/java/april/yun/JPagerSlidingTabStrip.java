@@ -25,6 +25,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.Size;
@@ -128,6 +129,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     mScrollingChildHelper.setNestedScrollingEnabled(nestedEnable);
   }
 
+  @Keep
   public void bindViewPager(ViewPager pager) {
     this.pager = pager;
     if (pager.getAdapter() == null) {
@@ -351,6 +353,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
   }
 
 
+  @Keep
   public void bindTitles(String... titles) {
     bindTitles(0, titles);
   }
@@ -358,6 +361,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
   /**
    * 设置title的icon必须在bindTitles之前调用
    */
+  @Keep
   public JPagerSlidingTabStrip coifigTabIcons(@DrawableRes @Size(min = 1) int... iconIds) {
     mIconIds = iconIds;
     return this;
@@ -366,11 +370,13 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
   /**
    * 两张图片为一组[选中,默认]
    */
+  @Keep
   public JPagerSlidingTabStrip coifigTabIcons(@DrawableRes @Size(min = 1) int[]... iconsIds) {
     mIconsIds = iconsIds;
     return this;
   }
 
+  @Keep
   public void bindTitles(int current, String... titles) {
     if (titles.length == 1) {
       for (int i = 0; i < titles.length; i++) {
@@ -397,6 +403,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     updateTabStyles();
   }
 
+  @Keep
   public void setCurrentPosition(int position) {
     setTag(position);
     if (mLastCheckedPosition == position || mValueAnimator.isRunning()) {
@@ -574,17 +581,17 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     return savedState;
   }
 
-
+  @Keep
   public JTabStyleDelegate getTabStyleDelegate() {
     return mTabStyleDelegate;
   }
 
-
+  @Keep
   public void setJTabStyle(JTabStyle JTabStyle) {
     mJTabStyle = JTabStyle;
   }
 
-
+  @Keep
   public int getTabCount() {
     return mTabCount;
   }
@@ -594,12 +601,12 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     return mState;
   }
 
-
+  @Keep
   public ViewGroup getTabsContainer() {
     return tabsContainer;
   }
 
-
+  @Keep
   public ISlidingTabStrip setPromptNum(int index, int num) {
     if (index < tabsContainer.getChildCount()) {
       ((PromptView) tabsContainer.getChildAt(index)).setPromptNum(num);
@@ -630,6 +637,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     mValueAnimator.cancel();
   }
 
+  @Keep
   public JPagerSlidingTabStrip setOntheSamePositionClickListener(OntheSamePositionClickListener samePositionClickListener) {
     mSamePositionClickListener = samePositionClickListener;
     return this;

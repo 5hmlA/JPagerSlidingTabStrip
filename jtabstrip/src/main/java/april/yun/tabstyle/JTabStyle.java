@@ -6,14 +6,14 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.os.Build;
-import androidx.viewpager.widget.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
-
+import androidx.annotation.Keep;
+import androidx.viewpager.widget.ViewPager;
 import april.yun.ISlidingTabStrip;
 import april.yun.other.JTabStyleDelegate;
 import april.yun.widget.PromptView;
@@ -25,6 +25,7 @@ import april.yun.widget.PromptView;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public abstract class JTabStyle {
     public static final long SHOWANI = 500;
     protected final JTabStyleDelegate mTabStyleDelegate;

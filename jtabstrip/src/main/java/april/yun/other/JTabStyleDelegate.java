@@ -6,13 +6,14 @@ import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import androidx.annotation.ColorInt;
-import androidx.annotation.Size;
-import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
+import androidx.annotation.ColorInt;
+import androidx.annotation.Keep;
+import androidx.annotation.Size;
+import androidx.core.content.ContextCompat;
 import april.yun.ISlidingTabStrip;
 import april.yun.tabstyle.JTabStyle;
 import april.yun.widget.PromptView;
@@ -28,6 +29,7 @@ import static april.yun.other.JTabStyleBuilder.STYLE_DEFAULT;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public class JTabStyleDelegate {
 
     private ISlidingTabStrip mTabStrip;

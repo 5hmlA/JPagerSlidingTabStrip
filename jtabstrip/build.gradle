@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply from: "../bintrayUpload.gradle"
 
 android {
      compileSdkVersion 28
@@ -6,10 +7,13 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        consumerProguardFiles 'consumer-proguard-rules.pro'
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

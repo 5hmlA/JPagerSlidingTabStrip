@@ -1,11 +1,13 @@
 package april.yun.other;
 
+import androidx.annotation.Keep;
 import april.yun.widget.SuperPrompt;
 
 /**
  * @another 江祖赟
  * @date 2017/9/25 0025.
  */
+@Keep
 public interface IPrompt {
 
     public SuperPrompt getPromptHelper();

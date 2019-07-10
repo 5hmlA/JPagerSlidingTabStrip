@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.view.ViewGroup;
+import androidx.annotation.Keep;
 import april.yun.ISlidingTabStrip;
 import april.yun.tabstyle.JTabStyle;
 
@@ -14,6 +15,7 @@ import april.yun.tabstyle.JTabStyle;
  * @since [https://github.com/ZuYun]
  * <p><a href="https://github.com/ZuYun">github</a>
  */
+@Keep
 public class CustomTabStyle extends JTabStyle {
     private Path mTrianglePath = new Path();
     private int mTrigangleHeight = 10;
