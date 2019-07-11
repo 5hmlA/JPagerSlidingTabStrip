@@ -9,6 +9,7 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.os.Parcelable;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
 import androidx.annotation.Size;
 import androidx.core.content.ContextCompat;
@@ -76,19 +77,19 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
     public boolean mPromptOnlyNum;
     private OntheSamePositionClickListener mSamePositionClickListener;
 
-    @keep
+    @Keep
     public JPagerSlidingTabStrip2(Context context){
         this(context, null);
     }
 
 
-    @keep
+    @Keep
     public JPagerSlidingTabStrip2(Context context, AttributeSet attrs){
         this(context, attrs, 0);
     }
 
 
-    @keep
+    @Keep
     public JPagerSlidingTabStrip2(Context context, AttributeSet attrs, int defStyle){
         super(context, attrs, defStyle);
 
@@ -113,7 +114,7 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
         mJTabStyle = mTabStyleDelegate.getJTabStyle();
     }
 
-    @keep
+    @Keep
     public void bindViewPager(ViewPager pager){
         this.pager = pager;
         if(pager.getAdapter() == null) {
@@ -125,7 +126,7 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
         notifyDataSetChanged();
     }
 
-    @keep
+    @Keep
     public void setOnPageChangeListener(OnPageChangeListener listener){
         this.delegatePageListener = listener;
     }
@@ -318,7 +319,7 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
     }
 
 
-    @keep
+    @Keep
     public void bindTitles(String... titles){
         bindTitles(0, titles);
     }
@@ -328,7 +329,7 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
      *
      * @param iconIds
      */
-    @keep
+    @Keep
     public JPagerSlidingTabStrip2 coifigTabIcons(@DrawableRes @Size(min = 1) int... iconIds){
         mIconIds = iconIds;
         return this;
@@ -340,13 +341,13 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
      * @param iconsIds
      * @return
      */
-    @keep
+    @Keep
     public JPagerSlidingTabStrip2 coifigTabIcons(@DrawableRes @Size(min = 1) int[]... iconsIds){
         mIconsIds = iconsIds;
         return this;
     }
 
-    @keep
+    @Keep
     public void bindTitles(int current, String... titles){
         if(titles.length == 1) {
             for(int i = 0; i<titles.length; i++) {
@@ -373,7 +374,7 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
         updateTabStyles();
     }
 
-    @keep
+    @Keep
     public void setCurrentPosition(int position){
         setTag(position);
         if(mLastCheckedPosition == position || mValueAnimator.isRunning()) {
@@ -524,37 +525,37 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
     }
 
 
-    @keep
+    @Keep
     public JTabStyleDelegate getTabStyleDelegate(){
         return mTabStyleDelegate;
     }
 
 
-    @keep
+    @Keep
     public void setJTabStyle(JTabStyle JTabStyle){
         mJTabStyle = JTabStyle;
     }
 
 
-    @keep
+    @Keep
     public int getTabCount(){
         return mTabCount;
     }
 
 
-    @keep
+    @Keep
     public int getState(){
         return mState;
     }
 
 
-    @keep
+    @Keep
     public ViewGroup getTabsContainer(){
         return tabsContainer;
     }
 
 
-    @keep
+    @Keep
     public ISlidingTabStrip setPromptNum(int index, int num){
         if(index<tabsContainer.getChildCount()) {
             ( (PromptTextView)tabsContainer.getChildAt(index) ).setPromptMsg(num);
@@ -562,7 +563,7 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
         return this;
     }
 
-    @keep
+    @Keep
     public ISlidingTabStrip setPromptStr(int index, String str){
         if(index<tabsContainer.getChildCount()) {
             ( (PromptTextView)tabsContainer.getChildAt(index) ).setPromptMsg(str);
@@ -583,7 +584,7 @@ public class JPagerSlidingTabStrip2 extends HorizontalScrollView implements ISli
         mValueAnimator.cancel();
     }
 
-    @keep
+    @Keep
     public JPagerSlidingTabStrip2 setOntheSamePositionClickListener(OntheSamePositionClickListener samePositionClickListener){
         mSamePositionClickListener = samePositionClickListener;
         return this;
