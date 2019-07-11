@@ -88,16 +88,19 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
   private int mLastEventY;
   private static final int[] ATTRS = new int[]{android.R.attr.nestedScrollingEnabled};
 
+  @Keep
   public JPagerSlidingTabStrip(Context context) {
     this(context, null);
   }
 
 
+  @Keep
   public JPagerSlidingTabStrip(Context context, AttributeSet attrs) {
     this(context, attrs, 0);
   }
 
 
+  @Keep
   public JPagerSlidingTabStrip(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
     TypedArray sa = context.obtainStyledAttributes(attrs, ATTRS);
@@ -141,6 +144,7 @@ public class JPagerSlidingTabStrip extends HorizontalScrollView implements ISlid
     notifyDataSetChanged();
   }
 
+  @Keep
   public void setOnPageChangeListener(OnPageChangeListener listener) {
     this.delegatePageListener = listener;
   }
