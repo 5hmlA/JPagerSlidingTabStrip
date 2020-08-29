@@ -18,14 +18,17 @@ public class PromptImageView extends androidx.appcompat.widget.AppCompatImageVie
 
     protected SuperPrompt mPromptHelper;
 
+    @Keep
     public PromptImageView(Context context){
         this(context, null);
     }
 
+    @Keep
     public PromptImageView(Context context, @Nullable AttributeSet attrs){
         this(context, attrs, 0);
     }
 
+    @Keep
     public PromptImageView(Context context, @Nullable AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
         mPromptHelper = new SuperPrompt(this);

@@ -30,14 +30,17 @@ public class PromptTextView extends androidx.appcompat.widget.AppCompatCheckedTe
      */
     private boolean mPromptForFirstLine = true;
 
+    @Keep
     public PromptTextView(Context context){
         this(context, null);
     }
 
+    @Keep
     public PromptTextView(Context context, @Nullable AttributeSet attrs){
         this(context, attrs, 0);
     }
 
+    @Keep
     public PromptTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
 

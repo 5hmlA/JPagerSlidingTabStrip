@@ -68,6 +68,7 @@ public class JToolbar extends Toolbar {
     }
 
 
+    @Keep
     public JToolbar(Context context, @Nullable AttributeSet attrs){
         super(context, attrs);
         setClickable(true);
@@ -75,7 +76,7 @@ public class JToolbar extends Toolbar {
         wrapperAttrs(context, attrs);
     }
 
-
+    @Keep
     public JToolbar(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
         setClickable(true);
